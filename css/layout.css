@@ -583,7 +583,24 @@ body.drawer-open {
 
 /* ---------- main column ---------- */
 .main { min-width: 0; }
-.page-head { margin-bottom: var(--sp-5); }
+.page-head {
+  position: relative;
+  margin-bottom: var(--sp-6);
+  padding: var(--sp-6) var(--sp-6) var(--sp-5) calc(var(--sp-6) + 6px);
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius-lg);
+  background:
+    var(--motif),
+    radial-gradient(120% 180% at 100% 0%, color-mix(in srgb, var(--brand) 14%, transparent), transparent 58%),
+    var(--surface);
+  background-size: 40px 40px, auto, auto;
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+}
+.page-head::before {
+  content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 5px;
+  background: linear-gradient(180deg, var(--brand), var(--accent));
+}
 .page-head .eyebrow {
   display: inline-flex; align-items: center; gap: 8px;
   font-family: var(--font-display);
@@ -596,11 +613,12 @@ body.drawer-open {
   background: linear-gradient(90deg, var(--brand), var(--accent));
 }
 .page-head h1 {
-  font-size: clamp(1.8rem, 5vw, var(--fs-4xl));
+  font-size: clamp(1.9rem, 5vw, var(--fs-4xl));
+  letter-spacing: -0.025em;
   margin-bottom: var(--sp-2);
 }
 .page-head .lede {
-  font-size: var(--fs-base); color: var(--muted);
+  font-size: var(--fs-base); color: var(--ink-soft);
   line-height: var(--lh-base);
   max-width: var(--prose-max);
   margin-bottom: 0;

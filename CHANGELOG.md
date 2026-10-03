@@ -3,6 +3,20 @@
 All notable changes to **SikBodo — Bodo Learning Platform**.
 This project follows [Semantic Versioning](https://semver.org/).
 
+## [1.3.0] — 2026-10-03
+
+### Changed
+
+- **A visual overhaul of every page — no more plain tables.** Each page now opens on a decorated hero
+  band (a soft brand gradient over a subtle leaf motif), and the reference content has been rebuilt so
+  it reads as a designed product rather than a document:
+  - **Tables** gained tinted headers, zebra rows, hover highlighting and an emphasised Bodo column.
+  - **Reference sections** are now cards; grammar sections are numbered.
+  - **The dictionary** is a card grid, with the Bodo word as the hero of each card.
+  - **Phrases** are grouped cards, not tables.
+  - **Conversations** are chat bubbles, alternating by speaker.
+  - A contrast pass on the romanisation lines and category pills for readability.
+
 ## [1.2.0] — 2026-10-03
 
 ### Added

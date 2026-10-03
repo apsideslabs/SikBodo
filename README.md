@@ -6,7 +6,7 @@
 
 **An academic-grade, self-contained platform for learning Bodo (बरʼ, Boro)** — the Tibeto-Burman language of the Bodo people of Assam, India.
 
-[![version](https://img.shields.io/badge/version-1.2.0-48871c?style=flat-square)](CHANGELOG.md)
+[![version](https://img.shields.io/badge/version-1.3.0-48871c?style=flat-square)](CHANGELOG.md)
 [![license](https://img.shields.io/badge/license-MIT-0f766e?style=flat-square)](LICENSE)
 [![dependencies](https://img.shields.io/badge/runtime%20dependencies-0-b45309?style=flat-square)](#-design-constraints)
 [![build](https://img.shields.io/badge/build%20step-none-6d28d9?style=flat-square)](#-design-constraints)
