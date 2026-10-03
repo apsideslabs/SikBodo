@@ -337,4 +337,88 @@ window.SKB.dictionary = [
   { en: "together", bo: "ज", rom: "jo", cat: "Abstract & misc" },
   { en: "phone", bo: "फोन", rom: "phon", cat: "Abstract & misc" },
   { en: "computer", bo: "कम्प्युटर", rom: "kampusutar", cat: "Abstract & misc" },
+
+  /* --- Animals (extended) --- */
+  { en: "ox", bo: "मोसौ हालुआ", rom: "mwsau halua", cat: "Animals" },
+  { en: "buffalo", bo: "मोइसो", rom: "mwisw", cat: "Animals" },
+  { en: "sheep", bo: "बोर्मा मेन्दा", rom: "bwrma menda", cat: "Animals" },
+  { en: "tortoise", bo: "खासेउ", rom: "khaseu", cat: "Animals" },
+  { en: "fox", bo: "सियाल", rom: "shiyal", cat: "Animals" },
+  { en: "wolf", bo: "रुंग सैमा", rom: "rung swima", cat: "Animals" },
+  { en: "lion", bo: "सिंघो", rom: "singho", cat: "Animals" },
+  { en: "monkey", bo: "मोक्रा", rom: "mwkra", cat: "Animals" },
+  { en: "donkey", bo: "गाधो", rom: "gadho", cat: "Animals" },
+  { en: "crocodile", bo: "गोलेर", rom: "gwler", cat: "Animals" },
+  { en: "bear", bo: "मुफुर", rom: "mufur", cat: "Animals" },
+  { en: "horn", bo: "गों", rom: "gong", cat: "Animals" },
+  /* --- House & home (extended) --- */
+  { en: "door", bo: "दरजा", rom: "darja", cat: "House & home" },
+  { en: "clothes", bo: "जि", rom: "ji", cat: "House & home" },
+  { en: "field", bo: "हालि", rom: "hali", cat: "House & home" },
+  /* --- Verbs & actions (extended) --- */
+  { en: "open", bo: "खेव", rom: "khew", cat: "Verbs & actions" },
+  { en: "close", bo: "फां", rom: "phang", cat: "Verbs & actions" },
+  { en: "wake up", bo: "सिरि मोननाय", rom: "siri monnai", cat: "Verbs & actions" },
+  { en: "get up", bo: "सिखार", rom: "sikhar", cat: "Verbs & actions" },
+  { en: "wear", bo: "गान", rom: "gan", cat: "Verbs & actions" },
+  { en: "win", bo: "देरहानाय", rom: "derhanai", cat: "Verbs & actions" },
+  { en: "break", bo: "बाय", rom: "bai", cat: "Verbs & actions" },
+  { en: "jump", bo: "बात", rom: "bat", cat: "Verbs & actions" },
+  { en: "pull", bo: "बुनु", rom: "bunu", cat: "Verbs & actions" },
+  { en: "grow", bo: "डेट", rom: "det", cat: "Verbs & actions" },
+  { en: "be angry", bo: "ब्राप", rom: "brap", cat: "Verbs & actions" },
+  { en: "swim", bo: "सानस्रि", rom: "sansri", cat: "Verbs & actions" },
+  { en: "feed", bo: "दाव", rom: "dau", cat: "Verbs & actions" },
+  { en: "weave", bo: "दा", rom: "da", cat: "Verbs & actions" },
+  { en: "fill", bo: "बुं", rom: "bung", cat: "Verbs & actions" },
+  { en: "talk", bo: "रायलाइ", rom: "railai", cat: "Verbs & actions" },
+  { en: "touch", bo: "दांलिर", rom: "danglir", cat: "Verbs & actions" },
+  { en: "use", bo: "बाहाइ", rom: "bahai", cat: "Verbs & actions" },
+  { en: "stitch", bo: "सुथेनाइ", rom: "suthinai", cat: "Verbs & actions" },
+  { en: "start", bo: "जागायजेन", rom: "jagaijen", cat: "Verbs & actions" },
+  { en: "want", bo: "लुबो", rom: "lubw", cat: "Verbs & actions" },
+  /* --- Places & directions (extended) --- */
+  { en: "store / shop", bo: "दोनथुम", rom: "dwnthum", cat: "Places & directions" },
+  { en: "top", bo: "जौसिन", rom: "jwosin", cat: "Places & directions" },
+  { en: "under", bo: "सिं", rom: "sing", cat: "Places & directions" },
+  { en: "near", bo: "खाथि", rom: "khathi", cat: "Places & directions" },
+  /* --- Transport & travel (extended) --- */
+  { en: "transport", bo: "दैथाइ", rom: "dwithai", cat: "Transport & travel" },
+  /* --- Time (extended) --- */
+  { en: "time", bo: "समाइ", rom: "somai", cat: "Time" },
+  /* --- Plants & nature (extended) --- */
+  { en: "weather", bo: "बोथोर", rom: "bwtwr", cat: "Plants & nature" },
+  { en: "bark (of a tree)", bo: "दंफां बाख्ला", rom: "dongfang bakhla", cat: "Plants & nature" },
+  /* --- Body & health (extended) --- */
+  { en: "wing", bo: "गांखं", rom: "gangkong", cat: "Body & health" },
+  { en: "wound", bo: "गाराय", rom: "garai", cat: "Body & health" },
+  { en: "guts", bo: "नारि", rom: "nari", cat: "Body & health" },
+  { en: "fat", bo: "मोदोम गेदेर", rom: "modom geder", cat: "Body & health" },
+  /* --- Birds & insects (extended) --- */
+  { en: "feather", bo: "गां", rom: "gang", cat: "Birds & insects" },
+  /* --- Adjectives (extended) --- */
+  { en: "healthy", bo: "गुफुं", rom: "gufung", cat: "Adjectives" },
+  { en: "delicate", bo: "गेस्रेम", rom: "gesrem", cat: "Adjectives" },
+  { en: "sudden", bo: "हरखाब", rom: "horkhab", cat: "Adjectives" },
+  { en: "stiff", bo: "दिदोम", rom: "didwm", cat: "Adjectives" },
+  { en: "sticky", bo: "सिथाब-थाब", rom: "sithab-tab", cat: "Adjectives" },
+  { en: "violent", bo: "गिलु फालु", rom: "gilu palu", cat: "Adjectives" },
+  { en: "warm", bo: "दुंहाव हाव", rom: "dunghao hao", cat: "Adjectives" },
+  /* --- Abstract & misc (extended) --- */
+  { en: "thing", bo: "जिनिस", rom: "jinis", cat: "Abstract & misc" },
+  { en: "universe", bo: "मुलुग", rom: "mulug", cat: "Abstract & misc" },
+  { en: "voice", bo: "गारां", rom: "garang", cat: "Abstract & misc" },
+  { en: "war", bo: "दावहा", rom: "daoha", cat: "Abstract & misc" },
+  { en: "wrong", bo: "गोरोनथि", rom: "gwrwnthi", cat: "Abstract & misc" },
+  { en: "statement", bo: "बिबुथिनाय", rom: "bibungtinai", cat: "Abstract & misc" },
+  { en: "trade", bo: "बेफार", rom: "befar", cat: "Abstract & misc" },
+  /* --- Food & drink (extended) --- */
+  { en: "bread / roti", bo: "रुटि", rom: "ruti", cat: "Food & drink" },
+  /* --- School & work (extended) --- */
+  { en: "exam", bo: "परीखा", rom: "porikha", cat: "School & work" },
+  /* --- People & family (extended) --- */
+  { en: "parents", bo: "बिमा-बिपा", rom: "bima-bipha", cat: "People & family" },
+  /* --- Adverbs (extended) --- */
+  { en: "sometime", bo: "स्वानसे", rom: "swanse", cat: "Adverbs" },
+  { en: "seldom", bo: "माब्लाबाशो", rom: "mablabasho", cat: "Adverbs" },
 ];
