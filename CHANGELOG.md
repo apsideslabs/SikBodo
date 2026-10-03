@@ -3,6 +3,23 @@
 All notable changes to **SikBodo — Bodo Learning Platform**.
 This project follows [Semantic Versioning](https://semver.org/).
 
+## [1.6.1] — 2026-10-03
+
+### Fixed
+
+- **The in-app update button now actually updates.** In the installed PWA the "new version" banner
+  appeared, but tapping it did nothing: the app never asked the browser to re-check `sw.js`, so no new
+  worker was ever *waiting* to take over — and the fallback reload was answered from the cache, which
+  serves the old page. The update flow now forces a `registration.update()` check, waits for the new
+  worker to install, promotes it with `SKIP_WAITING`, and reloads onto the new cache on
+  `controllerchange`. Verified end to end: with the fix the reload lands on the freshly deployed build;
+  with the old code it re-serves the cached one.
+- **Old caches are purged again.** The service worker's activation step deleted caches named `luitra-*`
+  — a leftover from the port — instead of `sikbodo-*`, so stale caches accumulated across releases.
+- The worker now accepts the `SKIP_WAITING` message as either a bare string or an object, and the
+  precache list is regenerated so it once more matches the files on disk (it had drifted: the sound,
+  speech and dark-logo files were missing).
+
 ## [1.6.0] — 2026-10-03
 
 ### Documentation & presentation

@@ -117,27 +117,70 @@
 
   /* ---------- applying an update ---------- */
 
-  function applyUpdate() {
-    const reg = state.registration;
-    const waiting = state.waiting || (reg && reg.waiting);
+  // Resolve once the registration reports a worker that has installed and is
+  // waiting to take over, or after `ms` with whatever we have by then.
+  function waitForWaiting(reg, ms) {
+    return new Promise((resolve) => {
+      if (reg.waiting) return resolve(reg.waiting);
+      let done = false;
+      const finish = (worker) => {
+        if (done) return;
+        done = true;
+        clearTimeout(timer);
+        resolve(worker || null);
+      };
+      const timer = setTimeout(() => finish(reg.waiting), ms);
+      const watch = (sw) => {
+        if (!sw) return;
+        if (sw.state === "installed") finish(reg.waiting || sw);
+        else if (sw.state === "redundant") finish(null);
+        else sw.addEventListener("statechange", () => watch(sw));
+      };
+      watch(reg.installing);
+      reg.addEventListener("updatefound", () => watch(reg.installing));
+    });
+  }
+
+  async function applyUpdate() {
+    let reg = state.registration;
+    if (!reg && navigator.serviceWorker) {
+      try {
+        reg = await navigator.serviceWorker.getRegistration();
+      } catch (err) {
+        reg = null;
+      }
+    }
+
+    // The crucial step: make the browser check sw.js *now*. Without it a
+    // deployed worker can stay undiscovered while version.json already
+    // reports the new version — so the reload below would just serve the
+    // old page back out of the cache, and the button would look dead.
+    if (reg) {
+      try {
+        await reg.update();
+      } catch (err) {
+        /* offline, or no worker yet: fall through */
+      }
+    }
+
+    let waiting = state.waiting || (reg && reg.waiting) || null;
+    if (!waiting && reg) waiting = await waitForWaiting(reg, 5000);
 
     if (waiting) {
       // let the new worker take over, then reload onto the new cache
       let reloaded = false;
-      navigator.serviceWorker.addEventListener("controllerchange", () => {
+      const go = () => {
         if (reloaded) return;
         reloaded = true;
         location.reload();
-      });
+      };
+      navigator.serviceWorker.addEventListener("controllerchange", go);
       waiting.postMessage({ type: "SKIP_WAITING" });
       // if the swap is slow, reload anyway rather than hanging
-      setTimeout(() => {
-        if (!reloaded) {
-          reloaded = true;
-          location.reload();
-        }
-      }, 2500);
+      setTimeout(go, 3000);
     } else {
+      // nothing to swap — the deployment did not change sw.js, so a plain
+      // reload is all that is left
       location.reload();
     }
   }
@@ -151,6 +194,14 @@
       .register("sw.js")
       .then((reg) => {
         state.registration = reg;
+        // ask for a sw.js check now, rather than waiting for the browser's
+        // own (throttled) schedule — otherwise a deployed update can sit
+        // undiscovered while version.json already reports it
+        try {
+          reg.update();
+        } catch (err) {
+          /* older browsers: ignore */
+        }
         if (reg.waiting && navigator.serviceWorker.controller) {
           state.waiting = reg.waiting;
           check({}); // learn which version it is, then show the banner
@@ -210,6 +261,14 @@
       check({});
       document.addEventListener("visibilitychange", () => {
         if (document.visibilityState !== "visible") return;
+        // returning to the app is the moment to look for a new worker too
+        if (state.registration) {
+          try {
+            state.registration.update();
+          } catch (err) {
+            /* ignore */
+          }
+        }
         if (Date.now() - state.lastCheck > CHECK_EVERY) check({});
       });
     }

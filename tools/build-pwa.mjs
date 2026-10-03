@@ -93,7 +93,7 @@ const sw = `/* ============================================================
    ============================================================ */
 
 const VERSION = "${version}";
-const CACHE = "luitra-" + VERSION;
+const CACHE = "sikbodo-" + VERSION;
 
 const PRECACHE = ${JSON.stringify(list, null, 2)};
 
@@ -118,7 +118,7 @@ self.addEventListener("activate", (event) => {
       .keys()
       .then((keys) =>
         Promise.all(
-          keys.filter((k) => k.startsWith("luitra-") && k !== CACHE).map((k) => caches.delete(k))
+          keys.filter((k) => k.startsWith("sikbodo-") && k !== CACHE).map((k) => caches.delete(k))
         )
       )
       .then(() => self.clients.claim())
@@ -126,7 +126,7 @@ self.addEventListener("activate", (event) => {
 });
 
 self.addEventListener("message", (event) => {
-  if (event.data && event.data.type === "SKIP_WAITING") self.skipWaiting();
+  if (event.data === "SKIP_WAITING" || (event.data && event.data.type === "SKIP_WAITING")) self.skipWaiting();
 });
 
 self.addEventListener("fetch", (event) => {
@@ -187,4 +187,4 @@ self.addEventListener("fetch", (event) => {
 fs.writeFileSync(path.join(ROOT, "sw.js"), sw);
 
 console.log(`build-pwa: version.json → ${version} (released ${released})`);
-console.log(`build-pwa: sw.js → cache "luitra-${version}", ${assets.length} precached entries`);
+console.log(`build-pwa: sw.js → cache "sikbodo-${version}", ${assets.length} precached entries`);

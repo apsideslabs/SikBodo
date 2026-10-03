@@ -13,7 +13,7 @@ language of the Bodo people of Assam, India.
 **15 lessons · 16 grammar sections · a 348-word dictionary · 107 phrases · 14 dialogues · an interactive practice arena** — all running in the browser, with no build step and no runtime dependencies.
 
 [![Live site](https://img.shields.io/badge/live%20site-open-48871c?style=flat-square&logo=githubpages&logoColor=white)](https://apsideslabs.github.io/SikBodo/)
-[![Version](https://img.shields.io/badge/version-1.6.0-48871c?style=flat-square)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-1.6.1-48871c?style=flat-square)](CHANGELOG.md)
 [![Licence](https://img.shields.io/badge/licence-MIT-0f766e?style=flat-square)](LICENSE)
 [![Runtime dependencies](https://img.shields.io/badge/runtime%20dependencies-0-b45309?style=flat-square)](#design-constraints)
 [![Build step](https://img.shields.io/badge/build%20step-none-6d28d9?style=flat-square)](#design-constraints)
