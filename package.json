@@ -1,6 +1,6 @@
 {
   "name": "sikbodo",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "private": true,
   "description": "SikBodo — an academic-grade, self-contained Bodo learning platform. Static HTML, CSS and JavaScript with no runtime dependencies.",
   "license": "MIT",
