@@ -9,6 +9,7 @@
   const AX = (window.AX = window.AX || {});
   const B = window.SKB;
   const icon = (n, c) => AX.icons.icon(n, c);
+  const speakBtn = (t, c) => (AX.speech ? AX.speech.button(t, t, c) : "");
 
   const esc = (s) =>
     String(s == null ? "" : s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
@@ -72,7 +73,7 @@
       { icon: "numbers", title: "Numbers & Time", text: "Cardinals, tens, days & months", href: "numbers.html", tone: "b" },
       { icon: "phrases", title: "Everyday Phrases", text: `${c.phrases} expressions by situation`, href: "phrases.html", tone: "c" },
       { icon: "conversations", title: "Conversations", text: `${c.dialogues} annotated dialogues`, href: "conversations.html", tone: "d" },
-      { icon: "quiz", title: "Quiz Arena", text: "Flashcards & multiple choice", href: "quiz.html", tone: "a" },
+      { icon: "quiz", title: "Practice Arena", text: "Choice · listening · spelling · flashcards", href: "quiz.html", tone: "a" },
       { icon: "translator", title: "Phrase Translator", text: "English ↔ Bodo phrase & word lookup", href: "translator.html", tone: "b" },
       { icon: "culture", title: "Language & Community", text: "History, script movement & festivals", href: "culture.html", tone: "c" },
       { icon: "contribute", title: "Contribute", text: "Open-source corpus & verification", href: "contribute.html", tone: "d" },
@@ -112,7 +113,7 @@
           </div>
           <div class="dash-cta">
             <a class="btn primary" href="lessons.html#lesson-${nextN}">${allDone ? "Review lessons" : `Continue Lesson ${nextN}`} ${icon("arrow")}</a>
-            <a class="btn ghost" href="quiz.html">${icon("quiz")} Quiz Arena</a>
+            <a class="btn ghost" href="quiz.html">${icon("quiz")} Practise</a>
           </div>
         </div>
         <div class="dash-tiles">
@@ -156,7 +157,7 @@
             <div class="wotd-en">${esc(wotd.en)}</div>
             <button class="btn ghost small wotd-reveal" type="button" id="wotd-btn">${icon("search")} Reveal the Bodo</button>
             <div class="wotd-ans" id="wotd-ans" hidden>
-              <span class="wotd-bo bo">${esc(wotd.bo)}</span>
+              <span class="wotd-bo bo">${esc(wotd.bo)}</span> ${speakBtn(wotd.bo)}
               <span class="wotd-rom">${esc(wotd.rom)}</span>
             </div>
             <button class="btn subtle small" type="button" id="wotd-save">${icon("star")} Save this word</button>
@@ -171,7 +172,7 @@
               <span>${icon("star")} best streak ${visit.best}</span>
             </div>
             <div class="btn-row">
-              <a class="btn primary" href="quiz.html">${icon("quiz")} Start a quiz round</a>
+              <a class="btn primary" href="quiz.html">${icon("quiz")} Start practising</a>
               <a class="btn ghost" href="dictionary.html">${icon("dictionary")} Browse words</a>
             </div>
           </div>
@@ -292,6 +293,7 @@
                 ${done ? icon("check") + " Completed (+50 XP Earned)" : icon("star") + " Complete Lesson · +50 XP"}
               </button>
               <span class="state ${done ? "done" : ""}">${done ? "Mastered — click to undo" : "Mark complete when you finish reading"}</span>
+              <a class="btn ghost small" href="quiz.html">${icon("quiz")} Practise these words</a>
             </div>
           </div>
         </details>`;
@@ -437,7 +439,7 @@
             (g) => `<section class="chart-group">
           <h3>${esc(g.group)} <span class="rom">${esc(g.bo)}</span></h3>
           <div class="glyph-grid">${g.items
-            .map((it) => `<div class="glyph"><span class="glyph-l">${esc(it.l)}</span><span class="glyph-r">${esc(it.reads)}</span></div>`)
+            .map((it) => `<div class="glyph" data-speak="${esc(it.l)}" role="button" tabindex="0" title="Hear it"><span class="glyph-l">${esc(it.l)}</span><span class="glyph-r">${esc(it.reads)}</span></div>`)
             .join("")}</div>
         </section>`
           )
@@ -458,7 +460,7 @@
       const examples = B.dictionary.filter((d) => d.bo.includes(baseChar)).slice(0, 4);
       box.innerHTML = `
         <div class="ci-main">
-          <div class="ci-big bo">${esc(g.l)}</div>
+          <div class="ci-big bo">${esc(g.l)}</div> ${speakBtn(g.l)}
           <div class="ci-info">
             <span class="ci-kicker">INTERACTIVE CHARACTER INSPECTOR</span>
             <h3>Romanisation: <code>${esc(g.r)}</code></h3>
@@ -562,11 +564,11 @@
     const n = B.numbers;
     const grid = (arr) =>
       `<div class="num-grid">${arr
-        .map((x) => `<div class="num-cell"><span class="n">${x.n}</span><span class="b">${esc(x.bo)}</span><span class="r">${esc(x.rom)}</span></div>`)
+        .map((x) => `<div class="num-cell" data-speak="${esc(x.bo)}" role="button" tabindex="0" title="Hear it"><span class="n">${x.n}</span><span class="b">${esc(x.bo)}</span><span class="r">${esc(x.rom)}</span></div>`)
         .join("")}</div>`;
     const digitGrid = (arr) =>
       `<div class="num-grid">${arr
-        .map((x) => `<div class="num-cell"><span class="n" style="font-family:var(--font-bo)">${x.n}</span><span class="b">${esc(x.bo)}</span><span class="r">${esc(x.arabic)} · ${esc(x.rom)}</span></div>`)
+        .map((x) => `<div class="num-cell" data-speak="${esc(x.bo)}" role="button" tabindex="0" title="Hear it"><span class="n" style="font-family:var(--font-bo)">${x.n}</span><span class="b">${esc(x.bo)}</span><span class="r">${esc(x.arabic)} · ${esc(x.rom)}</span></div>`)
         .join("")}</div>`;
     const pair = (arr) =>
       table(["English", "Bodo", "Roman"], arr.map((t) => [esc(t.en), `<span class="bo">${esc(t.bo)}</span>`, `<span class="rom">${esc(t.rom)}</span>`]));
@@ -651,7 +653,7 @@
               const isStar = savedSet.has(d.en);
               return `<article class="dict-card">
                 <button type="button" class="dict-star ${isStar ? "active" : ""}" data-star="${esc(d.en)}" aria-label="Bookmark ${esc(d.en)}" title="Save word">${icon("star")}</button>
-                <span class="dc-bo bo">${esc(d.bo)}</span>
+                <span class="dc-bo bo">${esc(d.bo)}</span>${speakBtn(d.bo, "dc-speak")}
                 <span class="dc-rom">${esc(d.rom || "")}</span>
                 <span class="dc-en">${esc(d.en)}</span>
                 ${d.note ? `<span class="dc-note">${esc(d.note)}</span>` : ""}
@@ -709,7 +711,7 @@
               ${rows
                 .map(
                   (p) => `<div class="phrase-tile">
-                  <span class="pt-bo bo">${esc(p.bo)}</span>
+                  <span class="pt-bo bo">${esc(p.bo)}</span>${speakBtn(p.bo, "pt-speak")}
                   <span class="pt-rom">${esc(p.rom || "")}</span>
                   <span class="pt-en">${esc(p.en)}</span>
                 </div>`
@@ -746,7 +748,7 @@
                 (l) => `<div class="chat-turn ${side[l.who] ? "right" : ""}">
                   <span class="chat-avatar" aria-hidden="true">${esc((l.who || "?").trim().charAt(0))}</span>
                   <div class="chat-bubble">
-                    <div class="chat-bo bo">${esc(l.bo)}</div>
+                    <div class="chat-bo bo">${esc(l.bo)} ${speakBtn(l.bo, "chat-speak")}</div>
                     <div class="chat-rom">${esc(l.rom || "")}</div>
                     <div class="chat-en">${esc(l.en)}</div>
                   </div>

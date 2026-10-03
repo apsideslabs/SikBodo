@@ -12,7 +12,7 @@
     { href: "index.html", label: "Home", key: "home", icon: "home" },
     { href: "lessons.html", label: "Lessons", key: "lessons", icon: "lessons" },
     { href: "dictionary.html", label: "Words", key: "dictionary", icon: "dictionary" },
-    { href: "quiz.html", label: "Quiz", key: "quiz", icon: "quiz" },
+    { href: "quiz.html", label: "Practice", key: "quiz", icon: "quiz" },
     { href: "progress.html", label: "Progress", key: "progress", icon: "progress", badge: true },
   ];
 

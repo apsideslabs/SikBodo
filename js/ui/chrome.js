@@ -34,7 +34,7 @@
         { href: "phrases.html", label: "Phrases", key: "phrases", icon: "phrases" },
         { href: "conversations.html", label: "Conversations", key: "conversations", icon: "conversations" },
         { href: "reading.html", label: "Reading & writing", key: "reading", icon: "library" },
-        { href: "quiz.html", label: "Quiz", key: "quiz", icon: "quiz" },
+        { href: "quiz.html", label: "Practice", key: "quiz", icon: "quiz" },
         { href: "translator.html", label: "Translator", key: "translator", icon: "translator" },
       ],
     },
@@ -55,7 +55,7 @@
     { href: "script.html", label: "Script", key: "script" },
     { href: "grammar.html", label: "Grammar", key: "grammar" },
     { href: "dictionary.html", label: "Dictionary", key: "dictionary" },
-    { href: "quiz.html", label: "Quiz", key: "quiz" },
+    { href: "quiz.html", label: "Practice", key: "quiz" },
     { href: "progress.html", label: "Progress", key: "progress" },
   ];
 

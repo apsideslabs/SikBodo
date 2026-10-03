@@ -1,7 +1,7 @@
 /* ============================================================
    SikBodo — interactive tools
-   Gamified Quiz Arena (Multiple Choice + Flashcards with XP &
-   Streaks) and Bilingual Phrase Translator.
+   The Practice Arena: an exercise engine with several modes,
+   instant feedback, scoring and XP. Plus the Phrase Translator.
    ============================================================ */
 
 (function () {
@@ -12,249 +12,259 @@
   const esc = (s) =>
     String(s == null ? "" : s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 
-  /* ---------------------------------------------------------- QUIZ ARENA */
+  const body = () => document.getElementById("page-body");
+  const speakBtn = (text, cls) => (AX.speech ? AX.speech.button(text, text, cls) : "");
+  const speak = (t) => { if (AX.speech) AX.speech.speak(t); };
+  const isDevanagari = (s) => /[\u0900-\u097F]/.test(s || "");
+
+  /* ---------------------------------------------------------- PRACTICE ARENA */
   function quiz() {
-    const host = document.getElementById("page-body");
-    let quizType = "mc"; // "mc" (multiple choice) | "flash" (flashcard)
-    let dirMode = "all"; // "all" | "en" | "bo"
+    const D = B.dictionary;
+    const cats = [...new Set(D.map((d) => d.cat))].sort();
+    const ROUND = 12;
+    let scope = "all";
 
-    const shuffle = (arr) => {
-      const a = arr.slice();
-      for (let i = a.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [a[i], a[j]] = [a[j], a[i]];
+    const norm = (s) => String(s || "").toLowerCase().replace(/[\s\-'’.]/g, "");
+    const shuffle = (a) => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+    const sample = (arr, n) => shuffle(arr).slice(0, n);
+
+    const MODES = [
+      { id: "mixed",  icon: "spark",   name: "Mixed round",    desc: "A bit of everything — choice, listening and spelling." },
+      { id: "choice", icon: "quiz",    name: "Multiple choice", desc: "Pick the right meaning, in both directions." },
+      { id: "listen", icon: "volume",  name: "Listening",       desc: "Hear a word and choose what you heard." },
+      { id: "type",   icon: "file",    name: "Spelling",        desc: "Type the romanisation for an English word." },
+      { id: "flash",  icon: "lessons", name: "Flashcards",      desc: "Reveal the meaning and grade yourself." },
+    ];
+
+    function pool() { return scope === "all" ? D : D.filter((d) => d.cat === scope); }
+
+    function build(type, w, p) {
+      const others = sample(p.filter((x) => x.en !== w.en && x.bo !== w.bo), 3);
+      if ((type === "choice-en" || type === "choice-bo" || type === "listen") && others.length < 3) return null;
+      if (type === "choice-en") return { type, w, prompt: w.en, promptLang: "en", answer: w.bo, options: shuffle([w, ...others]).map((o) => ({ label: o.bo, ok: o.bo === w.bo })) };
+      if (type === "choice-bo") return { type, w, prompt: w.bo, promptLang: "bo", answer: w.en, options: shuffle([w, ...others]).map((o) => ({ label: o.en, ok: o.en === w.en })) };
+      if (type === "listen")    return { type, w, prompt: null, promptLang: "bo", answer: w.bo, options: shuffle([w, ...others]).map((o) => ({ label: o.bo, ok: o.bo === w.bo })) };
+      if (type === "type")      return { type, w, prompt: w.en, promptLang: "en", answer: w.rom };
+      if (type === "flash")     return { type, w, prompt: w.bo, promptLang: "bo", answer: w.en };
+      return null;
+    }
+
+    function start(mode) {
+      const p = pool();
+      const words = sample(p, Math.min(ROUND, p.length));
+      const qs = [];
+      words.forEach((w, i) => {
+        let t = mode;
+        if (mode === "mixed") t = ["choice-en", "listen", "choice-bo", "type"][i % 4];
+        else if (mode === "choice") t = i % 2 ? "choice-bo" : "choice-en";
+        const q = build(t, w, p);
+        if (q) qs.push(q);
+      });
+      render({ mode, qs, i: 0, score: 0, streak: 0, best: 0, answered: false, picked: null, revealed: false });
+    }
+
+    function startScreen() {
+      body().innerHTML = `
+        <div class="arena">
+          <div class="arena-head">
+            <span class="sec-kicker">PRACTICE ARENA</span>
+            <h2>Learn by doing</h2>
+            <p class="prose">A round is a short, scored set of exercises drawn from the dictionary. You answer, you get instant feedback, and you earn XP for what you get right. Pick a mode to begin.</p>
+            <p class="arena-note">Pronunciation uses your browser's built-in speech. Bodo has no dedicated voice, so an Indic voice reads the Devanagari as an approximation — treat it as a memory aid, not a native model.</p>
+          </div>
+          <div class="mode-grid">
+            ${MODES.map((m) => `<button type="button" class="mode-card" data-mode="${m.id}">
+                <span class="mc-ic">${icon(m.icon)}</span>
+                <strong>${esc(m.name)}</strong>
+                <span>${esc(m.desc)}</span>
+                <span class="mc-go">${icon("arrow")}</span>
+              </button>`).join("")}
+          </div>
+          <div class="arena-scope">
+            <label for="arena-cat">Words to practise</label>
+            <select id="arena-cat">
+              <option value="all">All categories (${D.length} words)</option>
+              ${cats.map((c) => `<option value="${esc(c)}">${esc(c)}</option>`).join("")}
+            </select>
+          </div>
+        </div>`;
+      const sel = document.getElementById("arena-cat");
+      sel.addEventListener("change", () => { scope = sel.value; });
+      body().querySelectorAll("[data-mode]").forEach((b) =>
+        b.addEventListener("click", () => { if (AX.sfx) AX.sfx.pop(); start(b.getAttribute("data-mode")); })
+      );
+    }
+
+    function render(S) {
+      if (S.i >= S.qs.length) return end(S);
+      const q = S.qs[S.i];
+      const pct = Math.round((S.i / S.qs.length) * 100);
+
+      let promptHTML;
+      if (q.type === "listen") {
+        promptHTML = `<div class="aq-prompt aq-listen">
+            <button type="button" class="play-big" data-speak="${esc(q.w.bo)}" aria-label="Play the word">${icon("volume")}</button>
+            <span class="aq-hint">Tap to hear it, then choose the word you heard</span>
+          </div>`;
+      } else if (q.type === "flash") {
+        promptHTML = `<div class="aq-prompt">
+            <span class="aq-kicker">What does this mean?</span>
+            <div class="aq-bo bo">${esc(q.prompt)} ${speakBtn(q.prompt)}</div>
+            <div class="aq-rom">${esc(q.w.rom)}</div>
+          </div>`;
+      } else if (q.promptLang === "bo") {
+        promptHTML = `<div class="aq-prompt">
+            <span class="aq-kicker">What does this mean?</span>
+            <div class="aq-bo bo">${esc(q.prompt)} ${speakBtn(q.prompt)}</div>
+          </div>`;
+      } else {
+        promptHTML = `<div class="aq-prompt">
+            <span class="aq-kicker">${q.type === "type" ? "Type the romanisation" : "Which is the Bodo for…"}</span>
+            <div class="aq-en">${esc(q.prompt)}</div>
+          </div>`;
       }
-      return a;
-    };
 
-    const buildDeck = () => {
-      const raw = [];
-      B.dictionary.forEach((d, idx) => {
-        const en = d.en.split("/")[0].trim();
-        if (dirMode === "all" || dirMode === "en") {
-          raw.push({ id: idx, q: en, a: d.bo, rom: d.rom || "", cat: d.cat || "", from: "en" });
-        }
-        if (dirMode === "all" || dirMode === "bo") {
-          raw.push({ id: idx, q: d.bo, a: en, rom: d.rom || "", cat: d.cat || "", from: "bo" });
-        }
-      });
+      let answerHTML;
+      if (q.type === "type") {
+        answerHTML = `<div class="aq-type">
+            <input id="aq-input" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="type the romanisation…" aria-label="Your answer">
+            <button class="btn primary" id="aq-check" type="button">Check ${icon("arrow")}</button>
+          </div>`;
+      } else if (q.type === "flash") {
+        answerHTML = `<div class="aq-flash">
+            ${S.revealed
+              ? `<div class="aq-answer"><span class="aq-kicker">It means</span><div class="aq-en">${esc(q.answer)}</div></div>
+                 <div class="aq-flash-btns">
+                   <button class="btn ghost" data-grade="0" type="button">${icon("reset")} Again</button>
+                   <button class="btn primary" data-grade="1" type="button">${icon("check")} Got it</button>
+                 </div>`
+              : `<button class="btn primary" id="aq-reveal" type="button">${icon("search")} Show the meaning</button>`}
+          </div>`;
+      } else {
+        answerHTML = `<div class="aq-options">
+            ${q.options.map((o, k) => {
+              const cls = S.answered ? (o.ok ? "ok" : (S.picked === k ? "bad" : "dim")) : "";
+              return `<button type="button" class="aq-opt ${cls}" data-opt="${k}" ${S.answered ? "disabled" : ""}>
+                  <span class="ao-lbl ${isDevanagari(o.label) ? "bo" : ""}">${esc(o.label)}</span>
+                  ${isDevanagari(o.label) ? speakBtn(o.label, "ao-speak") : ""}
+                </button>`;
+            }).join("")}
+          </div>`;
+      }
 
-      const picked = shuffle(raw).slice(0, 15);
-      return picked.map((item) => {
-        const pool = B.dictionary
-          .filter((_, idx) => idx !== item.id)
-          .map((d) => (item.from === "en" ? d.bo : d.en.split("/")[0].trim()));
-        const distractors = shuffle([...new Set(pool)].filter((x) => x !== item.a)).slice(0, 3);
-        const options = shuffle([item.a, ...distractors]);
-        return Object.assign({}, item, { options });
-      });
-    };
-
-    let deck = buildDeck();
-    let i = 0;
-    let revealed = false;
-    let pickedChoice = null;
-    let score = 0;
-    let streak = 0;
-    let sessionXp = 0;
-
-    function draw() {
-      const c = deck[i];
-      const pct = Math.round((i / deck.length) * 100);
-
-      host.innerHTML = `
-        <div class="quiz-stage">
-          <div class="quiz-controls">
-            <div class="seg" id="q-type-seg" role="group" aria-label="Quiz mode" style="width:auto">
-              <button type="button" data-qtype="mc" aria-pressed="${quizType === "mc"}">Multiple Choice</button>
-              <button type="button" data-qtype="flash" aria-pressed="${quizType === "flash"}">Flashcards</button>
-            </div>
-            <div class="seg" id="q-dir-seg" role="group" aria-label="Direction" style="width:auto">
-              <button type="button" data-qdir="all" aria-pressed="${dirMode === "all"}">Mixed</button>
-              <button type="button" data-qdir="en" aria-pressed="${dirMode === "en"}">EN → BO</button>
-              <button type="button" data-qdir="bo" aria-pressed="${dirMode === "bo"}">BO → EN</button>
+      body().innerHTML = `
+        <div class="arena">
+          <div class="arena-top">
+            <div class="arena-prog"><i style="width:${pct}%"></i></div>
+            <div class="arena-meta">
+              <span>${S.i + 1} / ${S.qs.length}</span>
+              <span class="am-score">${icon("star")} ${S.score}</span>
+              <span class="am-streak">${icon("flame")} ${S.streak}</span>
             </div>
           </div>
-
-          <div class="quiz-hud">
-            <span class="q-counter">Question ${i + 1} / ${deck.length}</span>
-            <div class="q-badges">
-              <span class="q-streak ${streak >= 2 ? "hot" : ""}">🔥 ${streak} Streak</span>
-              <span class="mc-xp">${icon("star")} +${sessionXp} XP</span>
+          <div class="arena-card">
+            ${promptHTML}
+            ${answerHTML}
+            <div class="arena-fb" id="arena-fb" aria-live="polite"></div>
+            <div class="arena-actions">
+              <button class="btn ghost small" id="arena-quit" type="button">End round</button>
+              <button class="btn primary" id="arena-next" type="button" hidden>Next ${icon("arrow")}</button>
             </div>
           </div>
-
-          <div class="progress" style="margin-bottom:var(--sp-4)">
-            <i style="width:${pct}%"></i>
-          </div>
-
-          <div class="flash">
-            <div class="prompt-label">
-              ${c.from === "en" ? "Select the Bodo translation" : "Select the English meaning"}
-              ${c.cat ? ` · ${esc(c.cat)}` : ""}
-            </div>
-            <div class="prompt ${c.from === "bo" ? "bo" : ""}">${esc(c.q)}</div>
-            ${c.from === "bo" && c.rom ? `<div class="answer-rom">${esc(c.rom)}</div>` : ""}
-
-            ${
-              quizType === "mc"
-                ? `<div class="mc-options">
-                    ${c.options
-                      .map((opt, idx) => {
-                        let cls = "mc-opt";
-                        if (revealed) {
-                          if (opt === c.a) cls += " correct";
-                          else if (opt === pickedChoice) cls += " wrong";
-                        }
-                        return `<button type="button" class="${cls}" data-opt="${esc(opt)}" ${revealed ? "disabled" : ""}>
-                          <span class="mc-key">${idx + 1}</span>
-                          <span class="mc-val ${c.from === "en" ? "bo" : ""}">${esc(opt)}</span>
-                        </button>`;
-                      })
-                      .join("")}
-                  </div>
-                  ${
-                    revealed
-                      ? `<div class="mc-feedback ${pickedChoice === c.a ? "ok" : "err"}">
-                          <div>
-                            <strong>${pickedChoice === c.a ? "Correct! +10 XP" : "Not quite"}</strong>
-                            <span>${esc(c.q)} = <b class="bo">${esc(c.a)}</b> ${c.rom ? `(${esc(c.rom)})` : ""}</span>
-                          </div>
-                          <button class="btn primary small" id="q-next" type="button">Next ${icon("arrow")}</button>
-                        </div>`
-                      : ""
-                  }`
-                : `${
-                    revealed
-                      ? `<div class="flash-divider"></div>
-                         <div class="answer ${c.from === "en" ? "bo" : ""}">${esc(c.a)}</div>
-                         ${c.from === "en" && c.rom ? `<div class="answer-rom">${esc(c.rom)}</div>` : ""}`
-                      : ""
-                  }`
-            }
-          </div>
-
-          ${
-            quizType === "flash"
-              ? `<div class="quiz-btns">
-                  ${
-                    !revealed
-                      ? `<button class="btn primary" id="q-reveal" type="button">Flip Card</button>`
-                      : `<button class="btn primary" id="q-right" type="button">${icon("check")} Got it · +10 XP</button>
-                         <button class="btn ghost" id="q-wrong" type="button">Needs review</button>`
-                  }
-                  <button class="btn subtle" id="q-restart" type="button">${icon("reset")} Restart</button>
-                </div>`
-              : `<div class="quiz-btns" style="margin-top:var(--sp-3)">
-                  <button class="btn subtle small" id="q-restart" type="button">${icon("reset")} New 15-Question Round</button>
-                </div>`
-          }
         </div>`;
 
-      host.querySelector("#q-type-seg").addEventListener("click", (e) => {
-        const b = e.target.closest("button[data-qtype]");
-        if (!b) return;
-        quizType = b.getAttribute("data-qtype");
-        restart();
-      });
-
-      host.querySelector("#q-dir-seg").addEventListener("click", (e) => {
-        const b = e.target.closest("button[data-qdir]");
-        if (!b) return;
-        dirMode = b.getAttribute("data-qdir");
-        restart();
-      });
-
-      host.querySelectorAll(".mc-opt").forEach((btn) => {
-        btn.addEventListener("click", () => {
-          if (revealed) return;
-          pickedChoice = btn.getAttribute("data-opt");
-          revealed = true;
-          const isGood = pickedChoice === c.a;
-          if (isGood) {
-            score++;
-            streak++;
-            sessionXp += 10;
-            AX.store.progress.addBonusXp(10);
-            AX.store.progress.recordStreak(streak);
-            if (AX.sfx) AX.sfx.correct();
-          } else {
-            streak = 0;
-            if (AX.sfx) AX.sfx.wrong();
-          }
-          draw();
-        });
-      });
-
-      const nextBtn = document.getElementById("q-next");
-      if (nextBtn) nextBtn.addEventListener("click", () => advance());
-
-      const r = document.getElementById("q-reveal");
-      if (r)
-        r.addEventListener("click", () => {
-          revealed = true;
-          if (AX.sfx) AX.sfx.flip();
-          draw();
-        });
-      const rt = document.getElementById("q-right");
-      if (rt)
-        rt.addEventListener("click", () => {
-          score++;
-          streak++;
-          sessionXp += 10;
-          AX.store.progress.addBonusXp(10);
-          AX.store.progress.recordStreak(streak);
-          if (AX.sfx) AX.sfx.correct();
-          advance();
-        });
-      const wr = document.getElementById("q-wrong");
-      if (wr)
-        wr.addEventListener("click", () => {
-          streak = 0;
-          if (AX.sfx) AX.sfx.wrong();
-          advance();
-        });
-      const rst = document.getElementById("q-restart");
-      if (rst) rst.addEventListener("click", restart);
+      wire(S, q);
     }
 
-    function advance() {
-      if (i + 1 >= deck.length) {
-        if (AX.sfx) AX.sfx.complete();
-        const pct = Math.round((score / deck.length) * 100);
-        host.innerHTML = `
-          <div class="quiz-stage">
-            <div class="flash">
-              <div class="prompt-label">ROUND COMPLETE</div>
-              <div class="prompt">${score} / ${deck.length} Correct (${pct}%)</div>
-              <div class="answer-rom">Earned <strong>+${sessionXp} XP</strong> this session · Best streak: 🔥 ${AX.store.progress.bestStreak()}</div>
-            </div>
-            <div class="quiz-btns">
-              <button class="btn primary" id="q-again" type="button">${icon("reset")} Play Another Round</button>
-              <a class="btn ghost" href="lessons.html">Back to Lessons</a>
-            </div>
-          </div>`;
-        document.getElementById("q-again").addEventListener("click", restart);
-        return;
+    function feedback(S, q, correct) {
+      S.answered = true;
+      if (correct) { S.score++; S.streak++; S.best = Math.max(S.best, S.streak); if (AX.sfx) AX.sfx.correct(); }
+      else { S.streak = 0; if (AX.sfx) AX.sfx.wrong(); }
+      const fb = document.getElementById("arena-fb");
+      const ansBo = q.type === "type" ? q.w.bo : q.answer;
+      fb.innerHTML = correct
+        ? `<span class="fb-ok">${icon("check")} Correct${S.streak > 1 ? ` · ${S.streak} in a row` : ""}</span>`
+        : `<span class="fb-bad">${icon("close")} Not quite — the answer is <b class="bo">${esc(ansBo)}</b>${q.w.rom ? ` <span class="rom">${esc(q.w.rom)}</span>` : ""}</span>`;
+      fb.classList.add("show");
+      const next = document.getElementById("arena-next");
+      next.hidden = false;
+      next.focus();
+      if (correct) setTimeout(() => { if (document.body.contains(next) && !next.hidden) advance(S); }, 850);
+    }
+
+    function wire(S, q) {
+      if (q.type === "listen") setTimeout(() => speak(q.w.bo), 250);
+      if (q.type === "flash") {
+        const rev = document.getElementById("aq-reveal");
+        if (rev) rev.addEventListener("click", () => { if (AX.sfx) AX.sfx.flip(); speak(q.prompt); S.revealed = true; render(S); });
+        document.querySelectorAll("[data-grade]").forEach((b) =>
+          b.addEventListener("click", () => feedback(S, q, b.getAttribute("data-grade") === "1"))
+        );
       }
-      i++;
-      revealed = false;
-      pickedChoice = null;
-      draw();
+      if (q.type === "type") {
+        const input = document.getElementById("aq-input");
+        const check = () => {
+          const correct = norm(input.value) === norm(q.answer);
+          input.disabled = true;
+          document.getElementById("aq-check").disabled = true;
+          input.classList.add(correct ? "ok" : "bad");
+          feedback(S, q, correct);
+        };
+        document.getElementById("aq-check").addEventListener("click", check);
+        input.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); check(); } });
+        setTimeout(() => input.focus(), 60);
+      }
+      document.querySelectorAll("[data-opt]").forEach((b) =>
+        b.addEventListener("click", () => {
+          const k = Number(b.getAttribute("data-opt"));
+          S.picked = k;
+          document.querySelectorAll("[data-opt]").forEach((x) => {
+            const ok = q.options[Number(x.getAttribute("data-opt"))].ok;
+            x.classList.add(ok ? "ok" : (Number(x.getAttribute("data-opt")) === k ? "bad" : "dim"));
+            x.disabled = true;
+          });
+          feedback(S, q, q.options[k].ok);
+        })
+      );
+      document.getElementById("arena-next").addEventListener("click", () => advance(S));
+      document.getElementById("arena-quit").addEventListener("click", () => end(S));
     }
 
-    function restart() {
-      deck = buildDeck();
-      i = 0;
-      score = 0;
-      streak = 0;
-      sessionXp = 0;
-      revealed = false;
-      pickedChoice = null;
-      draw();
+    function advance(S) {
+      S.i++; S.answered = false; S.picked = null; S.revealed = false;
+      render(S);
     }
 
-    draw();
+    function end(S) {
+      const total = S.i;
+      const acc = total ? Math.round((S.score / total) * 100) : 0;
+      const xp = S.score * 10 + (acc >= 80 && total ? 20 : 0);
+      if (xp) AX.store.progress.addBonusXp(xp);
+      if (S.best) AX.store.progress.recordStreak(S.best);
+      if (AX.sfx) AX.sfx.complete();
+      document.dispatchEvent(new Event("ax:progress"));
+      const msg = acc >= 90 ? "Outstanding." : acc >= 70 ? "Good going." : acc >= 40 ? "Getting there." : "Keep at it — repetition is the whole trick.";
+      body().innerHTML = `
+        <div class="arena">
+          <div class="arena-end">
+            <span class="sec-kicker">ROUND COMPLETE</span>
+            <h2>${acc >= 70 ? icon("trophy") : icon("spark")} ${esc(msg)}</h2>
+            <div class="end-stats">
+              <div class="end-stat"><b>${S.score}</b><span>correct of ${total}</span></div>
+              <div class="end-stat"><b>${acc}%</b><span>accuracy</span></div>
+              <div class="end-stat"><b>${S.best}</b><span>best streak</span></div>
+              <div class="end-stat xp"><b>+${xp}</b><span>XP earned</span></div>
+            </div>
+            <div class="btn-row">
+              <button class="btn primary" id="end-again" type="button">${icon("reset")} Another round</button>
+              <a class="btn ghost" href="progress.html">${icon("progress")} See your record</a>
+            </div>
+          </div>
+        </div>`;
+      document.getElementById("end-again").addEventListener("click", () => start(S.mode));
+    }
+
+    startScreen();
   }
 
   /* ---------------------------------------------------------- TRANSLATOR */
