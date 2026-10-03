@@ -506,12 +506,10 @@
     body().innerHTML =
       `<p class="prose">${esc(g.intro)}</p>` +
       g.sections
-        .map((s) => {
-          const t = s.table
-            ? table(s.table.head, s.table.rows, s.table.caption)
-            : "";
+        .map((s, i) => {
+          const t = s.table ? table(s.table.head, s.table.rows, s.table.caption) : "";
           return `<section class="section" id="${esc(s.id)}">
-            <h2>${esc(s.title)}</h2>
+            <h2><span class="sec-num">${String(i + 1).padStart(2, "0")}</span>${esc(s.title)}</h2>
             <p class="prose">${esc(s.summary)}</p>
             ${t}
             ${notesList(s.notes)}
@@ -625,7 +623,7 @@
         </button>
       </div>
       <p class="count" id="dict-count" role="status"></p>
-      <div id="dict-list"></div>`;
+      <div id="dict-list" class="dict-grid"></div>`;
 
     const search = document.getElementById("dict-search");
     const catSel = document.getElementById("dict-cat");
@@ -651,20 +649,17 @@
         ? rows
             .map((d) => {
               const isStar = savedSet.has(d.en);
-              return `<div class="dict-row">
-                <div class="dict-en">${esc(d.en)}${d.note ? `<span class="dict-note">${esc(d.note)}</span>` : ""}</div>
-                <div class="dict-bo">${esc(d.bo)}</div>
-                <div class="dict-rom">${esc(d.rom || "")}</div>
-                <div class="dict-actions">
-                  <span class="dict-cat">${esc(d.cat)}</span>
-                  <button type="button" class="dict-star ${isStar ? "active" : ""}" data-star="${esc(d.en)}" aria-label="Bookmark ${esc(d.en)}" title="Save word">
-                    ${icon("star")}
-                  </button>
-                </div>
-              </div>`;
+              return `<article class="dict-card">
+                <button type="button" class="dict-star ${isStar ? "active" : ""}" data-star="${esc(d.en)}" aria-label="Bookmark ${esc(d.en)}" title="Save word">${icon("star")}</button>
+                <span class="dc-bo bo">${esc(d.bo)}</span>
+                <span class="dc-rom">${esc(d.rom || "")}</span>
+                <span class="dc-en">${esc(d.en)}</span>
+                ${d.note ? `<span class="dc-note">${esc(d.note)}</span>` : ""}
+                <span class="dc-cat">${esc(d.cat)}</span>
+              </article>`;
             })
             .join("")
-        : `<p class="empty">${starredOnly ? "No saved words match this filter yet. Click the ★ icon on any word to save it." : "No matches. Try a different spelling — Bodo romanisation varies between sources."}</p>`;
+        : `<p class="empty">${starredOnly ? "No saved words match this filter yet. Tap the star on any word to save it." : "No matches. Try a different spelling — Bodo romanisation varies between sources."}</p>`;
 
       list.querySelectorAll("[data-star]").forEach((btn) => {
         btn.addEventListener("click", () => {
@@ -702,7 +697,7 @@
 
     function draw() {
       const term = (search.value || "").trim().toLowerCase();
-      list.innerHTML = cats
+      const html = cats
         .map((c) => {
           const rows = B.phrases.filter(
             (p) => p.cat === c && (!term || p.en.toLowerCase().includes(term) || p.bo.includes(term) || (p.rom || "").toLowerCase().includes(term))
@@ -710,10 +705,21 @@
           if (!rows.length) return "";
           return `<section class="ref-block">
             <h3>${esc(c)}</h3>
-            ${table(["English", "Bodo", "Roman"], rows.map((p) => [esc(p.en), `<span class="bo">${esc(p.bo)}</span>`, `<span class="rom">${esc(p.rom || "")}</span>`]))}
+            <div class="phrase-grid">
+              ${rows
+                .map(
+                  (p) => `<div class="phrase-tile">
+                  <span class="pt-bo bo">${esc(p.bo)}</span>
+                  <span class="pt-rom">${esc(p.rom || "")}</span>
+                  <span class="pt-en">${esc(p.en)}</span>
+                </div>`
+                )
+                .join("")}
+            </div>
           </section>`;
         })
         .join("");
+      list.innerHTML = html || `<p class="empty">No phrases match that search.</p>`;
     }
     search.addEventListener("input", draw);
     draw();
@@ -722,8 +728,10 @@
   /* ---------------------------------------------------------- CONVERSATIONS */
   function conversations() {
     body().innerHTML = B.dialogues
-      .map(
-        (d) => `<article class="dialogue">
+      .map((d) => {
+        const side = {};
+        d.lines.forEach((l) => { if (!(l.who in side)) side[l.who] = Object.keys(side).length % 2; });
+        return `<article class="dialogue">
           <header class="dlg-head">
             <h2 style="border:0;padding:0;margin:0;font-size:var(--fs-lg)">${esc(d.title)}</h2>
             <div class="chips" style="font-size:var(--fs-xs);color:var(--muted)">
@@ -732,23 +740,23 @@
               <span style="font-weight:700;color:var(--brand)">${esc(d.level)}</span>
             </div>
           </header>
-          <div class="dlg-lines">
+          <div class="chat">
             ${d.lines
               .map(
-                (l) => `<div class="dlg-line">
-                  <span class="dlg-who">${esc(l.who)}</span>
-                  <div class="dlg-text">
-                    <div class="dlg-en">${esc(l.en)}</div>
-                    <div class="dlg-bo">${esc(l.bo)}</div>
-                    <div class="dlg-rom">${esc(l.rom || "")}</div>
+                (l) => `<div class="chat-turn ${side[l.who] ? "right" : ""}">
+                  <span class="chat-avatar" aria-hidden="true">${esc((l.who || "?").trim().charAt(0))}</span>
+                  <div class="chat-bubble">
+                    <div class="chat-bo bo">${esc(l.bo)}</div>
+                    <div class="chat-rom">${esc(l.rom || "")}</div>
+                    <div class="chat-en">${esc(l.en)}</div>
                   </div>
                 </div>`
               )
               .join("")}
           </div>
           ${d.note ? `<p class="dlg-note">${icon("info")} <strong>Note:</strong> ${esc(d.note)}</p>` : ""}
-        </article>`
-      )
+        </article>`;
+      })
       .join("");
   }
 
