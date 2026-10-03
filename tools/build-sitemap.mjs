@@ -30,6 +30,29 @@ const BASE_URL = 'https://apsideslabs.github.io/SikBodo/';
 /** Pages that must never appear in the sitemap. */
 const EXCLUDED = new Set(['404.html']);
 
+/** Per-page crawler hints: [changefreq, priority]. */
+const HINTS = {
+  'index.html': ['daily', '1.0'],
+  'lessons.html': ['weekly', '0.9'],
+  'dictionary.html': ['weekly', '0.9'],
+  'quiz.html': ['weekly', '0.9'],
+  'script.html': ['monthly', '0.8'],
+  'grammar.html': ['monthly', '0.8'],
+  'phrases.html': ['monthly', '0.8'],
+  'conversations.html': ['monthly', '0.7'],
+  'verbs.html': ['monthly', '0.7'],
+  'numbers.html': ['monthly', '0.7'],
+  'reading.html': ['monthly', '0.7'],
+  'translator.html': ['monthly', '0.7'],
+  'progress.html': ['monthly', '0.6'],
+  'idioms.html': ['monthly', '0.6'],
+  'culture.html': ['monthly', '0.6'],
+  'resources.html': ['monthly', '0.6'],
+  'contribute.html': ['monthly', '0.5'],
+  'about.html': ['yearly', '0.5'],
+};
+const DEFAULT_HINT = ['monthly', '0.6'];
+
 const NAMED_ENTITIES = {
   amp: '&',
   lt: '<',
@@ -173,6 +196,8 @@ function main() {
       lastmod: formatDate(fs.statSync(full).mtime),
       title: readTitle(html),
       description: readMeta(html, 'description'),
+      changefreq: (HINTS[name] ?? DEFAULT_HINT)[0],
+      priority: (HINTS[name] ?? DEFAULT_HINT)[1],
     };
   });
 
@@ -183,6 +208,8 @@ function main() {
     lines.push('  <url>');
     lines.push(`    <loc>${xmlEscape(entry.loc)}</loc>`);
     lines.push(`    <lastmod>${entry.lastmod}</lastmod>`);
+    lines.push(`    <changefreq>${entry.changefreq}</changefreq>`);
+    lines.push(`    <priority>${entry.priority}</priority>`);
     const meta = [entry.title, entry.description].filter(Boolean).join(' - ');
     if (meta !== '') lines.push(`    <!-- ${commentSafe(meta)} -->`);
     lines.push('  </url>');

@@ -1,111 +1,129 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://apsideslabs.github.io/SikBodo/</loc>
+    <lastmod>2026-10-03</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+    <!-- SikBodo — Bodo Learning Platform - SikBodo is a free, offline, dependency-free platform for learning Bodo (बर') — lessons, grammar, verb tables, script, dictionary, phrases, conversations, reading, quiz and translator. -->
+  </url>
+  <url>
     <loc>https://apsideslabs.github.io/SikBodo/about.html</loc>
     <lastmod>2026-10-03</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
+    <!-- About & sources — SikBodo - What is in the platform, how it is built, what it is licensed under, and an honest statement of how far its accuracy can be trusted. -->
   </url>
   <url>
     <loc>https://apsideslabs.github.io/SikBodo/contribute.html</loc>
     <lastmod>2026-10-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
+    <!-- Contribute — SikBodo - SikBodo is a community resource: what you can add, why it matters, and exactly how to do it — including a route that needs no code. -->
   </url>
   <url>
     <loc>https://apsideslabs.github.io/SikBodo/conversations.html</loc>
     <lastmod>2026-10-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <!-- Conversations — SikBodo - Seventeen real-life Bodo dialogues with English, Bodo and pronunciation side by side. -->
   </url>
   <url>
     <loc>https://apsideslabs.github.io/SikBodo/culture.html</loc>
     <lastmod>2026-10-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
+    <!-- Language & community — SikBodo - Who speaks Bodo, why its script is distinct, how its dialects differ, and why it was declared a classical language. -->
   </url>
   <url>
     <loc>https://apsideslabs.github.io/SikBodo/dictionary.html</loc>
     <lastmod>2026-10-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
+    <!-- Dictionary — SikBodo - A searchable English–Bodo dictionary with romanisation, category filters, and words you can bookmark to your study record. -->
   </url>
   <url>
     <loc>https://apsideslabs.github.io/SikBodo/grammar.html</loc>
     <lastmod>2026-10-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <!-- Grammar — SikBodo - A descriptive reference for the machinery of Bodo: words, sentences, parts of speech, case suffixes, kārak, honorifics, gender, tense, compounds, sandhi, voice and reported speech. -->
   </url>
   <url>
     <loc>https://apsideslabs.github.io/SikBodo/idioms.html</loc>
     <lastmod>2026-10-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://apsideslabs.github.io/SikBodo/</loc>
-    <lastmod>2026-10-03</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>1.0</priority>
+    <!-- Idioms & proverbs — SikBodo - Bodo idioms and proverbs, each with its literal image and its real meaning. -->
   </url>
   <url>
     <loc>https://apsideslabs.github.io/SikBodo/lessons.html</loc>
     <lastmod>2026-10-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
+    <!-- Lessons — SikBodo - Fifteen graded Bodo lessons across Basic, Elementary, Intermediate and Advanced levels, with saved progress and XP. -->
   </url>
   <url>
     <loc>https://apsideslabs.github.io/SikBodo/numbers.html</loc>
     <lastmod>2026-10-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <!-- Numbers & time — SikBodo - Bodo numerals: the ten digits, 1–100 and the pattern above them, ordinals, days of the week, and both the Bodo and Gregorian calendars. -->
   </url>
   <url>
     <loc>https://apsideslabs.github.io/SikBodo/phrases.html</loc>
     <lastmod>2026-10-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <!-- Phrases — SikBodo - Common Bodo sentences grouped by the setting you will actually use them in. -->
   </url>
   <url>
     <loc>https://apsideslabs.github.io/SikBodo/progress.html</loc>
     <lastmod>2026-10-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
+    <!-- Learner Profile & Progress — SikBodo - Track your Bodo mastery, lesson completion across all proficiency levels, XP rank progression, quiz streaks, and saved dictionary words. -->
   </url>
   <url>
     <loc>https://apsideslabs.github.io/SikBodo/quiz.html</loc>
     <lastmod>2026-10-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
+    <!-- Practice Arena — SikBodo - An interactive practice arena: multiple choice, listening, spelling and flashcards drawn from the dictionary, with instant feedback, a running score and XP. -->
   </url>
   <url>
     <loc>https://apsideslabs.github.io/SikBodo/reading.html</loc>
     <lastmod>2026-10-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <!-- Reading & writing — SikBodo - Graded Bodo passages to read for meaning, with comprehension questions, plus a short guide to writing in Bodo. -->
   </url>
   <url>
     <loc>https://apsideslabs.github.io/SikBodo/resources.html</loc>
     <lastmod>2026-10-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
+    <!-- Resources — SikBodo - The external material consulted while building this platform, a twelve-week study plan, and how to report a correction. -->
   </url>
   <url>
     <loc>https://apsideslabs.github.io/SikBodo/script.html</loc>
     <lastmod>2026-10-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <!-- Script & sounds — SikBodo - The Devanagari script as Bodo uses it: the varnamala chart, every vowel and consonant with a pronunciation guide, a character inspector, and the sounds Bodo reads differently. -->
   </url>
   <url>
     <loc>https://apsideslabs.github.io/SikBodo/translator.html</loc>
     <lastmod>2026-10-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <!-- Translator — SikBodo - English → Bodo phrasebook lookup with a word-by-word fallback and a coverage score. -->
   </url>
   <url>
     <loc>https://apsideslabs.github.io/SikBodo/verbs.html</loc>
     <lastmod>2026-10-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <!-- Verbs — SikBodo - The Bodo verb system: the full present, past and future paradigm across the three honorific tiers, plus negation, the imperative, aspect and common verbs. -->
   </url>
 </urlset>
