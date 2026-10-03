@@ -5,7 +5,7 @@ not. It is deliberately conservative: everything listed here is intended to be a
 within the project's hard constraint of being a self-contained static site with no build
 step and no runtime dependencies.
 
-Current release: **1.3.0**.
+Current release: **1.4.0**.
 
 ## Guiding constraints
 
