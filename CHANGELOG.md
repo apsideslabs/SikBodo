@@ -3,6 +3,25 @@
 All notable changes to **SikBodo — Bodo Learning Platform**.
 This project follows [Semantic Versioning](https://semver.org/).
 
+## [1.2.0] — 2026-10-03
+
+### Added
+
+- **The supplied SikBodo logo is now the brand.** The header shows the given vector artwork — the open
+  book with leaves and the *SIKBODO* wordmark — drawn inline and recoloured through CSS variables so it
+  reads correctly in both light and dark themes. The app icons, favicon, splash and social card are all
+  rebuilt from the same artwork's mark, not a substitute.
+
+- **A gamified home page.** Below the study-record dashboard the home page now carries a **learning
+  path** (the next lesson as a hero card, with the following lessons listed), a **word of the day** card
+  with reveal-and-save, a **daily practice** card (streak, goal and best-streak), and a **study &
+  research** band linking to reading, sources, culture and the lexicon.
+
+### Changed
+
+- **The dictionary grew from 200 to 280 words** — a full colour set, a new *Fruits & vegetables*
+  category, more body parts, animals, nature, verbs and adjectives, all with romanisation.
+
 ## [1.1.0] — 2026-10-03
 
 ### Added

@@ -6,7 +6,7 @@
 
 **An academic-grade, self-contained platform for learning Bodo (बरʼ, Boro)** — the Tibeto-Burman language of the Bodo people of Assam, India.
 
-[![version](https://img.shields.io/badge/version-1.1.0-48871c?style=flat-square)](CHANGELOG.md)
+[![version](https://img.shields.io/badge/version-1.2.0-48871c?style=flat-square)](CHANGELOG.md)
 [![license](https://img.shields.io/badge/license-MIT-0f766e?style=flat-square)](LICENSE)
 [![dependencies](https://img.shields.io/badge/runtime%20dependencies-0-b45309?style=flat-square)](#-design-constraints)
 [![build](https://img.shields.io/badge/build%20step-none-6d28d9?style=flat-square)](#-design-constraints)
@@ -72,7 +72,7 @@ files the browser executes. Clone it, open `index.html`, and it works — includ
 | [`grammar.html`](grammar.html) | **Grammar reference** — 16 sections: words, sentences, parts of speech, word order, nouns and plurals, classifiers, case markers, pronouns, honorifics, the verb, negation, questions, adjectives, numerals, word formation, coordination and register |
 | [`verbs.html`](verbs.html) | **Verb tables** — a model verb's present/past/future paradigm, the negative, the imperative, the aspect markers, and ten common verbs |
 | [`numbers.html`](numbers.html) | **Numbers & time** — the ten digits, 1–100 and the pattern above them, the ordinals, time words, the days of the week, and the shared solar months |
-| [`dictionary.html`](dictionary.html) | **200 words** in the Devanagari script with romanisation and English, plus live search and 20 category filters (including Colours, Animals, Birds, Food, Festivals, Family and kinship, Verbs and Pronouns) |
+| [`dictionary.html`](dictionary.html) | **280 words** in the Devanagari script with romanisation and English, plus live search and 20 category filters (including Colours, Fruits & vegetables, Animals, Birds, Food, Festivals, Family and kinship, Verbs and Pronouns) |
 | [`idioms.html`](idioms.html) | **Idioms & proverbs** — a starter set of Bodo sayings, each with its literal image and its real meaning |
 | [`phrases.html`](phrases.html) | **84 phrases** grouped by setting: greetings, introductions, the market, food, travel, health, the classroom, the phone, the bank, festivals and more |
 | [`conversations.html`](conversations.html) | **14 dialogues** with English, Bodo and pronunciation side by side, each with a spoken-language note |
