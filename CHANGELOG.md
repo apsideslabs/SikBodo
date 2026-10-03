@@ -3,6 +3,19 @@
 All notable changes to **SikBodo — Bodo Learning Platform**.
 This project follows [Semantic Versioning](https://semver.org/).
 
+## [1.6.2] — 2026-10-03
+
+### Fixed
+
+- **Touch scrolling in the installed app.** Scrolling with a finger did nothing in the installed PWA
+  (programmatic scrolling still worked, which is what made it look like a rendering glitch). The cause
+  was one CSS line: the app-mode rule set `overscroll-behavior-y: none` on `<body>`. Because `<body>`
+  also carries `overflow-x: hidden`, its `overflow-y` computes to `auto`, which makes body a scroll
+  container — and any non-`auto` `overscroll-behavior` on that container makes Chromium swallow the
+  touch scroll gesture. The pull-to-refresh guard now sits on `<html>`, the element that actually
+  scrolls, where it does not affect scrolling. Verified by finger-drag in emulated app mode: blocked
+  before, 540 px after; the sidebar's own scroll is unaffected.
+
 ## [1.6.1] — 2026-10-03
 
 ### Fixed

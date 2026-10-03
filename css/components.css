@@ -2101,9 +2101,15 @@ html[data-theme="dark"] .lp-fire-number strong {
 
 html[data-display="standalone"] {
   scroll-padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px));
+  /* The page scroller is <html>, so the pull-to-refresh guard has to live
+     here. Putting it on <body> is what broke touch scrolling: because
+     body also carries `overflow-x: hidden`, its `overflow-y` computes to
+     `auto`, which makes body a scroll container — and any non-`auto`
+     `overscroll-behavior` on that container swallows the touch scroll
+     gesture, leaving the installed app unable to scroll by finger. */
+  overscroll-behavior-y: none;
 }
 html[data-display="standalone"] body {
-  overscroll-behavior-y: none;
   -webkit-tap-highlight-color: transparent;
 }
 html[data-display="standalone"] .site-header {
