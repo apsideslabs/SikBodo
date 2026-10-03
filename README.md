@@ -6,7 +6,7 @@
 
 **An academic-grade, self-contained platform for learning Bodo (बरʼ, Boro)** — the Tibeto-Burman language of the Bodo people of Assam, India.
 
-[![version](https://img.shields.io/badge/version-1.0.0-48871c?style=flat-square)](CHANGELOG.md)
+[![version](https://img.shields.io/badge/version-1.1.0-48871c?style=flat-square)](CHANGELOG.md)
 [![license](https://img.shields.io/badge/license-MIT-0f766e?style=flat-square)](LICENSE)
 [![dependencies](https://img.shields.io/badge/runtime%20dependencies-0-b45309?style=flat-square)](#-design-constraints)
 [![build](https://img.shields.io/badge/build%20step-none-6d28d9?style=flat-square)](#-design-constraints)
@@ -266,12 +266,16 @@ how to test it locally, is in [`docs/UPDATES.md`](docs/UPDATES.md).
 The platform is a **language studio**, not a static reader. Everything below is computed on the
 device and stored in `localStorage` — there is no account and nothing is uploaded.
 
-- **XP.** Each completed lesson is worth 50 XP; the Quiz Arena adds bonus XP and tracks your best
-  streak. The figure appears as a live pill in the header on every page.
+- **XP.** Each completed lesson is worth 50 XP; the Quiz Arena adds bonus XP. A live HUD in the header
+  shows your level ring, total XP and current day-streak on every page.
 - **15 ranks**, from *Initiate* to *Bodo Laureate*, each with its own XP threshold, a focus line and
   the milestone that unlocks it. The ladder is drawn on the Progress page and in the sidebar card.
-- **18 trophies** — lesson tiers, XP clubs, streak milestones and vocabulary goals — shown as a grid
-  on the Progress page with an earned / locked state.
+- **A day-streak.** Opening the platform on consecutive days rolls a streak forward, with a best-streak
+  record kept — the classic habit mechanic, stored on the device.
+- **A daily goal.** Each day tracks the XP you have earned against a 50 XP target, shown as a
+  percentage on the home dashboard.
+- **18 trophies** plus a **milestone badge strip** on the home page — lesson tiers, XP clubs, streak
+  milestones and vocabulary goals — each with an earned / locked state.
 - **Saved words.** Every dictionary row carries a star; starred words are collected on the Progress
   page and can be filtered in the Dictionary.
 - **A learner profile** with an editable name, and **export / import of the whole study record** as

@@ -3,6 +3,32 @@
 All notable changes to **SikBodo — Bodo Learning Platform**.
 This project follows [Semantic Versioning](https://semver.org/).
 
+## [1.1.0] — 2026-10-03
+
+### Added
+
+- **A professional wordmark.** The header brand is now a wide *SikBodo* wordmark (a green sprout mark
+  plus type), drawn inline so it stays crisp and inherits the text colour in both themes — no plate,
+  no squashing. The supplied **BODO** logo remains the source of the mark and the app icons.
+
+- **A richer header HUD.** A level ring with the level number inside, the running XP, and a flame with
+  the current day-streak replace the old text pill.
+
+- **A day-streak and daily-goal engine** in `js/core/store.js`. Opening the platform on consecutive
+  days advances the streak; each day tracks XP earned against a 50 XP goal.
+
+- **A gamified home dashboard** — a level ring, XP progress to the next rank, a continue-learning
+  button, and four live tiles (XP, day-streak, daily goal, words saved).
+
+- **A milestone badge strip** on the home page, and a **directory grid** of tone-coloured cards
+  replacing the plain list.
+
+### Changed
+
+- The header logo is larger and no longer needs a light plate in dark theme.
+- Primary buttons carry a subtle gradient and glow; the home page reads as a study studio rather than
+  a static page.
+
 ## [1.0.0] — 2026-10-03
 
 ### Added

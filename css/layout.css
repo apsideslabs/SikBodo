@@ -191,44 +191,42 @@ mark { background: var(--warn-soft); color: var(--ink); padding: 0 0.2em; border
   }
 }
 
-/* Header HUD Pill (shown on >= 560px; under 768px the bottom nav has a dedicated Progress tab) */
-.hud-pill {
+/* Header HUD — level ring, XP and day streak (shown on >= 560px) */
+.hud {
   display: none;
   align-items: center;
-  gap: 6px;
-  padding: 5px 10px;
+  gap: 8px;
+  padding: 4px 12px 4px 4px;
   border-radius: var(--radius-pill);
   background: var(--surface-2);
   border: 1.5px solid var(--outline);
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  font-weight: 700;
   text-decoration: none;
   color: var(--ink);
   white-space: nowrap;
   cursor: pointer;
   box-shadow: 0 2px 0 var(--outline);
-  transition: transform var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease);
+  transition: transform var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease);
 }
-@media (min-width: 560px) {
-  .hud-pill { display: inline-flex; }
-}
-.hud-pill:hover, .hud-pill[aria-expanded="true"] {
+@media (min-width: 560px) { .hud { display: inline-flex; } }
+.hud:hover, .hud[aria-expanded="true"] {
   text-decoration: none;
   border-color: var(--brand);
   transform: translateY(-1px);
+  box-shadow: 0 3px 0 var(--brand-soft);
 }
-.hud-lvl {
-  color: var(--brand);
-  background: var(--brand-soft);
-  padding: 1px 6px;
-  border-radius: var(--radius-pill);
-}
-.hud-xp {
-  display: inline-flex; align-items: center; gap: 3px;
-  color: var(--xp);
-}
-.hud-xp .icon { width: 0.95em; height: 0.95em; fill: currentColor; }
+.hud-ring { position: relative; width: 30px; height: 30px; flex: 0 0 30px; display: grid; place-items: center; }
+.hud-ring svg { width: 30px; height: 30px; transform: rotate(-90deg); }
+.hud-ring-bg { fill: none; stroke: var(--outline); stroke-width: 3; }
+.hud-ring-fg { fill: none; stroke: var(--brand); stroke-width: 3; stroke-linecap: round; transition: stroke-dashoffset var(--dur-slow) var(--ease); }
+.hud-lvl { position: absolute; inset: 0; display: grid; place-items: center; font-family: var(--font-mono); font-size: 0.72rem; font-weight: 800; color: var(--brand-ink); }
+.hud-stack { display: flex; flex-direction: column; gap: 2px; line-height: 1; }
+.hud-xp, .hud-streak { display: inline-flex; align-items: center; gap: 3px; font-family: var(--font-mono); font-size: 0.68rem; font-weight: 700; }
+.hud-xp { color: var(--xp); }
+.hud-xp b, .hud-streak b { font-weight: 800; }
+.hud-xp i, .hud-streak i { font-style: normal; font-weight: 600; opacity: 0.6; font-size: 0.86em; }
+.hud-xp .icon, .hud-streak .icon { width: 0.95em; height: 0.95em; fill: none; stroke: currentColor; }
+.hud-streak { color: var(--faint); }
+.hud-streak.is-on { color: #e0632a; }
 
 .header-search { display: none; align-items: center; position: relative; }
 @media (min-width: 768px) { .header-search { display: flex; } }
@@ -770,23 +768,16 @@ html[data-theme="dark"] .mnav-badge {
 /* ---------- header brand ----------
    The brand is the wordmark image itself. Its artwork is 1478x440, so the
    width is left to follow the height — the logo is never squashed to fit a box.
-   The wordmark is dark blue on transparency, so in dark theme it sits on a
-   soft light plate rather than disappearing into the header. */
+   The wordmark is drawn inline so it inherits the text colour and stays
+   crisp in both themes — no plate needed. */
 .brand-logo {
   display: block;
-  height: 34px; width: auto;
+  height: 42px; width: auto;
   flex: 0 0 auto;
+  color: var(--ink);
 }
-@media (min-width: 768px) { .brand-logo { height: 38px; } }
-html[data-theme="dark"] .brand-logo {
-  /* content-box so the plate wraps the logo instead of shrinking it */
-  box-sizing: content-box;
-  background: #f7f9fc;
-  padding: 4px 8px;
-  border-radius: 10px;
-  box-shadow: var(--shadow-xs);
-}
-@media print { .brand-logo { height: 32px; } }
+@media (min-width: 768px) { .brand-logo { height: 46px; } }
+@media print { .brand-logo { height: 34px; } }
 
 /* ---------- launch splash (installed app only) ----------
    Static markup on every page, so it paints on the first frame — never
