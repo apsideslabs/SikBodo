@@ -6,7 +6,7 @@
 
 **An academic-grade, self-contained platform for learning Bodo (बरʼ, Boro)** — the Tibeto-Burman language of the Bodo people of Assam, India.
 
-[![version](https://img.shields.io/badge/version-1.4.0-48871c?style=flat-square)](CHANGELOG.md)
+[![version](https://img.shields.io/badge/version-1.5.0-48871c?style=flat-square)](CHANGELOG.md)
 [![license](https://img.shields.io/badge/license-MIT-0f766e?style=flat-square)](LICENSE)
 [![dependencies](https://img.shields.io/badge/runtime%20dependencies-0-b45309?style=flat-square)](#-design-constraints)
 [![build](https://img.shields.io/badge/build%20step-none-6d28d9?style=flat-square)](#-design-constraints)
@@ -72,9 +72,9 @@ files the browser executes. Clone it, open `index.html`, and it works — includ
 | [`grammar.html`](grammar.html) | **Grammar reference** — 16 sections: words, sentences, parts of speech, word order, nouns and plurals, classifiers, case markers, pronouns, honorifics, the verb, negation, questions, adjectives, numerals, word formation, coordination and register |
 | [`verbs.html`](verbs.html) | **Verb tables** — a model verb's present/past/future paradigm, the negative, the imperative, the aspect markers, and ten common verbs |
 | [`numbers.html`](numbers.html) | **Numbers & time** — the ten digits, 1–100 and the pattern above them, the ordinals, time words, the days of the week, and the shared solar months |
-| [`dictionary.html`](dictionary.html) | **280 words** in the Devanagari script with romanisation and English, plus live search and 20 category filters (including Colours, Fruits & vegetables, Animals, Birds, Food, Festivals, Family and kinship, Verbs and Pronouns) |
+| [`dictionary.html`](dictionary.html) | **348 words** in the Devanagari script with romanisation and English, plus live search and 21 category filters (including Colours, Fruits & vegetables, Animals, Birds, Food, Festivals, Family and kinship, Verbs and Pronouns) |
 | [`idioms.html`](idioms.html) | **Idioms & proverbs** — a starter set of Bodo sayings, each with its literal image and its real meaning |
-| [`phrases.html`](phrases.html) | **84 phrases** grouped by setting: greetings, introductions, the market, food, travel, health, the classroom, the phone, the bank, festivals and more |
+| [`phrases.html`](phrases.html) | **107 phrases** grouped by setting: greetings, introductions, a daily routine, the market, food, travel, health, the classroom, the phone, the bank, festivals and more |
 | [`conversations.html`](conversations.html) | **14 dialogues** with English, Bodo and pronunciation side by side, each with a spoken-language note |
 | [`reading.html`](reading.html) | **Reading & writing** — 7 graded passages from two-line beginners' texts to a short essay, each with a romanisation, an English rendering and comprehension questions, plus a guide to writing |
 | [`quiz.html`](quiz.html) | **Practice Arena** — five scored exercise modes (mixed, multiple choice, listening, spelling, flashcards) with instant feedback, a running score and streak, and XP for correct answers |
@@ -161,7 +161,7 @@ SikBodo/
 │   │   ├── verbs.js        # persons, tenses, negation, imperative, aspect
 │   │   ├── numbers.js      # numerals, pattern, time words
 │   │   ├── dictionary.js   # 200 entries
-│   │   ├── phrases.js      # 84 phrases by setting
+│   │   ├── phrases.js      # 107 phrases by setting
 │   │   ├── dialogues.js    # 14 conversations
 │   │   ├── reading.js      # graded passages + writing guide
 │   │   ├── idioms.js       # idioms and proverbs
@@ -334,6 +334,16 @@ The romanisation used across the project, without exception: **`w`** for the hig
 
 ---
 
+## SEO & discoverability
+
+Every page carries a unique title and description, a canonical URL, Open Graph and Twitter card tags, and
+a `robots` directive. Each page also ships **JSON-LD structured data** (`schema.org`) in a single `@graph`:
+a `BreadcrumbList`, plus a page entity — `WebSite` and `Organization` on the home page, and `Course`,
+`LearningResource`, `DefinedTermSet`, `Quiz`, `Article`, `CollectionPage` or `WebPage` as appropriate —
+linked to the site and marked `inLanguage: en` and `about: Bodo (brx)`. `sitemap.xml` lists every page with
+`lastmod`, `changefreq` and `priority`; `robots.txt` points at it. No third-party scripts, so nothing blocks
+crawling.
+
 ## Design constraints
 
 These are deliberate and load-bearing. Features that break them are out of scope.
@@ -404,7 +414,7 @@ enabled, and CI runs a dependency-free secret scan on every push.
 
 ## Roadmap
 
-Shipped: audio pronunciation (browser speech, approximate), an interactive practice engine, a 280-word dictionary. Planned: spaced-repetition review, a larger verified dictionary, tone-marked
+Shipped: audio pronunciation (browser speech, approximate), an interactive practice engine, a 348-word dictionary. Planned: spaced-repetition review, a larger verified dictionary, tone-marked
 entries, and growing the reading material. Explicitly **not** planned: ads, tracking, telemetry,
 accounts, CDNs and a build step. Full detail in [`docs/ROADMAP.md`](docs/ROADMAP.md).
 

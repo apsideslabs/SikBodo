@@ -3,6 +3,21 @@
 All notable changes to **SikBodo — Bodo Learning Platform**.
 This project follows [Semantic Versioning](https://semver.org/).
 
+## [1.5.0] — 2026-10-03
+
+### Added
+
+- **More content.** The dictionary grew from 280 to **348 words** (21 categories) with a researched second
+  pass — more animals (ox, buffalo, sheep, tortoise, fox, wolf, lion, monkey, donkey, crocodile, bear),
+  more house words, verbs (open, close, wear, win, break, jump, pull, swim …) and adjectives. The phrasebook
+  grew from 84 to **107 phrases** with a new **Daily routine** set and a **Language & learning** set.
+
+- **SEO.** Every page now ships **JSON-LD structured data** — a `BreadcrumbList` plus a typed page entity
+  (`WebSite` + `Organization` on the home page; `Course`, `LearningResource`, `DefinedTermSet`, `Quiz`,
+  `Article`, `CollectionPage`, `WebApplication` or `WebPage` elsewhere), all `inLanguage: en` and
+  `about: Bodo`. Added **Twitter card** tags, `og:url`, `og:locale`, `og:image` dimensions and alt text, and
+  a `robots` directive. The sitemap now carries `lastmod`, `changefreq` and `priority`.
+
 ## [1.4.0] — 2026-10-03
 
 ### Added
