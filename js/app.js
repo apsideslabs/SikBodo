@@ -35,6 +35,9 @@
     // 1. icons must exist before anything renders markup that uses them
     AX.icons.inject();
 
+    // 1b. record today's visit and roll the day-streak forward
+    if (AX.store && AX.store.visit) AX.store.visit.touch();
+
     // 2. preferences are already applied by js/core/prefs.js at parse time;
     //    re-apply once the document is ready so the theme toggle reflects state
     AX.prefs.apply();

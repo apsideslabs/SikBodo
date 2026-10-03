@@ -373,6 +373,7 @@
         list = list.filter((x) => x !== num);
       }
       set(LESSONS_KEY, list.sort((a, b) => a - b));
+      if (on) daily.add(50);
       return list;
     },
     count(total) {
@@ -395,6 +396,7 @@
       const cur = Number(get(BONUS_XP_KEY, 0)) || 0;
       const next = Math.max(0, cur + Number(pts || 0));
       set(BONUS_XP_KEY, next);
+      daily.add(pts);
       document.dispatchEvent(new Event("ax:progress"));
       return next;
     },
@@ -493,5 +495,56 @@
     },
   };
 
-  AX.store = { get, set, remove, profile, progress, saved, isPersistent: () => usable };
+  /* ---------- visit streak & daily goal ---------- */
+  const VISIT_KEY = "visit.log";
+  const DAILY_KEY = "daily.xp";
+
+  function ymd(d) {
+    d = d || new Date();
+    const z = (n) => String(n).padStart(2, "0");
+    return d.getFullYear() + "-" + z(d.getMonth() + 1) + "-" + z(d.getDate());
+  }
+
+  const visit = {
+    get() {
+      const v = get(VISIT_KEY, null);
+      if (!v || typeof v !== "object") return { last: null, streak: 0, best: 0 };
+      return { last: v.last || null, streak: Number(v.streak) || 0, best: Number(v.best) || 0 };
+    },
+    /* Record today's visit and roll the day-streak forward. Idempotent per day. */
+    touch() {
+      const t = ymd();
+      const v = visit.get();
+      if (v.last === t) return v;
+      const y = ymd(new Date(Date.now() - 86400000));
+      const streak = v.last === y ? v.streak + 1 : 1;
+      const next = { last: t, streak, best: Math.max(v.best, streak) };
+      set(VISIT_KEY, next);
+      document.dispatchEvent(new Event("ax:progress"));
+      return next;
+    },
+    clear() { remove(VISIT_KEY); },
+  };
+
+  const daily = {
+    goal() { return 50; },
+    get() {
+      const d = get(DAILY_KEY, null);
+      const t = ymd();
+      if (!d || typeof d !== "object" || d.date !== t) return { date: t, xp: 0 };
+      return { date: t, xp: Number(d.xp) || 0 };
+    },
+    add(pts) {
+      const cur = daily.get();
+      const next = { date: cur.date, xp: Math.max(0, cur.xp + Number(pts || 0)) };
+      set(DAILY_KEY, next);
+      return next;
+    },
+    percent() {
+      return Math.min(100, Math.round((daily.get().xp / daily.goal()) * 100));
+    },
+    clear() { remove(DAILY_KEY); },
+  };
+
+  AX.store = { get, set, remove, profile, progress, saved, visit, daily, isPersistent: () => usable };
 })();
