@@ -13,7 +13,7 @@ window.SKB.meta = {
   "released": "2026-10-03",
   "tagline": "An academic-grade, self-contained platform for learning Bodo (बरʼ, Boro).",
   "description": "Learn Bodo (बरʼ / Boro) from first principles: a graded curriculum, a grammar reference, verb tables across the person and honorific forms, the Devanagari-based Bodo script and its sounds, a searchable English–Bodo dictionary, everyday phrases, real conversations, a quiz and an English–Bodo translator. Runs entirely offline — no build step, no dependencies.",
-  "author": "The Study Cipher",
+  "author": "Apsides Labs",
   "license": "MIT",
   "repo": "https://github.com/apsideslabs/SikBodo",
   "site": "https://apsideslabs.github.io/SikBodo/",

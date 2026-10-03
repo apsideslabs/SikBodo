@@ -15,7 +15,7 @@ here when your change is merged. If you would rather not be named, say so and yo
 
 | Contributor | Role |
 |---|---|
-| **The Study Cipher** ([@apsideslabs](https://github.com/apsideslabs)) | Compiler and maintainer. Built the platform, compiled the initial content from published sources, and maintains the review process. |
+| **Apsides Labs** ([@apsideslabs](https://github.com/apsideslabs)) | Compiler and maintainer. Built the platform, compiled the initial content from published sources, and maintains the review process. |
 
 ## Language contributors
 
