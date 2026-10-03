@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Dictionary — SikBodo</title>
+<meta name="description" content="A searchable English–Bodo dictionary with romanisation, category filters, and words you can bookmark to your study record.">
+<meta name="author" content="The Study Cipher">
+<meta name="theme-color" content="#4338ca" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0b0e14" media="(prefers-color-scheme: dark)">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="SikBodo">
+<meta property="og:title" content="Dictionary — SikBodo">
+<meta property="og:description" content="A searchable English–Bodo dictionary with romanisation, category filters, and words you can bookmark to your study record.">
+<meta property="og:image" content="https://apsideslabs.github.io/SikBodo/assets/og-cover.svg">
+<link rel="canonical" href="https://apsideslabs.github.io/SikBodo/dictionary.html">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml"><link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="SikBodo">
+
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/layout.css">
+<link rel="stylesheet" href="css/components.css">
+<link rel="stylesheet" href="css/motion.css">
+<link rel="stylesheet" href="css/print.css" media="print">
+<noscript><style>.splash{display:none !important}</style></noscript>
+<script src="js/core/splash.js"></script>
+</head>
+<body data-page="dictionary">
+<div class="splash" id="splash" role="status" aria-live="polite" aria-label="Loading SikBodo">
+  <div class="splash-inner">
+    <div class="splash-mark">
+      <span class="splash-ring" aria-hidden="true"></span>
+      <img class="splash-logo" src="assets/splash-logo.svg" alt="" width="120" height="120" decoding="async">
+    </div>
+    <p class="splash-title">SikBodo</p>
+    <p class="splash-sub">Bodo Learning Platform</p>
+    <div class="splash-bar" aria-hidden="true"><span></span></div>
+  </div>
+</div>
+<a class="skip-link" href="#main">Skip to content</a>
+<header id="site-header"></header>
+<div class="update-banner" id="update-banner" role="status" aria-live="polite" hidden>
+  <svg class="icon" aria-hidden="true"><use href="#i-spark"></use></svg>
+  <div class="ub-text">
+    <strong>A new version is available</strong>
+    <span id="ub-detail"></span>
+  </div>
+  <div class="ub-actions">
+    <button class="btn primary small" type="button" id="ub-reload">Reload</button>
+    <a class="btn ghost small" id="ub-notes" href="#" target="_blank" rel="noopener" hidden>What&rsquo;s new</a>
+    <button class="icon-btn" type="button" id="ub-dismiss" aria-label="Dismiss update notice">&#10005;</button>
+  </div>
+</div>
+
+
+<main id="main">
+  <div class="shell">
+        <aside class="sidebar" id="sidebar"></aside>
+        <div class="main" id="content">
+          <div class="page-head">
+            <span class="eyebrow">Reference</span>
+            <h1>Dictionary</h1>
+            <p class="lede">Everyday vocabulary with the Bodo word in the Devanagari script, a romanised pronunciation and the English meaning. Search in any of the three, filter by category, and star the words you want to keep.</p>
+          </div>
+          <div id="page-body"></div>
+        </div>
+        <aside class="toc" id="toc"></aside>
+      </div>
+</main>
+
+<footer id="site-footer"></footer>
+
+<button class="cp-fab" id="cp-fab" type="button" aria-expanded="false"
+        aria-controls="cp-panel" aria-label="Display settings: theme, colour, text size, font">
+  <span aria-hidden="true">Aa</span>
+</button>
+
+<div class="cp-panel" id="cp-panel" role="dialog" aria-modal="false" aria-label="Display settings">
+  <div class="cp-head">
+    <h2>Display &amp; reading</h2>
+    <button class="icon-btn" id="cp-close" type="button" aria-label="Close display settings">&#10005;</button>
+  </div>
+
+  <div class="cp-group">
+    <label id="cp-l-theme">Theme</label>
+    <div class="seg" data-seg="theme" role="group" aria-labelledby="cp-l-theme">
+      <button type="button" data-val="light" aria-pressed="true">White</button>
+      <button type="button" data-val="dark" aria-pressed="false">Dark</button>
+      <button type="button" data-val="auto" aria-pressed="false">Auto</button>
+    </div>
+  </div>
+
+  <div class="cp-group">
+    <label id="cp-l-reading">Reading mode</label>
+    <div class="seg" data-seg="reading" role="group" aria-labelledby="cp-l-reading">
+      <button type="button" data-val="off" aria-pressed="true">Off</button>
+      <button type="button" data-val="on" aria-pressed="false">Comfortable</button>
+    </div>
+  </div>
+
+  <div class="cp-group">
+    <label id="cp-l-font">Font</label>
+    <div class="seg" data-seg="font" role="group" aria-labelledby="cp-l-font">
+      <button type="button" data-val="sans" aria-pressed="true">Sans</button>
+      <button type="button" data-val="serif" aria-pressed="false">Serif</button>
+      <button type="button" data-val="mono" aria-pressed="false">Mono</button>
+    </div>
+  </div>
+
+  <div class="cp-group">
+    <label for="cp-text">Text size <span class="cp-val" id="cp-text-val">100%</span></label>
+    <div class="cp-slider"><input type="range" id="cp-text" min="85" max="150" step="5" value="100"></div>
+  </div>
+
+  <div class="cp-group">
+    <label for="cp-zoom">Page zoom <span class="cp-val" id="cp-zoom-val">100%</span></label>
+    <div class="cp-slider"><input type="range" id="cp-zoom" min="80" max="140" step="5" value="100"></div>
+  </div>
+
+  <div class="cp-group">
+    <label for="cp-warm">Warmth <span class="cp-val" id="cp-warm-val">0</span></label>
+    <div class="cp-slider"><input type="range" id="cp-warm" min="-100" max="100" step="10" value="0"></div>
+  </div>
+
+  <div class="cp-group">
+    <label for="cp-int">Tint intensity <span class="cp-val" id="cp-int-val">45</span></label>
+    <div class="cp-slider"><input type="range" id="cp-int" min="0" max="100" step="5" value="45"></div>
+  </div>
+
+  <div class="cp-group">
+    <label id="cp-l-accent">Accent colour</label>
+    <div class="swatches" role="group" aria-labelledby="cp-l-accent">
+      <button type="button" class="swatch" data-accent="indigo" aria-pressed="true"  aria-label="Indigo" title="Indigo" style="background:#3730a3"></button>
+      <button type="button" class="swatch" data-accent="teal"   aria-pressed="false" aria-label="Teal"   title="Teal"   style="background:#0f766e"></button>
+      <button type="button" class="swatch" data-accent="rose"   aria-pressed="false" aria-label="Rose"   title="Rose"   style="background:#9f1239"></button>
+      <button type="button" class="swatch" data-accent="amber"  aria-pressed="false" aria-label="Amber"  title="Amber"  style="background:#b45309"></button>
+      <button type="button" class="swatch" data-accent="violet" aria-pressed="false" aria-label="Violet" title="Violet" style="background:#6d28d9"></button>
+      <button type="button" class="swatch" data-accent="green"  aria-pressed="false" aria-label="Green"  title="Green"  style="background:#15803d"></button>
+    </div>
+  </div>
+
+  <div class="cp-group">
+    <label id="cp-l-contrast">Contrast</label>
+    <div class="seg" data-seg="contrast" role="group" aria-labelledby="cp-l-contrast">
+      <button type="button" data-val="normal" aria-pressed="true">Normal</button>
+      <button type="button" data-val="high" aria-pressed="false">High</button>
+    </div>
+  </div>
+
+  <div class="cp-group">
+    <label id="cp-l-toc">On-this-page column</label>
+    <div class="seg" data-seg="toc" role="group" aria-labelledby="cp-l-toc">
+      <button type="button" data-val="on" aria-pressed="true">Show</button>
+      <button type="button" data-val="off" aria-pressed="false">Hide</button>
+    </div>
+  </div>
+
+  <div class="cp-group">
+    <label id="cp-l-app">App &amp; updates</label>
+    <div class="cp-app-row">
+      <button class="btn ghost small" type="button" data-install-app hidden>Install app</button>
+      <button class="btn ghost small" type="button" id="cp-check">Check for updates</button>
+    </div>
+    <p class="cp-app-status" id="cp-app-status" role="status">Raokhanthi <span id="cp-version">&mdash;</span></p>
+  </div>
+
+  <div class="cp-foot">
+    <button class="btn ghost small" id="cp-reset" type="button">Reset all</button>
+  </div>
+</div>
+
+<script src="js/data/meta.js"></script>
+<script src="js/data/lessons.js"></script>
+<script src="js/data/script.js"></script>
+<script src="js/data/grammar.js"></script>
+<script src="js/data/verbs.js"></script>
+<script src="js/data/numbers.js"></script>
+<script src="js/data/dictionary.js"></script>
+<script src="js/data/phrases.js"></script>
+<script src="js/data/dialogues.js"></script>
+<script src="js/data/reading.js"></script>
+<script src="js/data/idioms.js"></script>
+<script src="js/data/culture.js"></script>
+<script src="js/data/resources.js"></script>
+<script src="js/data/contribute.js"></script>
+<script src="js/data/index.js"></script>
+<script src="js/core/store.js"></script>
+<script src="js/core/icons.js"></script>
+<script src="js/core/prefs.js"></script>
+<script src="js/ui/chrome.js"></script>
+<script src="js/ui/sidebar.js"></script>
+<script src="js/ui/mobilenav.js"></script>
+<script src="js/ui/panel.js"></script>
+<script src="js/ui/toc.js"></script>
+<script src="js/ui/motion.js"></script>
+<script src="js/render/renderers.js"></script>
+<script src="js/render/interactive.js"></script>
+<script src="js/app.js"></script>
+<script src="js/core/update.js"></script>
+<script src="js/core/install.js"></script>
+</body>
+</html>

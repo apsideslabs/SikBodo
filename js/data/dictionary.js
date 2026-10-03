@@ -1,0 +1,248 @@
+/* ============================================================
+   SikBodo — dictionary
+   Everyday vocabulary. Every Bodo entry is in the Devanagari
+   script and carries a romanisation. Categories are used by the
+   search filter and the quiz. Compiled from public sources; not
+   verified by a native speaker, and spelling varies between
+   sources — see docs/CONTENT-GUIDE.md.
+   ============================================================ */
+
+window.SKB = window.SKB || {};
+
+window.SKB.dictionary = [
+  /* --- People & family --- */
+  { en: "mother", bo: "बिमा", rom: "bima", cat: "People & family" },
+  { en: "father", bo: "बिफा", rom: "bipha", cat: "People & family", note: "आफा (afa) is the common spoken word." },
+  { en: "father (spoken)", bo: "आफा", rom: "afa", cat: "People & family" },
+  { en: "elder brother", bo: "आदा", rom: "ada", cat: "People & family", note: "बिदा (bida) is a variant." },
+  { en: "younger brother", bo: "फोंगबै", rom: "fongbai", cat: "People & family" },
+  { en: "elder sister", bo: "आबो", rom: "abo", cat: "People & family", note: "बिबो (bibo) is a variant." },
+  { en: "younger sister", bo: "बिनानाओ", rom: "binanao", cat: "People & family" },
+  { en: "child", bo: "गोथो", rom: "gotho", cat: "People & family" },
+  { en: "man (male)", bo: "हाउआ", rom: "hauwa", cat: "People & family" },
+  { en: "woman", bo: "हिनजाव", rom: "hinjao", cat: "People & family" },
+  { en: "person", bo: "मानसि", rom: "manshi", cat: "People & family" },
+  { en: "friend", bo: "लोगो", rom: "logo", cat: "People & family" },
+  { en: "husband", bo: "फिसै", rom: "phisai", cat: "People & family" },
+  { en: "wife", bo: "बिसि", rom: "bisi", cat: "People & family" },
+  { en: "family", bo: "नखर", rom: "nakhar", cat: "People & family" },
+  { en: "teacher", bo: "फोरोंगिरि", rom: "fwrwnggiri", cat: "People & family" },
+  { en: "student", bo: "फरायसा", rom: "pharaysa", cat: "People & family" },
+  { en: "doctor", bo: "देहा फाहामगिरि", rom: "deha phahamgiri", cat: "People & family" },
+
+  /* --- Body & health --- */
+  { en: "head", bo: "खोरो", rom: "khoro", cat: "Body & health" },
+  { en: "eye", bo: "मेगन", rom: "megan", cat: "Body & health" },
+  { en: "ear", bo: "खुमा", rom: "khuma", cat: "Body & health" },
+  { en: "nose", bo: "गोनथों", rom: "gonthong", cat: "Body & health" },
+  { en: "mouth", bo: "खुगा", rom: "khuga", cat: "Body & health" },
+  { en: "tooth", bo: "हाथाइ", rom: "hathai", cat: "Body & health" },
+  { en: "tongue", bo: "सालाइ", rom: "salai", cat: "Body & health" },
+  { en: "hair", bo: "खनाइ", rom: "khanai", cat: "Body & health" },
+  { en: "hand", bo: "आखाइ", rom: "akhai", cat: "Body & health" },
+  { en: "foot", bo: "आथेंग", rom: "atheng", cat: "Body & health" },
+  { en: "belly", bo: "उदै", rom: "udwi", cat: "Body & health" },
+  { en: "back", bo: "बिखुन", rom: "bikhun", cat: "Body & health" },
+  { en: "blood", bo: "थुइ", rom: "thwi", cat: "Body & health" },
+  { en: "bone", bo: "हारा", rom: "hara", cat: "Body & health" },
+  { en: "heart", bo: "सोंफ्लो", rom: "songphlo", cat: "Body & health" },
+  { en: "skin", bo: "बिगुर", rom: "bigur", cat: "Body & health" },
+  { en: "health", bo: "देहा", rom: "deha", cat: "Body & health" },
+
+  /* --- Food & drink --- */
+  { en: "water", bo: "दै", rom: "dwi", cat: "Food & drink" },
+  { en: "rice (cooked)", bo: "उंखाम", rom: "wngkham", cat: "Food & drink" },
+  { en: "paddy / rice (grain)", bo: "मै", rom: "mai", cat: "Food & drink" },
+  { en: "curry", bo: "उंख्रि", rom: "wngkhri", cat: "Food & drink" },
+  { en: "meat", bo: "बेदोर", rom: "bedor", cat: "Food & drink" },
+  { en: "fish", bo: "ना", rom: "na", cat: "Food & drink" },
+  { en: "egg", bo: "दाउदै", rom: "daudwi", cat: "Food & drink" },
+  { en: "salt", bo: "सोंख्रि", rom: "songkhri", cat: "Food & drink" },
+  { en: "tea", bo: "साहा", rom: "saha", cat: "Food & drink", note: "A borrowing, as in Assamese." },
+  { en: "rice beer", bo: "जौ", rom: "jau", cat: "Food & drink", note: "The traditional Bodo rice beer, also called जुमै (jumai)." },
+  { en: "vegetable", bo: "फिथाइ", rom: "phithai", cat: "Food & drink", note: "फिथाइ covers leafy greens and vegetables generally." },
+  { en: "sweet", bo: "गोदै", rom: "gwdwi", cat: "Food & drink" },
+
+  /* --- Animals --- */
+  { en: "dog", bo: "सैमा", rom: "saima", cat: "Animals" },
+  { en: "cat", bo: "माउजि", rom: "mauji", cat: "Animals" },
+  { en: "cow", bo: "मोसौ", rom: "mosou", cat: "Animals" },
+  { en: "horse", bo: "गोरै", rom: "gorai", cat: "Animals" },
+  { en: "goat", bo: "बोर्मा", rom: "borma", cat: "Animals" },
+  { en: "pig", bo: "ओमा", rom: "oma", cat: "Animals" },
+  { en: "elephant", bo: "मोइदेर", rom: "moider", cat: "Animals" },
+  { en: "deer", bo: "मोइ", rom: "moi", cat: "Animals" },
+  { en: "tiger", bo: "मोसा", rom: "mosa", cat: "Animals" },
+  { en: "snake", bo: "जिबौ", rom: "jibou", cat: "Animals" },
+  { en: "animal", bo: "जुनार", rom: "junar", cat: "Animals" },
+
+  /* --- Birds & insects --- */
+  { en: "bird", bo: "दाव", rom: "dau", cat: "Birds & insects" },
+  { en: "fowl / chicken", bo: "दाव", rom: "dau", cat: "Birds & insects", note: "दाव is 'bird' generally and also the domestic fowl." },
+  { en: "duck", bo: "हांसा", rom: "hansa", cat: "Birds & insects" },
+  { en: "worm", bo: "आमफौ", rom: "amphou", cat: "Birds & insects" },
+  { en: "louse", bo: "थेमा", rom: "thema", cat: "Birds & insects" },
+
+  /* --- Plants & nature --- */
+  { en: "tree", bo: "दंफां", rom: "dongfang", cat: "Plants & nature" },
+  { en: "flower", bo: "बिबर", rom: "bibar", cat: "Plants & nature" },
+  { en: "fruit", bo: "फिथाइ", rom: "phithai", cat: "Plants & nature" },
+  { en: "leaf", bo: "बिलाइ", rom: "bilai", cat: "Plants & nature" },
+  { en: "root", bo: "रुदा", rom: "ruda", cat: "Plants & nature" },
+  { en: "seed", bo: "बेगोर", rom: "begor", cat: "Plants & nature" },
+  { en: "grass", bo: "गांसो", rom: "ganso", cat: "Plants & nature" },
+  { en: "bamboo", bo: "वा", rom: "wa", cat: "Plants & nature" },
+  { en: "sun", bo: "सान", rom: "san", cat: "Plants & nature" },
+  { en: "moon", bo: "ओखाफुर", rom: "okhaphur", cat: "Plants & nature" },
+  { en: "star", bo: "हाथोरखि", rom: "hathorkhi", cat: "Plants & nature" },
+  { en: "wind", bo: "बार", rom: "bar", cat: "Plants & nature" },
+  { en: "mountain", bo: "हाजो", rom: "hajo", cat: "Plants & nature" },
+  { en: "river", bo: "दैमा", rom: "daima", cat: "Plants & nature" },
+  { en: "stone", bo: "अनथाइ", rom: "onthai", cat: "Plants & nature" },
+  { en: "wood", bo: "दंफां", rom: "dongfang", cat: "Plants & nature" },
+
+  /* --- Colours --- */
+  { en: "white", bo: "गुफुर", rom: "guphur", cat: "Colours" },
+  { en: "yellow", bo: "गोमो", rom: "gomwo", cat: "Colours" },
+  { en: "colour", bo: "गावजान", rom: "gaojan", cat: "Colours", note: "Bodo colour terms vary by source; only a few are well attested." },
+
+  /* --- Time --- */
+  { en: "day", bo: "सान", rom: "san", cat: "Time" },
+  { en: "night", bo: "हर", rom: "hor", cat: "Time" },
+  { en: "today", bo: "दिनै", rom: "dinai", cat: "Time" },
+  { en: "yesterday", bo: "मैया", rom: "maiya", cat: "Time" },
+  { en: "tomorrow", bo: "गाबोन", rom: "gabon", cat: "Time" },
+  { en: "morning", bo: "फुं", rom: "fung", cat: "Time" },
+  { en: "evening", bo: "बेलासि", rom: "belasi", cat: "Time" },
+  { en: "year", bo: "बोसोर", rom: "bosor", cat: "Time" },
+  { en: "month", bo: "दान", rom: "dan", cat: "Time" },
+  { en: "week", bo: "सबथा", rom: "sabtha", cat: "Time" },
+
+  /* --- Places & directions --- */
+  { en: "house / home", bo: "नो", rom: "no", cat: "Places & directions" },
+  { en: "village", bo: "गामि", rom: "gami", cat: "Places & directions" },
+  { en: "road / way", bo: "लामा", rom: "lama", cat: "Places & directions" },
+  { en: "market", bo: "हाथाइ", rom: "hathai", cat: "Places & directions" },
+  { en: "here", bo: "बेयाव", rom: "bewao", cat: "Places & directions" },
+  { en: "there", bo: "बैयाव", rom: "bwiyao", cat: "Places & directions" },
+  { en: "left", bo: "आग्सि", rom: "agsi", cat: "Places & directions" },
+  { en: "right", bo: "आगदा", rom: "agda", cat: "Places & directions" },
+  { en: "straight", bo: "थोंजों", rom: "thongjwng", cat: "Places & directions" },
+  { en: "school", bo: "इस्कुल", rom: "iskul", cat: "Places & directions", note: "A borrowing." },
+  { en: "water (river) / bank", bo: "दै खफ", rom: "dwi khaph", cat: "Places & directions" },
+
+  /* --- School & work --- */
+  { en: "book", bo: "बिजाब", rom: "bijab", cat: "School & work" },
+  { en: "pen", bo: "खलम", rom: "khalam", cat: "School & work" },
+  { en: "word", bo: "सोदोब", rom: "swdwb", cat: "School & work" },
+  { en: "language", bo: "राव", rom: "rao", cat: "School & work" },
+  { en: "work", bo: "खामानि", rom: "khamani", cat: "School & work" },
+  { en: "name", bo: "मुं", rom: "mung", cat: "School & work" },
+  { en: "money", bo: "रां", rom: "rang", cat: "School & work" },
+  { en: "story", bo: "स'ल'", rom: "solo", cat: "School & work" },
+  { en: "song", bo: "गाब", rom: "gab", cat: "School & work" },
+  { en: "dance", bo: "मोसानाय", rom: "mosanai", cat: "School & work" },
+
+  /* --- Transport & travel --- */
+  { en: "bus", bo: "बास", rom: "bas", cat: "Transport & travel", note: "A borrowing." },
+  { en: "train", bo: "रेलगारि", rom: "relgari", cat: "Transport & travel" },
+  { en: "boat", bo: "नाव", rom: "nao", cat: "Transport & travel" },
+  { en: "bicycle", bo: "साइकल", rom: "saikal", cat: "Transport & travel", note: "A borrowing." },
+
+  /* --- Verbs & actions --- */
+  { en: "eat", bo: "जा", rom: "za", cat: "Verbs & actions" },
+  { en: "drink", bo: "लों", rom: "lwng", cat: "Verbs & actions" },
+  { en: "go", bo: "थां", rom: "thang", cat: "Verbs & actions" },
+  { en: "come", bo: "फै", rom: "fai", cat: "Verbs & actions" },
+  { en: "see", bo: "नाय", rom: "nai", cat: "Verbs & actions" },
+  { en: "speak / say", bo: "बुं", rom: "bung", cat: "Verbs & actions" },
+  { en: "do / make", bo: "माव", rom: "mao", cat: "Verbs & actions" },
+  { en: "sleep", bo: "उंदु", rom: "undu", cat: "Verbs & actions" },
+  { en: "give", bo: "हो", rom: "ho", cat: "Verbs & actions" },
+  { en: "take / get", bo: "ला", rom: "la", cat: "Verbs & actions" },
+  { en: "run", bo: "खार", rom: "khar", cat: "Verbs & actions" },
+  { en: "walk", bo: "थाबाइ", rom: "thabai", cat: "Verbs & actions" },
+  { en: "sit", bo: "जेराय", rom: "jerai", cat: "Verbs & actions" },
+  { en: "write", bo: "लिर", rom: "lir", cat: "Verbs & actions" },
+  { en: "read / study", bo: "फराय", rom: "pharai", cat: "Verbs & actions" },
+  { en: "buy", bo: "बाय", rom: "bai", cat: "Verbs & actions" },
+  { en: "sell", bo: "फान", rom: "phan", cat: "Verbs & actions" },
+  { en: "laugh", bo: "मिनि", rom: "mini", cat: "Verbs & actions" },
+  { en: "know", bo: "मिथि", rom: "mithi", cat: "Verbs & actions" },
+  { en: "understand", bo: "बुजि", rom: "buji", cat: "Verbs & actions" },
+  { en: "to be / exist", bo: "दों", rom: "dong", cat: "Verbs & actions" },
+  { en: "wait", bo: "ने", rom: "ne", cat: "Verbs & actions" },
+  { en: "help", bo: "हेफाजाब", rom: "hefajab", cat: "Verbs & actions" },
+  { en: "love", bo: "मोजां मोनो", rom: "mwjang mwnw", cat: "Verbs & actions" },
+  { en: "forget", bo: "बावगार", rom: "bawgar", cat: "Verbs & actions" },
+
+  /* --- Adjectives --- */
+  { en: "good", bo: "मोजां", rom: "mwjang", cat: "Adjectives" },
+  { en: "bad", bo: "गाज्रि", rom: "gajri", cat: "Adjectives" },
+  { en: "big", bo: "गेदेर", rom: "geder", cat: "Adjectives" },
+  { en: "small", bo: "फिसा", rom: "phisa", cat: "Adjectives" },
+  { en: "new", bo: "गोदान", rom: "godan", cat: "Adjectives" },
+  { en: "long", bo: "गोलाव", rom: "golao", cat: "Adjectives" },
+  { en: "high / tall", bo: "गोजौ", rom: "gojwo", cat: "Adjectives" },
+  { en: "many", bo: "गोबां", rom: "gobang", cat: "Adjectives" },
+  { en: "few", bo: "खैसे", rom: "khaise", cat: "Adjectives" },
+  { en: "hot", bo: "जोबोद", rom: "jwobwd", cat: "Adjectives" },
+
+  /* --- Pronouns & function words --- */
+  { en: "I", bo: "आं", rom: "ang", cat: "Pronouns & function words" },
+  { en: "we (inclusive)", bo: "जों", rom: "jwng", cat: "Pronouns & function words" },
+  { en: "we (exclusive)", bo: "जां", rom: "jang", cat: "Pronouns & function words" },
+  { en: "you", bo: "नों", rom: "nwng", cat: "Pronouns & function words" },
+  { en: "you (plural)", bo: "नोंसोर", rom: "nwngswr", cat: "Pronouns & function words" },
+  { en: "he / she / it", bo: "बि", rom: "bi", cat: "Pronouns & function words" },
+  { en: "they", bo: "बिसोर", rom: "biswr", cat: "Pronouns & function words" },
+  { en: "this", bo: "बे", rom: "be", cat: "Pronouns & function words" },
+  { en: "that", bo: "बै", rom: "bwi", cat: "Pronouns & function words" },
+  { en: "yes", bo: "नंगौ", rom: "nongau", cat: "Pronouns & function words" },
+  { en: "no", bo: "नंगा", rom: "nonga", cat: "Pronouns & function words" },
+  { en: "and", bo: "आरो", rom: "aro", cat: "Pronouns & function words" },
+  { en: "all", bo: "गासै", rom: "gaswi", cat: "Pronouns & function words" },
+  { en: "other", bo: "गुबुन", rom: "gubun", cat: "Pronouns & function words" },
+
+  /* --- Question words --- */
+  { en: "what", bo: "मा", rom: "ma", cat: "Question words" },
+  { en: "who", bo: "सोर", rom: "swr", cat: "Question words" },
+  { en: "where", bo: "बबे", rom: "bobe", cat: "Question words" },
+  { en: "when", bo: "माब्ला", rom: "mabla", cat: "Question words" },
+  { en: "why", bo: "मानो", rom: "manwo", cat: "Question words" },
+  { en: "how", bo: "माब्रै", rom: "mabrwai", cat: "Question words" },
+  { en: "how much / how many", bo: "बेसेबां", rom: "besebang", cat: "Question words" },
+
+  /* --- Festivals & culture --- */
+  { en: "Bwisagu (new year festival)", bo: "ब्विसागु", rom: "bwisagu", cat: "Festivals & culture" },
+  { en: "Kherai (religious festival)", bo: "खेराइ", rom: "kherai", cat: "Festivals & culture" },
+  { en: "Domashi (harvest festival)", bo: "दोमासि", rom: "domashi", cat: "Festivals & culture" },
+  { en: "Bathou (supreme deity)", bo: "बाथौ", rom: "bathou", cat: "Festivals & culture" },
+  { en: "drum", bo: "खाम", rom: "kham", cat: "Festivals & culture" },
+  { en: "flute", bo: "सिफुं", rom: "sifung", cat: "Festivals & culture" },
+  { en: "cymbals", bo: "जोथा", rom: "jotha", cat: "Festivals & culture" },
+  { en: "festival", bo: "हारिमु", rom: "harimu", cat: "Festivals & culture" },
+
+  /* --- Numbers --- */
+  { en: "one", bo: "से", rom: "se", cat: "Numbers" },
+  { en: "two", bo: "नै", rom: "nai", cat: "Numbers" },
+  { en: "three", bo: "थाम", rom: "tham", cat: "Numbers" },
+  { en: "four", bo: "ब्रै", rom: "brai", cat: "Numbers" },
+  { en: "five", bo: "बा", rom: "ba", cat: "Numbers" },
+  { en: "six", bo: "द'", rom: "do", cat: "Numbers" },
+  { en: "seven", bo: "स्नि", rom: "sni", cat: "Numbers" },
+  { en: "eight", bo: "दाइन", rom: "dain", cat: "Numbers" },
+  { en: "nine", bo: "गु", rom: "gu", cat: "Numbers" },
+  { en: "ten", bo: "जि", rom: "ji", cat: "Numbers" },
+  { en: "hundred", bo: "जौ", rom: "jau", cat: "Numbers" },
+  { en: "thousand", bo: "रोजा", rom: "roja", cat: "Numbers" },
+
+  /* --- Abstract & misc --- */
+  { en: "joy / happiness", bo: "गोजोननाय", rom: "gojonnai", cat: "Abstract & misc" },
+  { en: "sorrow", bo: "दुखु", rom: "dukhu", cat: "Abstract & misc" },
+  { en: "problem", bo: "जेंना", rom: "jenna", cat: "Abstract & misc" },
+  { en: "power / strength", bo: "गोरा", rom: "gwra", cat: "Abstract & misc" },
+  { en: "wisdom", bo: "सोलोगोनां", rom: "swlwgwnang", cat: "Abstract & misc" },
+  { en: "truth", bo: "सैथो", rom: "saitwo", cat: "Abstract & misc" },
+  { en: "God", bo: "ईशोर", rom: "iswar", cat: "Abstract & misc" }
+];

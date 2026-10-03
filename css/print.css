@@ -1,0 +1,47 @@
+/* ============================================================
+   Raokhanthi — print stylesheet
+   ============================================================ */
+
+@media print {
+  :root {
+    --bg: #fff;
+    --surface: #fff;
+    --surface-2: #fff;
+    --ink: #000;
+    --ink-soft: #1a1a1a;
+    --muted: #444;
+    --line: #bbb;
+  }
+
+  html { font-size: 11pt; }
+  body { zoom: 1 !important; background: #fff; color: #000; }
+  body::after { display: none !important; }
+
+  .site-header, .sidebar, .toc, .site-footer, .cp-fab, .cp-panel,
+  .skip-link, .toolbar, .quiz-btns, .tr-samples, .btn, .lesson-done,
+  .nav-toggle, .header-tools { display: none !important; }
+
+  .shell { display: block; padding: 0; max-width: none; }
+  .main, .prose { max-width: none; }
+
+  a { color: #000; text-decoration: none; }
+  a[href^="http"]::after { content: " (" attr(href) ")"; font-size: 9pt; color: #555; }
+
+  h1, h2, h3 { break-after: avoid; page-break-after: avoid; }
+  p, li, tr, .card, .dialogue, .note-card, .glyph, .dict-row { break-inside: avoid; page-break-inside: avoid; }
+  h1 { font-size: 22pt; }
+  h2 { font-size: 15pt; border-bottom: 1px solid #999; }
+
+  .card, .dialogue, .note-card, .flash { border: 1px solid #ccc; box-shadow: none; }
+
+  details.lesson { border: 1px solid #ccc; }
+  details.lesson > summary { font-weight: 700; }
+  details.lesson > .lesson-body { display: block !important; }
+  details.lesson summary::after { display: none; }
+
+  .table-wrap { overflow: visible; border: 1px solid #ccc; }
+  table { font-size: 10pt; }
+  thead { display: table-header-group; }
+
+  @page { margin: 18mm 16mm; }
+}

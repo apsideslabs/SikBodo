@@ -1,0 +1,254 @@
+/* ============================================================
+   SikBodo — design tokens
+   Crafted, tactile, gamified language studio design system.
+   Typography: Outfit (display) + DM Sans (body) + JetBrains Mono.
+   Typefaces are named in the stacks below but never fetched — the
+   no-CDN / works-offline invariant rules out a runtime @import, so
+   these resolve from fonts the reader already has.
+   Palette: Warm Studio Stone & Crisp Elevated Surfaces with
+   Electric Indigo, Emerald Teal, and Sunburst Gold XP accents.
+   ============================================================ */
+
+:root {
+  /* --- brand & mastery accents --- */
+  --brand: #48871c;
+  --brand-ink: #2f5e10;
+  --brand-soft: #eef7e3;
+
+  /* --- Apsides Labs maker mark --- */
+  --logo-ink: #032351;
+  --logo-accent: #0664fb;
+  --accent: #b45309;
+  --accent-soft: #fdf3e3;
+
+  /* --- gamified XP & streak tokens --- */
+  --xp: #d97706;
+  --xp-soft: #fef3c7;
+  --xp-border: #f59e0b;
+
+  /* --- 60% warm tactile studio canvas & 30% crisp card surfaces --- */
+  --bg: #f6f5f0;
+  --bg-soft: #efece6;
+  --surface: #ffffff;
+  --surface-2: #f3f1ec;
+  --surface-3: #e7e4dc;
+
+  /* --- text hierarchy --- */
+  --ink: #141413;
+  --ink-soft: #2c2b28;
+  --muted: #615e57;
+  --faint: #8f8b82;
+
+  /* --- tactile borders & lips --- */
+  --line: #e5e2da;
+  --line-strong: #d0ccc0;
+  --outline: #ddd9ce;
+  --outline-hover: #b8b2a4;
+
+  /* --- semantic states --- */
+  --ok: #0d9488;
+  --ok-soft: #ccfbf1;
+  --warn: #d97706;
+  --warn-soft: #fef3c7;
+  --danger: #e11d48;
+  --danger-soft: #ffe4e6;
+
+  /* --- crafted non-generic typography --- */
+  --font-sans: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-display: "Outfit", "DM Sans", system-ui, sans-serif;
+  --font-serif: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  /* The stack for the language being learnt. The token keeps its historical
+     name from the Bodo reference; here it resolves to the Devanagari script. */
+  --font-bo: "Noto Sans Devanagari", "Noto Serif Devanagari", "Nirmala UI", "Mangal", "Kohinoor Devanagari", system-ui, sans-serif;
+  --font-as: var(--font-bo);
+  --font: var(--font-sans);
+
+  --fs-xs: 0.78125rem;  /* 12.5px */
+  --fs-sm: 0.875rem;    /* 14px */
+  --fs-base: 0.96875rem;/* 15.5px */
+  --fs-lg: 1.125rem;    /* 18px */
+  --fs-xl: 1.28rem;     /* 20.5px */
+  --fs-2xl: 1.55rem;    /* 25px */
+  --fs-3xl: 1.95rem;    /* 31px */
+  --fs-4xl: 2.4rem;     /* 38.4px */
+  --fs-5xl: 3rem;       /* 48px */
+
+  --lh-tight: 1.16;
+  --lh-snug: 1.35;
+  --lh-base: 1.62;
+  --lh-loose: 1.75;
+
+  --tracking-tight: -0.024em;
+  --tracking-wide: 0.065em;
+
+  /* --- space (4px base) --- */
+  --sp-1: 0.25rem;
+  --sp-2: 0.5rem;
+  --sp-3: 0.75rem;
+  --sp-4: 1rem;
+  --sp-5: 1.5rem;
+  --sp-6: 2rem;
+  --sp-7: 2.5rem;
+  --sp-8: 3.25rem;
+  --sp-9: 4rem;
+
+  /* --- tactile rounded geometry --- */
+  --radius-sm: 8px;
+  --radius: 11px;
+  --radius-lg: 15px;
+  --radius-xl: 20px;
+  --radius-pill: 999px;
+
+  /* --- signature tactile elevation (bottom lip + soft ambient shadow) --- */
+  --shadow-xs: 0 1px 2px rgba(20, 20, 19, 0.05);
+  --shadow-sm: 0 2px 0 var(--outline), 0 4px 10px -2px rgba(20, 20, 19, 0.05);
+  --shadow: 0 3px 0 var(--outline), 0 10px 24px -6px rgba(20, 20, 19, 0.08);
+  --shadow-lg: 0 18px 42px -10px rgba(20, 20, 19, 0.16);
+  --shadow-card: 0 3px 0 var(--outline), 0 8px 20px -8px rgba(20, 20, 19, 0.07);
+  --shadow-card-hover: 0 5px 0 var(--outline-hover), 0 14px 28px -8px rgba(20, 20, 19, 0.12);
+
+  /* --- domain hues for module distinction --- */
+  --hue-a: #4338ca; --hue-a-soft: #eef2ff;
+  --hue-b: #0d9488; --hue-b-soft: #ccfbf1;
+  --hue-c: #d97706; --hue-c-soft: #fef3c7;
+  --hue-d: #e11d48; --hue-d-soft: #ffe4e6;
+
+  /* --- layout (1440px desktop baseline) --- */
+  --header-h: 60px;
+  --mobilenav-h: 58px;
+  --sidebar-w: 272px;
+  --content-max: 1340px;
+  --prose-max: 68ch;
+  --toc-w: 220px;
+
+  /* --- gradients --- */
+  --grad-brand: linear-gradient(135deg, #2f5e10 0%, #48871c 52%, #b45309 100%);
+  --grad-sheen: linear-gradient(90deg, var(--brand), var(--accent));
+  --grad-surface: linear-gradient(180deg, color-mix(in srgb, var(--brand) 5%, var(--surface)), var(--surface));
+
+  /* --- motion --- */
+  --dur-fast: 120ms;
+  --dur: 170ms;
+  --dur-slow: 320ms;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* --- display controls --- */
+  --text-scale: 1;
+  --zoom: 1;
+  --warm-color: transparent;
+  --warm-opacity: 0;
+
+  color-scheme: light;
+}
+
+@media (min-width: 768px) {
+  :root { --header-h: 64px; }
+}
+
+/* ---------- dark theme (Midnight Studio) ---------- */
+html[data-theme="dark"] {
+  --brand: #8fce4f;
+  --brand-ink: #b6e07a;
+  --brand-soft: rgba(143, 206, 79, 0.15);
+
+  /* the mark's navy would disappear on a dark ground, so it is lifted
+     the way every other brand colour is */
+  --logo-ink: #e9eefb;
+  --logo-accent: #6ea8ff;
+  --accent: #fbbf24;
+  --accent-soft: rgba(251, 191, 36, 0.14);
+
+  --xp: #fbbf24;
+  --xp-soft: rgba(251, 191, 36, 0.15);
+  --xp-border: #f59e0b;
+
+  --bg: #0c0f16;
+  --bg-soft: #111621;
+  --surface: #161c28;
+  --surface-2: #1e2636;
+  --surface-3: #283246;
+
+  --ink: #f3f4f6;
+  --ink-soft: #d1d5db;
+  --muted: #9ca3af;
+  --faint: #6b7280;
+
+  --line: #232c3d;
+  --line-strong: #323f57;
+  --outline: #263044;
+  --outline-hover: #3f4f6e;
+
+  --ok: #2dd4bf;
+  --ok-soft: rgba(45, 212, 191, 0.15);
+  --warn: #fbbf24;
+  --warn-soft: rgba(251, 191, 36, 0.15);
+  --danger: #fb7185;
+  --danger-soft: rgba(251, 113, 133, 0.15);
+
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.45);
+  --shadow-sm: 0 2px 0 #080a0f, 0 4px 10px rgba(0, 0, 0, 0.4);
+  --shadow: 0 3px 0 #080a0f, 0 10px 24px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 18px 44px rgba(0, 0, 0, 0.65);
+  --shadow-card: 0 3px 0 #090c12, 0 8px 20px -6px rgba(0, 0, 0, 0.5);
+  --shadow-card-hover: 0 5px 0 var(--outline-hover), 0 14px 28px -6px rgba(0, 0, 0, 0.65);
+
+  --hue-a: #818cf8; --hue-a-soft: rgba(129, 140, 248, 0.15);
+  --hue-b: #2dd4bf; --hue-b-soft: rgba(45, 212, 191, 0.15);
+  --hue-c: #fbbf24; --hue-c-soft: rgba(251, 191, 36, 0.15);
+  --hue-d: #fb7185; --hue-d-soft: rgba(251, 113, 133, 0.15);
+
+  color-scheme: dark;
+}
+
+/* ---------- reading mode ---------- */
+html[data-reading="on"] {
+  --bg: #f9f5eb;
+  --bg-soft: #f2ecde;
+  --surface: #fffdf8;
+  --surface-2: #f3ebda;
+  --surface-3: #e8dec8;
+  --ink: #221c13;
+  --ink-soft: #3c3223;
+  --muted: #685942;
+  --outline: #dfd4bc;
+  --outline-hover: #c5b697;
+}
+html[data-reading="on"][data-theme="dark"] {
+  --bg: #14110c;
+  --bg-soft: #191510;
+  --surface: #1d1812;
+  --surface-2: #251f17;
+  --surface-3: #2e261c;
+}
+
+/* ---------- font family control ---------- */
+html[data-font="serif"] { --font: var(--font-serif); }
+html[data-font="mono"] { --font: var(--font-mono); }
+
+/* ---------- contrast control ---------- */
+html[data-contrast="high"] {
+  --line: #8f8b82;
+  --line-strong: #5c5952;
+  --outline: #8f8b82;
+  --muted: #22211f;
+  --faint: #42403c;
+}
+html[data-theme="dark"][data-contrast="high"] {
+  --line: #52607a;
+  --line-strong: #7888a6;
+  --outline: #52607a;
+  --muted: #e5e7eb;
+  --faint: #cbd5e1;
+}
+
+/* ---------- motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
