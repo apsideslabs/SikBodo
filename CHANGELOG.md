@@ -3,6 +3,19 @@
 All notable changes to **SikBodo — Bodo Learning Platform**.
 This project follows [Semantic Versioning](https://semver.org/).
 
+## [1.6.0] — 2026-10-03
+
+### Documentation & presentation
+
+- **Rewrote the README** as a structured, professional landing page: the real logo (theme-aware via a
+  `<picture>` element, with a new `assets/logo-dark.svg` variant for dark mode), a title and tagline, an
+  organised badge set, a topics line, an **At a glance** fact table, a full table of contents, and a
+  documented project tree.
+- **Added five Mermaid diagrams** — the runtime architecture, the page-boot sequence, the curriculum
+  ladder, a feature mindmap, and a release timeline. All five are validated to parse.
+- Corrected stale details in the docs (the dictionary is 348 words, not 200) and recorded the new
+  discoverability files.
+
 ## [1.5.0] — 2026-10-03
 
 ### Added

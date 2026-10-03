@@ -1,23 +1,37 @@
 <div align="center">
 
-<img src="assets/og-cover.svg" alt="SikBodo — an academic-grade platform for learning Bodo" width="820">
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/logo-dark.svg">
+  <img src="assets/logo.svg" alt="SikBodo — a free, offline platform for learning Bodo" width="440">
+</picture>
 
-# SikBodo · बरʼ
+# SikBodo
 
-**An academic-grade, self-contained platform for learning Bodo (बरʼ, Boro)** — the Tibeto-Burman language of the Bodo people of Assam, India.
+**A free, offline, dependency-free platform for learning Bodo (बरʼ · Boro)** — the Tibeto-Burman
+language of the Bodo people of Assam, India.
 
-[![version](https://img.shields.io/badge/version-1.5.0-48871c?style=flat-square)](CHANGELOG.md)
-[![license](https://img.shields.io/badge/license-MIT-0f766e?style=flat-square)](LICENSE)
-[![dependencies](https://img.shields.io/badge/runtime%20dependencies-0-b45309?style=flat-square)](#-design-constraints)
-[![build](https://img.shields.io/badge/build%20step-none-6d28d9?style=flat-square)](#-design-constraints)
-[![offline](https://img.shields.io/badge/works-offline-15803d?style=flat-square)](#-getting-started)
-[![Pages](https://img.shields.io/badge/GitHub%20Pages-live-3730a3?style=flat-square)](https://apsideslabs.github.io/SikBodo/)
+**15 lessons · 16 grammar sections · a 348-word dictionary · 107 phrases · 14 dialogues · an interactive practice arena** — all running in the browser, with no build step and no runtime dependencies.
+
+[![Live site](https://img.shields.io/badge/live%20site-open-48871c?style=flat-square&logo=githubpages&logoColor=white)](https://apsideslabs.github.io/SikBodo/)
+[![Version](https://img.shields.io/badge/version-1.6.0-48871c?style=flat-square)](CHANGELOG.md)
+[![Licence](https://img.shields.io/badge/licence-MIT-0f766e?style=flat-square)](LICENSE)
+[![Runtime dependencies](https://img.shields.io/badge/runtime%20dependencies-0-b45309?style=flat-square)](#design-constraints)
+[![Build step](https://img.shields.io/badge/build%20step-none-6d28d9?style=flat-square)](#design-constraints)
+
 [![CI](https://img.shields.io/badge/CI-validate%20%2B%20secret%20scan-0f766e?style=flat-square)](.github/workflows/ci.yml)
-[![icons](https://img.shields.io/badge/icons-Lucide%20ISC-6d28d9?style=flat-square)](assets/icons.svg)
-[![PRs](https://img.shields.io/badge/PRs-welcome-15803d?style=flat-square)](CONTRIBUTING.md)
-[![contributors](https://img.shields.io/badge/contributors-wanted-b45309?style=flat-square)](CONTRIBUTORS.md)
+[![Offline](https://img.shields.io/badge/works-offline-15803d?style=flat-square)](#install--updates)
+[![PWA](https://img.shields.io/badge/installable-PWA-3730a3?style=flat-square)](#install--updates)
+[![Accessibility](https://img.shields.io/badge/accessibility-WCAG%202.1%20AA-0f766e?style=flat-square)](docs/ACCESSIBILITY.md)
+[![PRs welcome](https://img.shields.io/badge/PRs-welcome-15803d?style=flat-square)](CONTRIBUTING.md)
+[![Contributors wanted](https://img.shields.io/badge/contributors-wanted-b45309?style=flat-square)](CONTRIBUTORS.md)
 
-**[Open the live site →](https://apsideslabs.github.io/SikBodo/)**
+<sub><b>Topics:</b>
+<code>bodo</code> <code>boro</code> <code>brx</code> <code>tibeto-burman</code> <code>bodo-language</code>
+<code>language-learning</code> <code>assam</code> <code>northeast-india</code> <code>devanagari</code>
+<code>education</code> <code>offline-first</code> <code>pwa</code> <code>static-site</code>
+<code>vanilla-js</code> <code>no-dependencies</code> <code>github-pages</code></sub>
+
+**[Open the live site →](https://apsideslabs.github.io/SikBodo/)** · **[Read the docs →](docs/)** · **[Contribute →](CONTRIBUTING.md)**
 
 </div>
 
@@ -25,27 +39,33 @@
 
 ## Contents
 
-- [What this is](#what-this-is)
+- [Overview](#overview)
+- [At a glance](#at-a-glance)
 - [Features](#features)
 - [Architecture](#architecture)
+- [How a page is built](#how-a-page-is-built)
+- [Curriculum](#curriculum)
+- [Feature map](#feature-map)
 - [Project structure](#project-structure)
 - [Getting started](#getting-started)
 - [Install & updates](#install--updates)
-- [Gamification](#gamification)
+- [Progress & gamification](#progress--gamification)
 - [The display panel](#the-display-panel)
 - [Content model](#content-model)
+- [Discoverability & SEO](#discoverability--seo)
 - [Design constraints](#design-constraints)
 - [Accuracy statement](#accuracy-statement)
 - [Accessibility](#accessibility)
 - [Contributing](#contributing)
 - [Security](#security)
 - [Roadmap](#roadmap)
+- [Release history](#release-history)
 - [Licence](#licence)
 - [Credits](#credits)
 
 ---
 
-## What this is
+## Overview
 
 SikBodo is a complete course in Bodo that runs entirely in the browser. It is built for people who
 want to actually learn the language rather than sample it: a graded curriculum, a descriptive grammar
@@ -57,8 +77,30 @@ no package manager and no third-party runtime dependency. The files in this repo
 files the browser executes. Clone it, open `index.html`, and it works — including offline.
 
 > **On the name.** Bodo is the language's common English name; the people and the language call
-> themselves **बरʼ** (*Boro*). The language is a member of the Tibeto-Burman family — quite unrelated to
+> themselves **बरʼ** (*Boro*). The language belongs to the Tibeto-Burman family — quite unrelated to
 > Assamese, which shares its region — and it has been written in Devanagari since 1975.
+
+---
+
+## At a glance
+
+| | |
+| --- | --- |
+| **Language taught** | Bodo / Boro · ISO 639-3 [`brx`](https://iso639-3.sil.org/code/brx) |
+| **Script** | Devanagari, with romanisation throughout |
+| **Curriculum** | 15 lessons across four levels |
+| **Grammar** | 16 reference sections |
+| **Dictionary** | 348 words · 21 categories |
+| **Phrases** | 107 across 16 settings |
+| **Dialogues** | 14, with side-by-side English and pronunciation |
+| **Reading** | 7 graded passages |
+| **Practice** | 5 scored exercise modes |
+| **Progress** | XP · 15 ranks · 18 trophies · day-streaks |
+| **Pages** | 19, plus a 404 |
+| **Runtime dependencies** | none |
+| **Build step** | none |
+| **Offline** | yes — installable PWA |
+| **Licence** | MIT |
 
 ---
 
@@ -67,7 +109,7 @@ files the browser executes. Clone it, open `index.html`, and it works — includ
 | Page | What it does |
 | --- | --- |
 | [`lessons.html`](lessons.html) | **15 lessons** across Basic · Elementary · Intermediate · Advanced, with per-lesson progress saved locally |
-| [`progress.html`](progress.html) | **Progress & study record** — your XP, mastery rank, streak, saved words, a 15-rank ladder and 18 unlockable trophies, built entirely on this device |
+| [`progress.html`](progress.html) | **Progress & study record** — XP, mastery rank, streak, saved words, a 15-rank ladder and 18 unlockable trophies, built entirely on this device |
 | [`script.html`](script.html) | **Script & sounds** — the varnamala chart of every letter as it is read aloud, then the vowels and consonants with a pronunciation guide, a character inspector, and the sounds Bodo reads differently |
 | [`grammar.html`](grammar.html) | **Grammar reference** — 16 sections: words, sentences, parts of speech, word order, nouns and plurals, classifiers, case markers, pronouns, honorifics, the verb, negation, questions, adjectives, numerals, word formation, coordination and register |
 | [`verbs.html`](verbs.html) | **Verb tables** — a model verb's present/past/future paradigm, the negative, the imperative, the aspect markers, and ten common verbs |
@@ -96,26 +138,61 @@ SikBodo is a **no-build static site**. Content is data, the interface is generat
 that data, and the visual system is four stylesheets driven by design tokens.
 
 ```mermaid
-flowchart LR
-    A["index.html<br/><small>static shell</small>"] --> B["js/data/*.js<br/><small>content modules</small>"]
-    B --> C["js/data/index.js<br/><small>merges into window.SKB</small>"]
-    C --> D["js/app.js<br/><small>boot()</small>"]
-    D --> E["js/ui/chrome.js<br/><small>header + footer + nav</small>"]
-    D --> F["js/ui/sidebar.js<br/><small>grouped nav + progress</small>"]
-    D --> G["js/ui/panel.js<br/><small>display controls</small>"]
-    D --> H["js/render/*.js<br/><small>page renderers</small>"]
-    H --> I["#page-body"]
-    I --> J["js/ui/toc.js<br/><small>on-this-page column</small>"]
-    K["js/core/prefs.js"] -.->|CSS custom properties| L(["&lt;html&gt;<br/>data-theme / data-reading / data-font"])
-    G --> K
-    L -.-> M["css/tokens.css<br/><small>all components react</small>"]
+flowchart TB
+  subgraph data["Content — js/data/*.js"]
+    direction LR
+    A1["lessons · grammar · script<br/>verbs · numbers"]
+    A2["dictionary · phrases<br/>dialogues · reading"]
+    A3["idioms · culture<br/>resources · contribute"]
+  end
 
-    classDef data fill:#eef7e3,stroke:#48871c,color:#1b2e12
-    classDef ui fill:#e6f4f1,stroke:#0f766e,color:#0b3b36
-    classDef core fill:#fdf3e3,stroke:#b45309,color:#5a3a05
-    class B,C data
-    class E,F,G,H,I,J ui
-    class K,L,M core
+  A1 --> IDX
+  A2 --> IDX
+  A3 --> IDX
+  IDX["js/data/index.js<br/>merges into window.SKB"] --> APP["js/app.js<br/>boot()"]
+
+  subgraph shell["Shell — js/ui/*"]
+    direction LR
+    B1["chrome.js<br/>header · footer · nav"]
+    B2["sidebar.js · mobilenav.js"]
+    B3["panel.js<br/>display controls"]
+  end
+
+  subgraph render["Renderers — js/render/*"]
+    direction LR
+    C1["renderers.js<br/>content pages"]
+    C2["interactive.js<br/>arena · translator"]
+  end
+
+  APP --> B1
+  APP --> B2
+  APP --> B3
+  APP --> C1
+  APP --> C2
+  B1 --> BODY["#page-body"]
+  B2 --> BODY
+  B3 --> BODY
+  C1 --> BODY
+  C2 --> BODY
+  BODY --> TOC["js/ui/toc.js<br/>on-this-page column"]
+
+  subgraph core["Core — js/core/*"]
+    direction LR
+    E1["store.js<br/>XP · ranks · streaks"]
+    E2["prefs.js<br/>display engine"]
+    E3["sfx.js · speech.js<br/>sound"]
+  end
+
+  E2 -.->|CSS custom properties| HTMLNODE["html element<br/>data-theme · data-font"]
+  HTMLNODE -.-> TOK["css/tokens.css"]
+  TOK -.-> ALL["every component reacts"]
+
+  classDef data fill:#eef7e3,stroke:#48871c,color:#1b2e12
+  classDef ui fill:#e6f4f1,stroke:#0f766e,color:#0b3b36
+  classDef core fill:#fdf3e3,stroke:#b45309,color:#5a3a05
+  class A1,A2,A3,IDX data
+  class B1,B2,B3,C1,C2,BODY,TOC ui
+  class E1,E2,E3,HTMLNODE,TOK,ALL core
 ```
 
 ### The two rules that keep it honest
@@ -125,6 +202,78 @@ flowchart LR
 2. **The interface is generated, the headings are static.** Each page carries its own `<h1>` and lede in
    HTML — good for search engines and for the CI skeleton check — while everything below is rendered
    from data.
+
+---
+
+## How a page is built
+
+There is no server render and no hydration step. Every page follows the same short sequence:
+
+```mermaid
+sequenceDiagram
+  autonumber
+  participant B as Browser
+  participant A as app.js
+  participant D as js/data/index.js
+  participant R as js/ui + js/render
+  participant S as localStorage
+  B->>A: open any page
+  A->>A: boot()
+  A->>D: read content into window.SKB
+  A->>S: restore display preferences
+  A->>R: build header, sidebar, panel
+  R->>B: render into #page-body
+  A->>R: build the on-this-page column
+  B->>A: learner interacts
+  A->>S: save XP, streak, saved words
+```
+
+---
+
+## Curriculum
+
+The 15 lessons are graded into four levels. Each level assumes the one before it, and the Practice
+Arena draws on everything unlocked so far.
+
+```mermaid
+flowchart LR
+  A["Basic<br/>lessons 1–4"] --> B["Elementary<br/>lessons 5–8"] --> C["Intermediate<br/>lessons 9–12"] --> D["Advanced<br/>lessons 13–15"]
+  A --> P
+  B --> P
+  C --> P
+  D --> P
+  P["Practice Arena<br/>XP · streaks · ranks"]
+```
+
+---
+
+## Feature map
+
+```mermaid
+mindmap
+  root((SikBodo))
+    Learn
+      15 graded lessons
+      16 grammar sections
+      Verb tables
+      Script and sounds
+    Practise
+      Practice Arena
+      Multiple choice
+      Listening
+      Spelling
+      Flashcards
+    Reference
+      348-word dictionary
+      107 phrases
+      14 dialogues
+      Idioms and proverbs
+    Track
+      XP and 15 ranks
+      18 trophies
+      Day streaks
+      Saved words
+```
 
 ---
 
@@ -149,18 +298,21 @@ SikBodo/
 │   ├── core/
 │   │   ├── store.js        # localStorage + the gamified mastery engine
 │   │   │                   #   (XP, 15 ranks, streaks, saved words, profile)
+│   │   ├── prefs.js        # display preferences engine
+│   │   ├── sfx.js          # WebAudio interface tones
+│   │   ├── speech.js       # text-to-speech pronunciation
+│   │   ├── icons.js        # generated icon helper (Lucide sprite, inlined)
 │   │   ├── update.js       # service worker + the update banner (PWA)
 │   │   ├── install.js      # install offer, app mode, display-mode stamp
-│   │   ├── prefs.js        # display preferences engine
-│   │   └── icons.js        # generated icon helper (Lucide sprite, inlined)
+│   │   └── splash.js       # splash screen for the installed app
 │   ├── data/
 │   │   ├── meta.js         # site metadata, facts, credits
 │   │   ├── lessons.js      # 15 lessons
 │   │   ├── script.js       # vowels, consonants, notes
-│   │   ├── grammar.js      # grammar reference sections
+│   │   ├── grammar.js      # 16 grammar reference sections
 │   │   ├── verbs.js        # persons, tenses, negation, imperative, aspect
-│   │   ├── numbers.js      # numerals, pattern, time words
-│   │   ├── dictionary.js   # 200 entries
+│   │   ├── numbers.js      # numerals, pattern, time words, months
+│   │   ├── dictionary.js   # 348 entries
 │   │   ├── phrases.js      # 107 phrases by setting
 │   │   ├── dialogues.js    # 14 conversations
 │   │   ├── reading.js      # graded passages + writing guide
@@ -175,13 +327,15 @@ SikBodo/
 │   │   ├── mobilenav.js    # mobile bottom bar
 │   │   ├── panel.js        # the floating display panel
 │   │   ├── toc.js          # on-this-page column with scroll spy
-│   │   └── motion.js       # scroll-reveal and stat count-up
+│   │   ├── motion.js       # scroll-reveal and stat count-up
+│   │   └── update.js       # the Updates button
 │   └── render/
 │       ├── renderers.js    # the static content pages
-│       └── interactive.js  # quiz and translator
+│       └── interactive.js  # practice arena and translator
 │
 ├── assets/
-│   ├── favicon.svg · logo.svg · logo-mark.svg · icon-maskable.svg · og-cover.svg
+│   ├── logo.svg · logo-dark.svg · logo-mark.svg · splash-logo.svg
+│   ├── favicon.svg · og-cover.svg · apsides-labs.svg · icon-maskable.svg
 │   ├── icon-192.png · icon-512.png · icon-maskable-512.png · apple-touch-icon.png
 │   └── icons.svg           # Lucide sprite (ISC)
 │
@@ -190,22 +344,25 @@ SikBodo/
 │   ├── CONTENT-GUIDE.md    # how to add content
 │   ├── ACCESSIBILITY.md    # commitments and test checklist
 │   ├── UPDATES.md          # install, offline and the update flow
+│   ├── SEO.md              # discoverability: what is automated, what is manual
 │   └── ROADMAP.md          # what is planned and what is not
 │
 ├── tools/
 │   ├── check-links.mjs     # dependency-free internal link checker
-│   └── build-sitemap.mjs   # regenerates sitemap.xml from the pages
+│   ├── build-sitemap.mjs   # regenerates sitemap.xml from the pages
+│   └── build-pwa.mjs       # regenerates icons and the manifest
 │
 ├── .github/
-│   ├── workflows/ci.yml    # validation + secret scanning
-│   ├── ISSUE_TEMPLATE/     # bug report, feature request
+│   ├── workflows/ci.yml        # validation + secret scanning
+│   ├── workflows/indexnow.yml  # submits URLs to IndexNow on each push
+│   ├── ISSUE_TEMPLATE/         # bug report, feature request
 │   ├── PULL_REQUEST_TEMPLATE.md
 │   └── dependabot.yml
 │
 ├── CONTRIBUTING.md · SECURITY.md · CODE_OF_CONDUCT.md
 ├── CHANGELOG.md · CONTRIBUTORS.md · LICENSE · README.md
-├── sw.js · version.json · manifest.webmanifest
-├── robots.txt · sitemap.xml · _headers
+├── sw.js · version.json · manifest.webmanifest · metadata.json
+├── robots.txt · sitemap.xml · llms.txt · _headers
 └── .nojekyll · .gitignore
 ```
 
@@ -261,7 +418,7 @@ how to test it locally, is in [`docs/UPDATES.md`](docs/UPDATES.md).
 
 ---
 
-## Gamification
+## Progress & gamification
 
 The platform is a **language studio**, not a static reader. Everything below is computed on the
 device and stored in `localStorage` — there is no account and nothing is uploaded.
@@ -282,6 +439,8 @@ device and stored in `localStorage` — there is no account and nothing is uploa
   JSON, so progress survives a cleared browser.
 - The rank and trophy definitions live in `js/core/store.js` and the Progress renderer; the
   content is Bodo and the rank titles are English.
+
+---
 
 ## The display panel
 
@@ -334,7 +493,7 @@ The romanisation used across the project, without exception: **`w`** for the hig
 
 ---
 
-## SEO & discoverability
+## Discoverability & SEO
 
 Every page carries a unique title and description, a canonical URL, Open Graph and Twitter card tags, and
 a `robots` directive. Each page also ships **JSON-LD structured data** (`schema.org`) in a single `@graph`:
@@ -342,7 +501,14 @@ a `BreadcrumbList`, plus a page entity — `WebSite` and `Organization` on the h
 `LearningResource`, `DefinedTermSet`, `Quiz`, `Article`, `CollectionPage` or `WebPage` as appropriate —
 linked to the site and marked `inLanguage: en` and `about: Bodo (brx)`. `sitemap.xml` lists every page with
 `lastmod`, `changefreq` and `priority`; `robots.txt` points at it. No third-party scripts, so nothing blocks
-crawling. For AI discovery, `llms.txt` gives crawlers a plain-language summary of the platform, and `.github/workflows/indexnow.yml` submits every URL to the **IndexNow** protocol (Bing, Yandex, Seznam, Naver) on each push to `main`. `docs/SEO.md` records what is automated and what still needs the owner's login — Search Console, a custom domain and backlinks.
+crawling.
+
+For AI discovery, `llms.txt` gives crawlers a plain-language summary of the platform, and
+`.github/workflows/indexnow.yml` submits every URL to the **IndexNow** protocol (Bing, Yandex, Seznam,
+Naver) on each push to `main`. `docs/SEO.md` records what is automated and what still needs the owner's
+login — Search Console, a custom domain and backlinks.
+
+---
 
 ## Design constraints
 
@@ -414,9 +580,28 @@ enabled, and CI runs a dependency-free secret scan on every push.
 
 ## Roadmap
 
-Shipped: audio pronunciation (browser speech, approximate), an interactive practice engine, a 348-word dictionary. Planned: spaced-repetition review, a larger verified dictionary, tone-marked
-entries, and growing the reading material. Explicitly **not** planned: ads, tracking, telemetry,
-accounts, CDNs and a build step. Full detail in [`docs/ROADMAP.md`](docs/ROADMAP.md).
+Shipped: audio pronunciation (browser speech, approximate), an interactive practice engine, a 348-word
+dictionary. Planned: spaced-repetition review, a larger verified dictionary, tone-marked entries, and
+growing the reading material. Explicitly **not** planned: ads, tracking, telemetry, accounts, CDNs and a
+build step. Full detail in [`docs/ROADMAP.md`](docs/ROADMAP.md).
+
+---
+
+## Release history
+
+```mermaid
+timeline
+  title SikBodo releases
+  1.0.0 : Ported from Luitra : full Bodo content set
+  1.1.0 : Header HUD : streaks and daily goal
+  1.2.0 : Real logo : dictionary to 280 words
+  1.3.0 : Visual overhaul of every page
+  1.4.0 : Practice Arena : sound and speech
+  1.5.0 : 348 words : JSON-LD SEO
+  1.6.0 : README and docs overhaul
+```
+
+The full, itemised list is in [`CHANGELOG.md`](CHANGELOG.md).
 
 ---
 
