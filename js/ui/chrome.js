@@ -64,9 +64,22 @@
   function hudHTML() {
     const total = (window.SKB && window.SKB.lessons && window.SKB.lessons.length) || 15;
     const r = AX.store.progress.rank(total);
-    return `<a class="hud-pill" id="header-hud" href="progress.html" title="Level ${r.level} ${r.title} · ${r.xp} XP">
-      <span class="hud-lvl">Lv.${r.level}</span>
-      <span class="hud-xp">${icon("star")} ${r.xp} XP</span>
+    const streak = AX.store.visit ? AX.store.visit.get().streak : 0;
+    const R = 15, C = 2 * Math.PI * R;
+    const off = (C * (1 - Math.min(100, r.levelPercent || 0) / 100)).toFixed(1);
+    const title = `Level ${r.level} — ${r.title} · ${r.xp} XP${streak ? ` · ${streak}-day streak` : ""}`;
+    return `<a class="hud" id="header-hud" href="progress.html" title="${title}" aria-label="${title}">
+      <span class="hud-ring" aria-hidden="true">
+        <svg viewBox="0 0 36 36">
+          <circle class="hud-ring-bg" cx="18" cy="18" r="${R}" />
+          <circle class="hud-ring-fg" cx="18" cy="18" r="${R}" stroke-dasharray="${C.toFixed(1)}" stroke-dashoffset="${off}" />
+        </svg>
+        <b class="hud-lvl">${r.level}</b>
+      </span>
+      <span class="hud-stack">
+        <span class="hud-xp">${icon("zap")}<b>${r.xp}</b><i>XP</i></span>
+        <span class="hud-streak${streak ? " is-on" : ""}">${icon("flame")}<b>${streak}</b><i>day${streak === 1 ? "" : "s"}</i></span>
+      </span>
     </a>`;
   }
 
@@ -75,7 +88,7 @@
     return `
       <div class="bar">
         <a class="brand" href="index.html" aria-label="${meta.name} — home">
-          <img class="brand-logo" src="assets/logo.svg" alt="" width="118" height="35" decoding="async">
+          <svg class="brand-logo" viewBox="0 0 511.8 122" width="511.8" height="122" role="img" aria-label="SikBodo" focusable="false"><g transform="translate(0 11) scale(0.19531)"><rect width="512" height="512" rx="116" fill="#48871c"/><g fill="none" stroke="#eaf7dc" stroke-width="30" stroke-linecap="round" stroke-linejoin="round"><path d="M256 432 L256 258"/></g><g fill="#eaf7dc"><path d="M256 306 C188 312 152 268 148 210 C208 212 246 254 256 306 Z"/><path d="M256 272 C324 278 360 234 364 176 C304 178 266 220 256 272 Z"/><path d="M256 234 C232 178 246 120 256 96 C266 120 280 178 256 234 Z"/></g></g><g transform="translate(130 95) scale(0.1 -0.1)" fill="currentColor"><path transform="translate(0.0 0)" d="M280 -11Q193 -11 130.5 17.5Q68 46 16 104L118 205Q152 166 193.5 144.5Q235 123 290 123Q340 123 367.5 141.0Q395 159 395 191Q395 220 377.0 238.0Q359 256 329.5 269.0Q300 282 264.5 294.0Q229 306 194.0 321.5Q159 337 129.5 360.5Q100 384 82.0 419.5Q64 455 64 509Q64 574 95.5 621.0Q127 668 183.0 692.5Q239 717 312 717Q386 717 447.5 691.0Q509 665 549 620L447 519Q415 552 382.5 568.0Q350 584 309 584Q268 584 244.0 568.5Q220 553 220 524Q220 497 238.0 480.5Q256 464 285.5 452.0Q315 440 350.5 428.0Q386 416 421.0 400.0Q456 384 485.5 359.5Q515 335 533.0 297.5Q551 260 551 205Q551 104 479.0 46.5Q407 -11 280 -11Z"/><path transform="translate(583.0 0)" d="M54 0V486H207V0ZM131 553Q95 553 71.5 577.5Q48 602 48 637Q48 673 71.5 697.0Q95 721 131 721Q167 721 190.0 697.0Q213 673 213 637Q213 602 190.0 577.5Q167 553 131 553Z"/><path transform="translate(844.0 0)" d="M365 0 195 252 364 486H535L331 223L336 286L545 0ZM54 0V726H207V0Z"/><path transform="translate(1390.0 0)" d="M188 0V122H354Q400 122 426.0 149.0Q452 176 452 215Q452 242 440.0 263.0Q428 284 406.5 296.0Q385 308 354 308H188V427H341Q380 427 404.0 446.5Q428 466 428 506Q428 545 404.0 564.5Q380 584 341 584H188V706H371Q439 706 486.5 681.0Q534 656 559.0 614.0Q584 572 584 521Q584 456 542.0 411.0Q500 366 418 349L422 402Q511 385 559.5 333.0Q608 281 608 205Q608 147 579.5 100.5Q551 54 497.5 27.0Q444 0 369 0ZM68 0V706H223V0Z"/><path transform="translate(2031.0 0)" d="M288 -11Q213 -11 152.5 22.5Q92 56 57.0 114.0Q22 172 22 244Q22 316 57.0 373.0Q92 430 152.0 463.5Q212 497 288 497Q364 497 424.0 464.0Q484 431 519.0 373.5Q554 316 554 244Q554 172 519.0 114.0Q484 56 424.0 22.5Q364 -11 288 -11ZM288 128Q321 128 346.0 142.5Q371 157 384.5 183.5Q398 210 398 244Q398 278 384.0 303.5Q370 329 345.5 343.5Q321 358 288 358Q256 358 231.0 343.5Q206 329 192.0 303.0Q178 277 178 243Q178 210 192.0 183.5Q206 157 231.0 142.5Q256 128 288 128Z"/><path transform="translate(2607.0 0)" d="M261 -10Q192 -10 138.5 23.0Q85 56 54.5 113.0Q24 170 24 243Q24 316 54.5 373.0Q85 430 138.5 463.0Q192 496 261 496Q311 496 351.5 477.0Q392 458 418.5 424.5Q445 391 448 348V143Q445 100 419.0 65.5Q393 31 352.0 10.5Q311 -10 261 -10ZM288 128Q321 128 345.0 142.5Q369 157 383.0 183.0Q397 209 397 243Q397 277 383.5 302.5Q370 328 345.5 343.0Q321 358 289 358Q257 358 232.5 343.0Q208 328 193.5 302.0Q179 276 179 243Q179 210 193.0 184.0Q207 158 232.0 143.0Q257 128 288 128ZM541 0H391V131L414 249L388 367V726H541Z"/><path transform="translate(3202.0 0)" d="M288 -11Q213 -11 152.5 22.5Q92 56 57.0 114.0Q22 172 22 244Q22 316 57.0 373.0Q92 430 152.0 463.5Q212 497 288 497Q364 497 424.0 464.0Q484 431 519.0 373.5Q554 316 554 244Q554 172 519.0 114.0Q484 56 424.0 22.5Q364 -11 288 -11ZM288 128Q321 128 346.0 142.5Q371 157 384.5 183.5Q398 210 398 244Q398 278 384.0 303.5Q370 329 345.5 343.5Q321 358 288 358Q256 358 231.0 343.5Q206 329 192.0 303.0Q178 277 178 243Q178 210 192.0 183.5Q206 157 231.0 142.5Q256 128 288 128Z"/></g></svg>
         </a>
 
         <nav class="header-nav" aria-label="Primary navigation">

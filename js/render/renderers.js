@@ -35,25 +35,80 @@
   /* ---------------------------------------------------------- HOME */
   function home() {
     const c = B.counts;
+    const total = B.lessons.length;
+    const r = AX.store.progress.rank(total);
+    const p = AX.store.progress.count(total);
+    const nextN = AX.store.progress.nextLesson(total);
+    const visit = AX.store.visit ? AX.store.visit.get() : { streak: 0, best: 0 };
+    const dailyXp = AX.store.daily ? AX.store.daily.get().xp : 0;
+    const goal = AX.store.daily ? AX.store.daily.goal() : 50;
+    const goalPct = Math.min(100, Math.round((dailyXp / goal) * 100));
+    const savedN = AX.store.saved.list().length;
+
+    const ring = (pct, R) => {
+      const C = 2 * Math.PI * R;
+      const off = (C * (1 - Math.min(100, Math.max(0, pct)) / 100)).toFixed(1);
+      const v = R * 2 + 6;
+      return `<svg viewBox="0 0 ${v} ${v}" class="ring" aria-hidden="true">
+        <circle cx="${R + 3}" cy="${R + 3}" r="${R}" class="ring-bg" />
+        <circle cx="${R + 3}" cy="${R + 3}" r="${R}" class="ring-fg" stroke-dasharray="${C.toFixed(1)}" stroke-dashoffset="${off}" />
+      </svg>`;
+    };
 
     const launch = [
-      { icon: "lessons", title: "Graded Lessons", text: `${c.lessons} modules from Basic to Advanced`, href: "lessons.html" },
-      { icon: "script", title: "Script & Sounds", text: `${c.vowels} vowels · ${c.consonants} consonants · inspector`, href: "script.html" },
-      { icon: "grammar", title: "Grammar Reference", text: "SOV syntax, case suffixes & mood", href: "grammar.html" },
-      { icon: "verbs", title: "Verb Tables", text: `${c.verbs} core roots × 3 tenses`, href: "verbs.html" },
-      { icon: "dictionary", title: "Dictionary", text: `${c.words} searchable entries · bookmarkable`, href: "dictionary.html" },
-      { icon: "numbers", title: "Numbers & Time", text: "Cardinals, decimals, days & seasons", href: "numbers.html" },
-      { icon: "phrases", title: "Everyday Phrases", text: `${c.phrases} expressions by situation`, href: "phrases.html" },
-      { icon: "conversations", title: "Conversations", text: `${c.dialogues} annotated dialogues`, href: "conversations.html" },
-      { icon: "quiz", title: "Practice Quiz", text: "Multiple choice & flashcard recall", href: "quiz.html" },
-      { icon: "translator", title: "Phrase Translator", text: "English ↔ Bodo phrase & word lookup", href: "translator.html" },
-      { icon: "culture", title: "Language & Community", text: "History, script movement & dialects", href: "culture.html" },
-      { icon: "contribute", title: "Contribute", text: "Open-source corpus & verification", href: "contribute.html" },
+      { icon: "lessons", title: "Graded Lessons", text: `${c.lessons} modules from Basic to Advanced`, href: "lessons.html", tone: "a" },
+      { icon: "script", title: "Script & Sounds", text: `${c.vowels} vowels · ${c.consonants} consonants · inspector`, href: "script.html", tone: "b" },
+      { icon: "grammar", title: "Grammar Reference", text: "SOV syntax, case markers & mood", href: "grammar.html", tone: "c" },
+      { icon: "verbs", title: "Verb Tables", text: `${c.verbs} core roots × 3 tenses`, href: "verbs.html", tone: "d" },
+      { icon: "dictionary", title: "Dictionary", text: `${c.words} searchable entries · bookmarkable`, href: "dictionary.html", tone: "a" },
+      { icon: "numbers", title: "Numbers & Time", text: "Cardinals, tens, days & months", href: "numbers.html", tone: "b" },
+      { icon: "phrases", title: "Everyday Phrases", text: `${c.phrases} expressions by situation`, href: "phrases.html", tone: "c" },
+      { icon: "conversations", title: "Conversations", text: `${c.dialogues} annotated dialogues`, href: "conversations.html", tone: "d" },
+      { icon: "quiz", title: "Quiz Arena", text: "Flashcards & multiple choice", href: "quiz.html", tone: "a" },
+      { icon: "translator", title: "Phrase Translator", text: "English ↔ Bodo phrase & word lookup", href: "translator.html", tone: "b" },
+      { icon: "culture", title: "Language & Community", text: "History, script movement & festivals", href: "culture.html", tone: "c" },
+      { icon: "contribute", title: "Contribute", text: "Open-source corpus & verification", href: "contribute.html", tone: "d" },
+    ];
+
+    const badges = [
+      { icon: "graduation", label: "First lesson", on: p.done >= 1 },
+      { icon: "book", label: "5 lessons", on: p.done >= 5 },
+      { icon: "compass", label: "10 lessons", on: p.done >= 10 },
+      { icon: "zap", label: "500 XP", on: r.xp >= 500 },
+      { icon: "flame", label: "3-day streak", on: visit.streak >= 3 },
+      { icon: "medal", label: "10 words saved", on: savedN >= 10 },
     ];
 
     const shelfItems = B.phrases.filter((ph) => ph.cat === "Greetings & courtesy").slice(0, 6);
 
     body().innerHTML = `
+      <section class="home-dash">
+        <div class="dash-lead">
+          <div class="dash-ring-lg">
+            ${ring(r.levelPercent, 34)}
+            <span class="dash-ring-num">${r.level}</span>
+          </div>
+          <div class="dash-copy">
+            <span class="sec-kicker">YOUR STUDY RECORD</span>
+            <h2>Level ${r.level} · ${esc(r.title)}</h2>
+            <p class="dash-sub">${p.done} of ${p.total} lessons complete · ${r.xp} XP earned</p>
+            <div class="dash-progress" role="progressbar" aria-valuenow="${r.levelPercent}" aria-valuemin="0" aria-valuemax="100"><i style="width:${r.levelPercent}%"></i></div>
+            <p class="dash-next">${p.done >= p.total ? "Every lesson complete — the ladder is yours." : `${Math.max(0, r.nextXp - r.xp)} XP to the next rank.`}</p>
+          </div>
+          <div class="dash-cta">
+            <a class="btn primary" href="lessons.html#lesson-${nextN}">${p.done >= p.total ? "Review lessons" : `Continue Lesson ${nextN}`} ${icon("arrow")}</a>
+            <a class="btn ghost" href="quiz.html">${icon("quiz")} Quiz Arena</a>
+          </div>
+        </div>
+
+        <div class="dash-tiles">
+          <div class="dash-tile t-xp"><span class="dt-ic">${icon("zap")}</span><b>${r.xp}</b><span>XP earned</span></div>
+          <div class="dash-tile t-streak ${visit.streak ? "is-on" : ""}"><span class="dt-ic">${icon("flame")}</span><b>${visit.streak}</b><span>day streak</span></div>
+          <div class="dash-tile t-goal"><span class="dt-ic">${icon("target")}</span><b>${goalPct}%</b><span>daily goal · ${dailyXp}/${goal} XP</span></div>
+          <div class="dash-tile t-saved"><span class="dt-ic">${icon("star")}</span><b>${savedN}</b><span>words saved</span></div>
+        </div>
+      </section>
+
       <section class="home-band">
         <div class="sec-head">
           <div>
@@ -62,58 +117,40 @@
           </div>
           <span class="sec-sub">12 modules · works 100% offline</span>
         </div>
-        <div class="dir-list">
+        <div class="dir-grid">
           ${launch
             .map(
-              (l) => `<a class="dir-row" href="${l.href}">
-                <span class="dir-icon">${icon(l.icon)}</span>
-                <span class="dir-main">
-                  <strong>${esc(l.title)}</strong>
-                  <span>${esc(l.text)}</span>
-                </span>
-                <span class="dir-arrow" aria-hidden="true">→</span>
-              </a>`
+              (l) => `<a class="dir-card tone-${l.tone}" href="${l.href}">
+              <span class="dir-icon">${icon(l.icon)}</span>
+              <span class="dir-main">
+                <strong>${esc(l.title)}</strong>
+                <span>${esc(l.text)}</span>
+              </span>
+              <span class="dir-arrow" aria-hidden="true">${icon("arrow")}</span>
+            </a>`
             )
             .join("")}
         </div>
       </section>
 
       <section class="home-band">
-        <div class="hb-split">
-          <div class="hb-lead">
-            <span class="sec-kicker">LANGUAGE PROFILE</span>
-            <h2>About Bodo (<span class="bo">बर'</span>)</h2>
-            <p class="sec-intro">
-              Bodo (<span class="bo">बर'</span> / <em>Boro</em>) is a Tibeto-Burman language of Assam. Unlike the Indo-Aryan languages of the same region, such as Assamese, Bodo belongs to the <strong>Sino-Tibetan</strong> family, is <strong>tonal</strong>, and has a literature that has grown rapidly since the 1950s.
-            </p>
-            <a href="culture.html" class="sec-link">Read full language &amp; community profile ${icon("arrow")}</a>
+        <div class="sec-head">
+          <div>
+            <span class="sec-kicker">MILESTONES</span>
+            <h2>Badges to Collect</h2>
           </div>
-
-          <div class="hb-matrix">
-            <div class="hb-item">
-              <span class="hb-num">01 · Language Family</span>
-              <h3>Tibeto-Burman</h3>
-              <p>A member of the <strong>Bodo–Garo</strong> group of the Tibeto-Burman branch of Sino-Tibetan, spoken in the Bodoland Territorial Region of Assam and across north-east India, with communities in Nepal and Bangladesh.</p>
-            </div>
-
-            <div class="hb-item">
-              <span class="hb-num">02 · Official Status</span>
-              <h3>Eighth Schedule Language</h3>
-              <p>An <strong>associate official language of Assam</strong> and one of the 22 languages in the <strong>Eighth Schedule of the Indian Constitution</strong>, added in 2003. Around 1.4 million speakers.</p>
-            </div>
-
-            <div class="hb-item">
-              <span class="hb-num">03 · Script &amp; Sounds</span>
-              <h3>The Bodo Script</h3>
-              <p>Written in the <strong>Devanagari script</strong> since 1975, after a long script movement — earlier in the Latin and Assamese scripts. Bodo is <strong>tonal</strong> and has the vowel <strong>/ɯ/</strong> that English lacks.</p>
-            </div>
-
-            <div class="hb-item">
-              <span class="hb-num">04 · Sentence Structure</span>
-              <h3>Verb-Final &amp; Suffixing</h3>
-              <p>Word order is <strong>Subject–Object–Verb (SOV)</strong> and the language is agglutinative; case is shown by postpositions (<span class="bo">-ni</span>, <span class="bo">-khou</span>, <span class="bo">-nw</span>, <span class="bo">-yao</span>, <span class="bo">-jwng</span>, <span class="bo">-nifrai</span>) and verbs stack tense, aspect and person into one word.</p>
-            </div>
-          </div>
+          <a href="progress.html" class="sec-link">Full study record ${icon("arrow")}</a>
+        </div>
+        <div class="mile-strip">
+          ${badges
+            .map(
+              (b) => `<div class="mile ${b.on ? "earned" : "locked"}">
+              <span class="mile-ic">${icon(b.on ? b.icon : "shield")}</span>
+              <span class="mile-lbl">${esc(b.label)}</span>
+              <span class="mile-state">${b.on ? icon("check") + " Earned" : "Locked"}</span>
+            </div>`
+            )
+            .join("")}
         </div>
       </section>
 
