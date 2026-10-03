@@ -6,7 +6,7 @@
 
 **An academic-grade, self-contained platform for learning Bodo (बरʼ, Boro)** — the Tibeto-Burman language of the Bodo people of Assam, India.
 
-[![version](https://img.shields.io/badge/version-1.3.0-48871c?style=flat-square)](CHANGELOG.md)
+[![version](https://img.shields.io/badge/version-1.4.0-48871c?style=flat-square)](CHANGELOG.md)
 [![license](https://img.shields.io/badge/license-MIT-0f766e?style=flat-square)](LICENSE)
 [![dependencies](https://img.shields.io/badge/runtime%20dependencies-0-b45309?style=flat-square)](#-design-constraints)
 [![build](https://img.shields.io/badge/build%20step-none-6d28d9?style=flat-square)](#-design-constraints)
@@ -77,7 +77,7 @@ files the browser executes. Clone it, open `index.html`, and it works — includ
 | [`phrases.html`](phrases.html) | **84 phrases** grouped by setting: greetings, introductions, the market, food, travel, health, the classroom, the phone, the bank, festivals and more |
 | [`conversations.html`](conversations.html) | **14 dialogues** with English, Bodo and pronunciation side by side, each with a spoken-language note |
 | [`reading.html`](reading.html) | **Reading & writing** — 7 graded passages from two-line beginners' texts to a short essay, each with a romanisation, an English rendering and comprehension questions, plus a guide to writing |
-| [`quiz.html`](quiz.html) | **Flashcards** in both directions with a running score |
+| [`quiz.html`](quiz.html) | **Practice Arena** — five scored exercise modes (mixed, multiple choice, listening, spelling, flashcards) with instant feedback, a running score and streak, and XP for correct answers |
 | [`translator.html`](translator.html) | **English → Bodo** phrasebook lookup with a word-by-word fallback and coverage score |
 | [`culture.html`](culture.html) | **Language & community** — speakers, the script and the script movement, tone and the vowel /ɯ/, dialects, Bathouism and the festivals, and the literature |
 | [`contribute.html`](contribute.html) | **Contribute** — what you can add, why it matters, and step-by-step routes including one that needs no code |
@@ -266,7 +266,7 @@ how to test it locally, is in [`docs/UPDATES.md`](docs/UPDATES.md).
 The platform is a **language studio**, not a static reader. Everything below is computed on the
 device and stored in `localStorage` — there is no account and nothing is uploaded.
 
-- **XP.** Each completed lesson is worth 50 XP; the Quiz Arena adds bonus XP. A live HUD in the header
+- **XP.** Each completed lesson is worth 50 XP; every correct answer in the Practice Arena adds more. A live HUD in the header
   shows your level ring, total XP and current day-streak on every page.
 - **15 ranks**, from *Initiate* to *Bodo Laureate*, each with its own XP threshold, a focus line and
   the milestone that unlocks it. The ladder is drawn on the Progress page and in the sidebar card.
@@ -404,7 +404,7 @@ enabled, and CI runs a dependency-free secret scan on every push.
 
 ## Roadmap
 
-Planned: audio pronunciation, spaced-repetition review, a larger verified dictionary, tone-marked
+Shipped: audio pronunciation (browser speech, approximate), an interactive practice engine, a 280-word dictionary. Planned: spaced-repetition review, a larger verified dictionary, tone-marked
 entries, and growing the reading material. Explicitly **not** planned: ads, tracking, telemetry,
 accounts, CDNs and a build step. Full detail in [`docs/ROADMAP.md`](docs/ROADMAP.md).
 

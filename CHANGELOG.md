@@ -3,6 +3,27 @@
 All notable changes to **SikBodo — Bodo Learning Platform**.
 This project follows [Semantic Versioning](https://semver.org/).
 
+## [1.4.0] — 2026-10-03
+
+### Added
+
+- **A real interactive learning loop.** The Quiz page is now a **Practice Arena** — an exercise engine with
+  five scored modes: **mixed**, **multiple choice** (both directions), **listening**, **spelling** and
+  **flashcards**. Every answer gets instant feedback, a running score and streak, and XP is awarded for
+  what you get right, with a results screen at the end.
+
+- **Sound.** `js/core/sfx.js` implements the sound-effect engine that the rest of the code already called
+  (`AX.sfx.correct()`, `.wrong()`, `.tap()`, `.complete()` …) but which never existed — synthesised with the
+  Web Audio API, no audio files, gated by the existing header toggle.
+
+- **Pronunciation.** `js/core/speech.js` plays Bodo with the browser's built-in speech synthesis, with a
+  speaker button on every dictionary word, phrase, dialogue line, script letter, number and the word of
+  the day. Bodo has no dedicated voice, so an Indic voice reads the Devanagari as an approximation — the
+  Practice Arena says so plainly.
+
+- **Practice hooks everywhere** — a "Practise these words" action on every lesson, and practice CTAs on
+  the home page. The nav item is relabelled **Practice**.
+
 ## [1.3.0] — 2026-10-03
 
 ### Changed
