@@ -1,0 +1,73 @@
+name: IndexNow
+
+# Notifies the IndexNow protocol (Bing, Yandex, Seznam, Naver) that the site's
+# URLs have changed, so they are re-crawled promptly. Runs on every push to
+# main and can be triggered by hand from the Actions tab.
+#
+# The submission happens on GitHub's runners because they can reach both the
+# published site (to verify the key file) and the IndexNow API. Nothing here
+# runs at page-view time and nothing ships to the browser.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: indexnow
+  cancel-in-progress: false
+
+jobs:
+  submit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Wait for GitHub Pages to publish the key file
+        run: |
+          KEY="92d1f7f9e8063a2300643330b94f785c"
+          URL="https://apsideslabs.github.io/SikBodo/${KEY}.txt"
+          for i in $(seq 1 20); do
+            BODY="$(curl -fsS --max-time 20 "$URL" 2>/dev/null || true)"
+            if [ "$BODY" = "$KEY" ]; then
+              echo "Key file is live (attempt $i)."
+              exit 0
+            fi
+            echo "Attempt $i: key file not live yet; waiting..."
+            sleep 15
+          done
+          echo "Key file not reachable yet; submitting anyway."
+
+      - name: Submit URLs to IndexNow
+        run: |
+          python3 - <<'PY'
+          import json, urllib.request
+
+          KEY = "92d1f7f9e8063a2300643330b94f785c"
+          BASE = "https://apsideslabs.github.io/SikBodo"
+          PAGES = [
+              "index.html", "lessons.html", "script.html", "grammar.html",
+              "verbs.html", "numbers.html", "dictionary.html", "phrases.html",
+              "conversations.html", "reading.html", "idioms.html", "culture.html",
+              "quiz.html", "translator.html", "progress.html", "resources.html",
+              "contribute.html", "about.html",
+          ]
+          urls = [BASE + "/" + p for p in PAGES]
+          payload = {
+              "host": "apsideslabs.github.io",
+              "key": KEY,
+              "keyLocation": f"{BASE}/{KEY}.txt",
+              "urlList": urls,
+          }
+          req = urllib.request.Request(
+              "https://api.indexnow.org/indexnow",
+              data=json.dumps(payload).encode("utf-8"),
+              headers={"Content-Type": "application/json; charset=utf-8"},
+          )
+          try:
+              with urllib.request.urlopen(req, timeout=30) as r:
+                  print("IndexNow response status:", r.status)
+          except Exception as e:
+              print("IndexNow submission failed:", e)
+          PY

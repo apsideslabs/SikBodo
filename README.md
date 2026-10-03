@@ -342,7 +342,7 @@ a `BreadcrumbList`, plus a page entity — `WebSite` and `Organization` on the h
 `LearningResource`, `DefinedTermSet`, `Quiz`, `Article`, `CollectionPage` or `WebPage` as appropriate —
 linked to the site and marked `inLanguage: en` and `about: Bodo (brx)`. `sitemap.xml` lists every page with
 `lastmod`, `changefreq` and `priority`; `robots.txt` points at it. No third-party scripts, so nothing blocks
-crawling.
+crawling. For AI discovery, `llms.txt` gives crawlers a plain-language summary of the platform, and `.github/workflows/indexnow.yml` submits every URL to the **IndexNow** protocol (Bing, Yandex, Seznam, Naver) on each push to `main`. `docs/SEO.md` records what is automated and what still needs the owner's login — Search Console, a custom domain and backlinks.
 
 ## Design constraints
 

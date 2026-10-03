@@ -1,0 +1,41 @@
+# SikBodo
+
+> SikBodo is a free, offline, dependency-free web platform for learning Bodo (बरʼ, also called Boro), a Tibeto-Burman language of the Bodo people of Assam, India.
+
+SikBodo is a static, no-build website — plain HTML, CSS and JavaScript with zero runtime dependencies and no build step. It works offline as an installable PWA and is published on GitHub Pages.
+
+## Key facts
+
+- Language taught: Bodo / Boro (ISO 639-3: brx), spoken in Assam and the Bodoland Territorial Region, India.
+- Writing: content is presented in the Devanagari script with romanisation. Bodo is tonal and tone is not marked.
+- Content: 15 graded lessons, 16 grammar sections, verb conjugation tables, a script chart, numbers, a 348-word dictionary across 21 categories, 107 everyday phrases, dialogues, reading passages, idioms, culture and resources.
+- Interactive: a Practice Arena (multiple choice, listening, spelling, flashcards), a word translator, and browser-based pronunciation.
+- License: MIT.
+- Source: https://github.com/apsideslabs/SikBodo
+- Accuracy: content is compiled from public sources and is not native-speaker verified.
+
+## Pages
+
+- [Home](https://apsideslabs.github.io/SikBodo/): overview and the learning path
+- [Lessons](https://apsideslabs.github.io/SikBodo/lessons.html): 15 graded lessons
+- [Script & sounds](https://apsideslabs.github.io/SikBodo/script.html): the Devanagari chart and pronunciation
+- [Grammar](https://apsideslabs.github.io/SikBodo/grammar.html): 16 grammar sections
+- [Verbs](https://apsideslabs.github.io/SikBodo/verbs.html): conjugation tables
+- [Numbers & time](https://apsideslabs.github.io/SikBodo/numbers.html)
+- [Dictionary](https://apsideslabs.github.io/SikBodo/dictionary.html): 348 words with live search and category filters
+- [Phrases](https://apsideslabs.github.io/SikBodo/phrases.html): 107 phrases grouped by setting
+- [Conversations](https://apsideslabs.github.io/SikBodo/conversations.html): everyday dialogues
+- [Reading & writing](https://apsideslabs.github.io/SikBodo/reading.html): passages with translations
+- [Idioms & proverbs](https://apsideslabs.github.io/SikBodo/idioms.html)
+- [Language & community](https://apsideslabs.github.io/SikBodo/culture.html): the Bodo language and its speakers
+- [Practice Arena](https://apsideslabs.github.io/SikBodo/quiz.html): interactive quiz with scoring
+- [Translator](https://apsideslabs.github.io/SikBodo/translator.html)
+- [Progress](https://apsideslabs.github.io/SikBodo/progress.html)
+- [Resources](https://apsideslabs.github.io/SikBodo/resources.html): further reading
+- [Contribute](https://apsideslabs.github.io/SikBodo/contribute.html)
+- [About & sources](https://apsideslabs.github.io/SikBodo/about.html): an honest statement of the platform's accuracy limits
+
+## Optional
+
+- [Repository](https://github.com/apsideslabs/SikBodo): source code and issue tracker
+- [Changelog](https://github.com/apsideslabs/SikBodo/blob/main/CHANGELOG.md)
