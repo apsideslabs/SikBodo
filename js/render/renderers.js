@@ -45,6 +45,14 @@
     const goalPct = Math.min(100, Math.round((dailyXp / goal) * 100));
     const savedN = AX.store.saved.list().length;
 
+    const isRead = (n) => AX.store.progress.isRead(n);
+    const nextLesson = B.lessons.find((l) => l.n === nextN) || B.lessons[0];
+    const upNext = B.lessons.filter((l) => !isRead(l.n) && l.n !== nextN).slice(0, 4);
+    const allDone = p.done >= p.total;
+
+    const dayIndex = Math.floor(Date.now() / 86400000);
+    const wotd = B.dictionary[dayIndex % B.dictionary.length];
+
     const ring = (pct, R) => {
       const C = 2 * Math.PI * R;
       const off = (C * (1 - Math.min(100, Math.max(0, pct)) / 100)).toFixed(1);
@@ -79,6 +87,13 @@
       { icon: "medal", label: "10 words saved", on: savedN >= 10 },
     ];
 
+    const research = [
+      { icon: "library", title: "Graded reading", text: `${c.passages} passages from two lines to a short essay, with comprehension checks.`, href: "reading.html" },
+      { icon: "resources", title: "Sources & study plan", text: "The grammars, dictionaries and corpora behind the platform, plus a 12-week plan.", href: "resources.html" },
+      { icon: "culture", title: "Language & community", text: "The script movement, tone, dialects, Bathouism and the literature.", href: "culture.html" },
+      { icon: "dictionary", title: "The lexicon", text: `${c.words} words with romanisation, searchable and bookmarkable.`, href: "dictionary.html" },
+    ];
+
     const shelfItems = B.phrases.filter((ph) => ph.cat === "Greetings & courtesy").slice(0, 6);
 
     body().innerHTML = `
@@ -93,14 +108,13 @@
             <h2>Level ${r.level} · ${esc(r.title)}</h2>
             <p class="dash-sub">${p.done} of ${p.total} lessons complete · ${r.xp} XP earned</p>
             <div class="dash-progress" role="progressbar" aria-valuenow="${r.levelPercent}" aria-valuemin="0" aria-valuemax="100"><i style="width:${r.levelPercent}%"></i></div>
-            <p class="dash-next">${p.done >= p.total ? "Every lesson complete — the ladder is yours." : `${Math.max(0, r.nextXp - r.xp)} XP to the next rank.`}</p>
+            <p class="dash-next">${allDone ? "Every lesson complete — the ladder is yours." : `${Math.max(0, r.nextXp - r.xp)} XP to the next rank.`}</p>
           </div>
           <div class="dash-cta">
-            <a class="btn primary" href="lessons.html#lesson-${nextN}">${p.done >= p.total ? "Review lessons" : `Continue Lesson ${nextN}`} ${icon("arrow")}</a>
+            <a class="btn primary" href="lessons.html#lesson-${nextN}">${allDone ? "Review lessons" : `Continue Lesson ${nextN}`} ${icon("arrow")}</a>
             <a class="btn ghost" href="quiz.html">${icon("quiz")} Quiz Arena</a>
           </div>
         </div>
-
         <div class="dash-tiles">
           <div class="dash-tile t-xp"><span class="dt-ic">${icon("zap")}</span><b>${r.xp}</b><span>XP earned</span></div>
           <div class="dash-tile t-streak ${visit.streak ? "is-on" : ""}"><span class="dt-ic">${icon("flame")}</span><b>${visit.streak}</b><span>day streak</span></div>
@@ -111,70 +125,111 @@
 
       <section class="home-band">
         <div class="sec-head">
-          <div>
-            <span class="sec-kicker">PLATFORM DIRECTORY</span>
-            <h2>Explore the Platform</h2>
+          <div><span class="sec-kicker">YOUR LEARNING PATH</span><h2>${allDone ? "You have finished the course" : "Pick up where you left off"}</h2></div>
+          <a href="lessons.html" class="sec-link">All ${c.lessons} lessons ${icon("arrow")}</a>
+        </div>
+        <div class="path-grid">
+          <a class="path-hero" href="lessons.html#lesson-${nextN}">
+            <span class="ph-badge">${allDone ? "COMPLETE" : "UP NEXT"}</span>
+            <span class="ph-n">Lesson ${nextN}</span>
+            <h3>${esc(nextLesson.title)}</h3>
+            <p>${esc(nextLesson.summary)}</p>
+            <span class="ph-cta">${allDone ? "Review this lesson" : "Start this lesson"} ${icon("arrow")}</span>
+          </a>
+          <div class="path-side">
+            ${upNext.length
+              ? upNext.map((l) => `<a class="path-mini" href="lessons.html#lesson-${l.n}">
+                  <span class="pm-n">${l.n}</span>
+                  <span class="pm-t"><b>${esc(l.title)}</b><small>${esc(l.level)} · +50 XP</small></span>
+                  <span class="pm-go" aria-hidden="true">${icon("arrow")}</span>
+                </a>`).join("")
+              : `<p class="empty">All lessons are marked complete. Revisit any lesson from the course page, or drill the dictionary.</p>`}
           </div>
+        </div>
+      </section>
+
+      <section class="home-band">
+        <div class="split-2">
+          <div class="wotd" id="wotd">
+            <span class="sec-kicker">WORD OF THE DAY</span>
+            <div class="wotd-cat">${esc(wotd.cat)}</div>
+            <div class="wotd-en">${esc(wotd.en)}</div>
+            <button class="btn ghost small wotd-reveal" type="button" id="wotd-btn">${icon("search")} Reveal the Bodo</button>
+            <div class="wotd-ans" id="wotd-ans" hidden>
+              <span class="wotd-bo bo">${esc(wotd.bo)}</span>
+              <span class="wotd-rom">${esc(wotd.rom)}</span>
+            </div>
+            <button class="btn subtle small" type="button" id="wotd-save">${icon("star")} Save this word</button>
+          </div>
+          <div class="practice-card">
+            <span class="sec-kicker">DAILY PRACTICE</span>
+            <h3>Keep the streak alive</h3>
+            <p>Ten minutes a day beats a weekend of cramming. Drill a round of flashcards, or test yourself against the whole dictionary.</p>
+            <div class="practice-stats">
+              <span>${icon("flame")} ${visit.streak}-day streak</span>
+              <span>${icon("target")} ${goalPct}% of today's goal</span>
+              <span>${icon("star")} best streak ${visit.best}</span>
+            </div>
+            <div class="btn-row">
+              <a class="btn primary" href="quiz.html">${icon("quiz")} Start a quiz round</a>
+              <a class="btn ghost" href="dictionary.html">${icon("dictionary")} Browse words</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="home-band">
+        <div class="sec-head">
+          <div><span class="sec-kicker">PLATFORM DIRECTORY</span><h2>Explore the Platform</h2></div>
           <span class="sec-sub">12 modules · works 100% offline</span>
         </div>
         <div class="dir-grid">
-          ${launch
-            .map(
-              (l) => `<a class="dir-card tone-${l.tone}" href="${l.href}">
+          ${launch.map((l) => `<a class="dir-card tone-${l.tone}" href="${l.href}">
               <span class="dir-icon">${icon(l.icon)}</span>
-              <span class="dir-main">
-                <strong>${esc(l.title)}</strong>
-                <span>${esc(l.text)}</span>
-              </span>
+              <span class="dir-main"><strong>${esc(l.title)}</strong><span>${esc(l.text)}</span></span>
               <span class="dir-arrow" aria-hidden="true">${icon("arrow")}</span>
-            </a>`
-            )
-            .join("")}
+            </a>`).join("")}
         </div>
       </section>
 
       <section class="home-band">
         <div class="sec-head">
-          <div>
-            <span class="sec-kicker">MILESTONES</span>
-            <h2>Badges to Collect</h2>
-          </div>
+          <div><span class="sec-kicker">MILESTONES</span><h2>Badges to Collect</h2></div>
           <a href="progress.html" class="sec-link">Full study record ${icon("arrow")}</a>
         </div>
         <div class="mile-strip">
-          ${badges
-            .map(
-              (b) => `<div class="mile ${b.on ? "earned" : "locked"}">
+          ${badges.map((b) => `<div class="mile ${b.on ? "earned" : "locked"}">
               <span class="mile-ic">${icon(b.on ? b.icon : "shield")}</span>
               <span class="mile-lbl">${esc(b.label)}</span>
               <span class="mile-state">${b.on ? icon("check") + " Earned" : "Locked"}</span>
-            </div>`
-            )
-            .join("")}
+            </div>`).join("")}
         </div>
       </section>
 
       <section class="home-band">
         <div class="sec-head">
-          <div>
-            <span class="sec-kicker">ESSENTIAL GREETINGS · TAP TO COPY</span>
-            <h2>Six Phrases to Start With</h2>
-          </div>
+          <div><span class="sec-kicker">STUDY &amp; RESEARCH</span><h2>Go deeper</h2></div>
+        </div>
+        <div class="research-grid">
+          ${research.map((x) => `<a class="research-card" href="${x.href}">
+              <span class="rc-ic">${icon(x.icon)}</span>
+              <strong>${esc(x.title)}</strong>
+              <span>${esc(x.text)}</span>
+            </a>`).join("")}
+        </div>
+      </section>
+
+      <section class="home-band">
+        <div class="sec-head">
+          <div><span class="sec-kicker">ESSENTIAL GREETINGS · TAP TO COPY</span><h2>Six Phrases to Start With</h2></div>
           <a href="phrases.html" class="sec-link">All ${c.phrases} phrases ${icon("arrow")}</a>
         </div>
         <div class="home-phrase-grid">
-          ${shelfItems
-            .map(
-              (ph) => `<div class="home-phrase-item phrase-card" data-copy="${esc(ph.bo)}" tabindex="0" role="button" aria-label="Copy ${esc(ph.bo)}">
-                <div class="hpi-top">
-                  <span class="hpi-bo bo">${esc(ph.bo)}</span>
-                  <span class="pc-copy-hint">${icon("copy")}</span>
-                </div>
+          ${shelfItems.map((ph) => `<div class="home-phrase-item phrase-card" data-copy="${esc(ph.bo)}" tabindex="0" role="button" aria-label="Copy ${esc(ph.bo)}">
+                <div class="hpi-top"><span class="hpi-bo bo">${esc(ph.bo)}</span><span class="pc-copy-hint">${icon("copy")}</span></div>
                 <span class="hpi-rom">${esc(ph.rom)}</span>
                 <span class="hpi-en">${esc(ph.en)}</span>
-              </div>`
-            )
-            .join("")}
+              </div>`).join("")}
         </div>
       </section>`;
 
@@ -190,10 +245,24 @@
         } catch (e) {}
       };
       card.addEventListener("click", triggerCopy);
-      card.addEventListener("keydown", (e) => {
-        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); triggerCopy(); }
-      });
+      card.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); triggerCopy(); } });
     });
+
+    const wotdBtn = document.getElementById("wotd-btn");
+    const wotdAns = document.getElementById("wotd-ans");
+    if (wotdBtn && wotdAns) {
+      wotdBtn.addEventListener("click", () => {
+        if (AX.sfx) AX.sfx.pop();
+        wotdAns.hidden = false;
+        wotdBtn.hidden = true;
+      });
+    }
+    const wotdSave = document.getElementById("wotd-save");
+    if (wotdSave) {
+      const paint = () => { wotdSave.innerHTML = (AX.store.saved.has(wotd.en) ? icon("check") + " Saved" : icon("star") + " Save this word"); };
+      paint();
+      wotdSave.addEventListener("click", () => { if (AX.sfx) AX.sfx.pop(); AX.store.saved.toggle(wotd.en); paint(); });
+    }
   }
 
   /* ---------------------------------------------------------- LESSONS */
