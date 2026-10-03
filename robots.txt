@@ -1,0 +1,7 @@
+# SikBodo — Bodo Learning Platform
+# https://github.com/apsideslabs/SikBodo
+
+User-agent: *
+Allow: /
+
+Sitemap: https://apsideslabs.github.io/SikBodo/sitemap.xml
