@@ -15,6 +15,11 @@
   --brand-ink: #2f5e10;
   --brand-soft: #eef7e3;
 
+  /* --- the SikBodo wordmark's own colours, theme-aware --- */
+  --bodo-ink: #10291c;
+  --bodo-green: #48871c;
+  --bodo-paper: #ffffff;
+
   /* --- Apsides Labs maker mark --- */
   --logo-ink: #032351;
   --logo-accent: #0664fb;
@@ -152,6 +157,10 @@ html[data-theme="dark"] {
   --brand: #8fce4f;
   --brand-ink: #b6e07a;
   --brand-soft: rgba(143, 206, 79, 0.15);
+
+  --bodo-ink: #e8f4dc;
+  --bodo-green: #8fce4f;
+  --bodo-paper: #12261a;
 
   /* the mark's navy would disappear on a dark ground, so it is lifted
      the way every other brand colour is */
