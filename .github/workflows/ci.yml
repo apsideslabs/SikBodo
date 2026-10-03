@@ -1,0 +1,118 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Validate sources
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Syntax-check every JavaScript file
+        run: |
+          set -euo pipefail
+          fail=0
+          while IFS= read -r -d '' f; do
+            if ! node --check "$f"; then
+              echo "::error file=$f::Syntax error in $f"
+              fail=1
+            fi
+          done < <(find js -name '*.js' -print0; printf 'sw.js\0')
+          exit $fail
+
+      - name: Validate page skeleton
+        run: |
+          node - <<'NODE'
+          const fs = require("fs");
+          const path = require("path");
+          const root = process.cwd();
+          const pages = fs.readdirSync(root).filter((f) => f.endsWith(".html"));
+          const required = [
+            [/^<!DOCTYPE html>/i, "doctype"],
+            [/<html[\s>]/i, "html element"],
+            [/<head[\s>]/i, "head"],
+            [/<body[^>]*data-page="[a-z0-9-]+"/i, "body[data-page]"],
+            [/id="site-header"/, "header landmark"],
+            [/id="main"/, "main landmark"],
+            [/id="site-footer"/, "footer landmark"],
+            [/class="skip-link"/, "skip link"],
+            [/<h1[\s>]/i, "h1"],
+            [/js\/data\/index\.js/, "data bundle script"],
+            [/js\/app\.js/, "app script"],
+            [/rel="manifest"/, "web app manifest link"],
+            [/js\/core\/update\.js/, "update module script"],
+            [/id="update-banner"/, "update banner"],
+          ];
+          let failed = 0;
+          for (const file of pages) {
+            const html = fs.readFileSync(path.join(root, file), "utf8");
+            for (const [re, label] of required) {
+              if (!re.test(html)) {
+                console.log(`::error file=${file}::missing ${label}`);
+                failed = 1;
+              }
+            }
+            const h1s = (html.match(/<h1[\s>]/gi) || []).length;
+            if (h1s > 1) {
+              console.log(`::error file=${file}::${h1s} <h1> elements (expected at most 1)`);
+              failed = 1;
+            }
+          }
+          console.log(`Checked ${pages.length} HTML file(s).`);
+          process.exit(failed);
+          NODE
+
+      - name: Validate release metadata
+        run: |
+          node - <<'NODE'
+          const fs = require("fs");
+          const meta = fs.readFileSync("js/data/meta.js", "utf8");
+          const mv = (meta.match(/"version"\s*:\s*"([^"]+)"/) || [])[1];
+          const vj = JSON.parse(fs.readFileSync("version.json", "utf8")).version;
+          const sw = (fs.readFileSync("sw.js", "utf8").match(/const VERSION = "([^"]+)"/) || [])[1];
+          const values = { "js/data/meta.js": mv, "version.json": vj, "sw.js": sw };
+          console.log(JSON.stringify(values));
+          const uniq = [...new Set(Object.values(values))];
+          if (uniq.length !== 1 || !uniq[0]) {
+            console.log("::error::Version mismatch across meta.js, version.json and sw.js: " + JSON.stringify(values));
+            process.exit(1);
+          }
+          console.log("Version consistent: " + uniq[0]);
+          NODE
+
+      - name: Check internal links
+        run: node tools/check-links.mjs
+
+  security:
+    name: Secret scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Scan for committed secrets
+        run: |
+          set -euo pipefail
+          # Dependency-free scan for high-signal credential patterns.
+          # The scan excludes its own workflow file so the patterns below do not self-match.
+          patterns='ghp_[A-Za-z0-9]{36}|github_pat_[A-Za-z0-9_]{22,}|AKIA[0-9A-Z]{16}|-----BEGIN (RSA |EC |OPENSSH |PGP )?PRIVATE KEY-----|xox[baprs]-[A-Za-z0-9-]{10,}|sk_live_[A-Za-z0-9]{20,}'
+          if git grep -nEI "$patterns" -- . ':(exclude).github/workflows/ci.yml' ':(exclude)docs' ':(exclude)SECURITY.md'; then
+            echo "::error::Potential secret detected in tracked files."
+            exit 1
+          fi
+          echo "No committed secrets detected."

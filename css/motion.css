@@ -1,0 +1,91 @@
+/* ============================================================
+   Raokhanthi — motion
+   Subtle, compositor-only micro-interactions (<=200ms routine
+   feedback) and entrance animations. Switched off under
+   prefers-reduced-motion.
+   ============================================================ */
+
+@keyframes rk-fade-up { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+@keyframes rk-fade-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes rk-pop { 0% { opacity: 0; transform: scale(0.98); } 100% { opacity: 1; transform: scale(1); } }
+
+/* ---------- entrance ---------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 320ms var(--ease-out), transform 320ms var(--ease-out);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+.reveal.is-in { opacity: 1; transform: none; }
+
+.page-head, .home-hero { animation: rk-fade-up 320ms var(--ease-out) both; }
+.page-head h1 { animation: rk-fade-up 380ms var(--ease-out) both; }
+.page-head .lede { animation: rk-fade-up 380ms 50ms var(--ease-out) both; }
+
+/* ---------- hover depth (<= 170ms compositor feedback) ---------- */
+.card, .dialogue, .lesson, .dict-row, .resource, .note-card,
+.glyph, .num-cell, .route, .launch-tile, .stat, .link-card {
+  transition: transform var(--dur) var(--ease),
+              border-color var(--dur) var(--ease),
+              background-color var(--dur) var(--ease),
+              box-shadow var(--dur) var(--ease);
+}
+.card:hover, .dialogue:hover, .resource:hover, .note-card:hover, .route:hover {
+  border-color: var(--outline-hover);
+  box-shadow: var(--shadow-card-hover);
+}
+.feature:hover { border-color: var(--brand); transform: translateY(-2px); }
+.launch-tile:hover { transform: translateY(-2px); }
+.launch-tile .lt-icon { transition: background-color var(--dur) var(--ease), color var(--dur) var(--ease); }
+.glyph:hover, .num-cell:hover { transform: translateY(-2px); border-color: var(--brand); }
+.dict-row:hover { transform: translateX(2px); }
+.stat:hover { border-color: var(--outline-hover); }
+.link-card:hover { transform: translateY(-1px); }
+
+.icon-btn {
+  transition: transform var(--dur-fast) var(--ease),
+              border-color var(--dur-fast) var(--ease),
+              background-color var(--dur-fast) var(--ease),
+              color var(--dur-fast) var(--ease);
+}
+.icon-btn:active { transform: translateY(1px); }
+.swatch { transition: transform var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease); }
+.swatch:hover { transform: scale(1.06); }
+
+/* ---------- learning path ---------- */
+.path-step { transition: transform var(--dur) var(--ease); }
+.path-step:hover { transform: translateX(2px); }
+.path-dot {
+  transition: transform var(--dur) var(--ease),
+              border-color var(--dur) var(--ease),
+              background-color var(--dur) var(--ease),
+              color var(--dur) var(--ease);
+}
+.path-step[data-complete="true"] .path-dot { animation: rk-pop 200ms var(--ease-out); }
+
+/* ---------- panel & drawer ---------- */
+.cp-panel.open { animation: rk-pop 160ms var(--ease-out); }
+.flash { animation: rk-pop 180ms var(--ease-out); }
+
+/* active mobile tab indicator */
+.mobile-nav a, .mobile-nav button { position: relative; transition: color var(--dur) var(--ease); }
+.mobile-nav a[aria-current="page"]::before,
+.mobile-nav button[aria-expanded="true"]::before {
+  content: ""; position: absolute; top: -4px; left: 50%; transform: translateX(-50%);
+  width: 24px; height: 2.5px; border-radius: 0 0 3px 3px; background: var(--brand);
+}
+
+/* ---------- shelves ---------- */
+.shelf::-webkit-scrollbar { height: 5px; }
+.shelf::-webkit-scrollbar-thumb { background: var(--line-strong); border-radius: 999px; }
+.shelf::-webkit-scrollbar-track { background: transparent; }
+
+/* ---------- reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1 !important; transform: none !important; }
+  .page-head, .page-head h1, .page-head .lede, .flash, .cp-panel.open,
+  .sidebar.open, .path-step[data-complete="true"] .path-dot { animation: none !important; }
+  .card:hover, .dialogue:hover, .resource:hover, .note-card:hover, .route:hover,
+  .feature:hover, .launch-tile:hover, .glyph:hover, .num-cell:hover, .stat:hover,
+  .dict-row:hover, .link-card:hover, .path-step:hover { transform: none !important; }
+}

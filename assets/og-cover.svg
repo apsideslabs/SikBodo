@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#10291c"/>
+      <stop offset="1" stop-color="#1c3a24"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <g transform="translate(96 150) scale(0.30)">
+    <rect width="512" height="512" rx="112" fill="#48871c"/>
+  <g fill="none" stroke="#eaf7dc" stroke-width="30" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M256 432 L256 258"/>
+  </g>
+  <g fill="#eaf7dc">
+    <path d="M256 306 C188 312 152 268 148 210 C208 212 246 254 256 306 Z"/>
+    <path d="M256 272 C324 278 360 234 364 176 C304 178 266 220 256 272 Z"/>
+    <path d="M256 234 C232 178 246 120 256 96 C266 120 280 178 256 234 Z"/>
+  </g>
+  </g>
+  <text x="300" y="270" font-family="system-ui, -apple-system, Segoe UI, Roboto, sans-serif" font-size="132" font-weight="800" fill="#ffffff">SikBodo</text>
+  <text x="304" y="340" font-family="system-ui, sans-serif" font-size="46" fill="#9fd06a">Boro Rao · Bodo</text>
+  <text x="304" y="410" font-family="system-ui, sans-serif" font-size="34" fill="#cfe3c0">An academic-grade, self-contained platform for learning Bodo.</text>
+  <text x="304" y="480" font-family="system-ui, sans-serif" font-size="30" fill="#8fae7f">Free · offline · no dependencies · MIT</text>
+</svg>

@@ -1,0 +1,32 @@
+# Security headers for hosts that support a _headers file
+# (Netlify, Cloudflare Pages). GitHub Pages IGNORES this file —
+# see SECURITY.md for what actually applies on the live site.
+
+/*
+  # --- transport & framing ---
+  Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  Cross-Origin-Opener-Policy: same-origin
+  Cross-Origin-Resource-Policy: same-origin
+  Permissions-Policy: accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()
+
+  # --- content security policy ---
+  # The site is entirely self-hosted: no CDN, no analytics, no fonts fetched at
+  # runtime. 'unsafe-inline' is required for style because the display panel
+  # writes CSS custom properties onto <html> and the renderers emit a few
+  # inline style attributes. Scripts are external files only — no inline script.
+  Content-Security-Policy: default-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'; object-src 'none'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'none'; font-src 'self'; manifest-src 'self'
+
+# The 404 page must not be cached by intermediaries.
+/404.html
+  Cache-Control: no-store
+
+# Long-lived caching for versioned static assets.
+/assets/*
+  Cache-Control: public, max-age=604800, immutable
+/css/*
+  Cache-Control: public, max-age=604800, immutable
+/js/*
+  Cache-Control: public, max-age=604800, immutable

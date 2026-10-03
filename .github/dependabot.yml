@@ -1,0 +1,21 @@
+version: 2
+updates:
+  # Keep the GitHub Actions used by .github/workflows/ci.yml current.
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "06:00"
+      timezone: "Asia/Kolkata"
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: "chore(ci)"
+    labels:
+      - "dependencies"
+      - "ci"
+
+  # NOTE: npm is intentionally omitted.
+  # SikBodo ships zero runtime dependencies — the browser loads the committed
+  # .html/.css/.js files directly, and there is no package.json at the repo root.
+  # If a dev-only toolchain is ever introduced, add an npm entry here.
